@@ -23,7 +23,7 @@ author: Ra Daesung
 email: daesungra@gmail.comd
 description: >- # this means to ignore newlines until "baseurl:"
   나무 개발자 블로그입니다
-baseurl: "namu" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: ''
 github_username:  daesungra
@@ -32,6 +32,9 @@ github_username:  daesungra
 theme: lagrange
 plugins:
   - jekyll-feed
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-seo-tag
 
 defaults:
   -
