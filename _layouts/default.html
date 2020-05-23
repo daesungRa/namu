@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+
+{% include head.html %}
+
+<body class="namu-body">
+
+  <div class="container">
+    {% include header.html %}
+    {% include menu.html %}
+
+    <div class="post-container">
+      {{ content }}
+    </div>
+
+    {% include footer.html %}
+
+  </div>
+
+</body>
+</html>

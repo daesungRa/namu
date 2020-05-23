@@ -1,0 +1,12 @@
+---
+title:  "새 글"
+date:   2020-05-06 19:26:23 +0900
+author: daesungra
+categories: daily
+permalink: "/daily/:year/:month/:day/:title"
+image: mountains.jpg
+image-view: false
+---
+
+안녕,
+반가워요

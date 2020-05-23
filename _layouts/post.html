@@ -1,0 +1,44 @@
+---
+layout: default
+---
+
+<h2>
+  {{ page.title }}
+  {% if page.author %}
+    <small class="post-subtitle">by {{ page.author }}</small>
+  {% else %}
+    <small class="post-subtitle">by namu</small>
+  {% endif %}
+</h2>
+
+{% if page.image and page.image-view %}
+  <img src="{{ site.github.url }}/assets/img/{{ page.image }}">
+{% endif %}
+
+{{ content }}
+
+<span class="post-date">
+  {{ site.data.settings.post_date_prefix }}
+  {% assign d = page.date | date: "%-d"  %}
+  {{ page.date | date: "%B" }}
+  {% case d %}
+    {% when '1' or '21' or '31' %}{{ d }}st
+    {% when '2' or '22' %}{{ d }}nd
+    {% when '3' or '23' %}{{ d }}rd
+    {% else %}{{ d }}th{% endcase %},
+  {{ page.date | date: "%Y" }}
+  by
+  {% if page.author %}
+    {{ page.author }}
+  {% else %}
+    {{ site.author }}
+  {% endif %}
+</span>
+
+{% include social-sharing.html %}
+
+{% include related-posts.html %}
+
+{% if site.data.settings.disqus.comments %}
+  {% include disqus.html %}
+{% endif %}
