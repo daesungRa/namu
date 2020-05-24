@@ -14,7 +14,7 @@ layout: default
     {%- for post in site.posts -%}
       {% assign content_length = post.content | size %}
       <h1 class="home-post-title">
-        <a class="post-link" href="{{ post.url }}">
+        <a class="post-link" href="{{ site.github.url }}{{ post.url }}">
           {{ post.title | escape }}
         </a>
       </h1>
