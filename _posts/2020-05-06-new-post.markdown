@@ -1,12 +1,17 @@
 ---
-title:  "새 글"
+title:  "시작"
 date:   2020-05-06 19:26:23 +0900
-author: daesungra
+author: namu
 categories: daily
 permalink: "/daily/:year/:month/:day/:title"
 image: mountains.jpg
 image-view: false
 ---
 
-안녕,
-반가워요
+시작이란 말은 언제나 아름답다.
+
+소나무에게도,<br/>
+나에게도,<br/>
+우리 가족에게도, 그리고 우리 민족에게도 언제나 시작은 있었다.
+
+새롭게 시작하는 모든 사람들을 언제나 사랑하고 축복한다.
