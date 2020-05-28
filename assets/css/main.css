@@ -302,6 +302,10 @@ hr {
   padding-right: 10px;
 }
 
+.menu-content a:hover {  /* in 200523 by namu */
+  color: #343434;
+}
+
 .social-icons {
   float: right;
 }
