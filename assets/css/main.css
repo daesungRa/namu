@@ -312,10 +312,17 @@ hr {
   top: 30px;
   left: 0;
   display: none;
-  padding-left: 12px;
+  width: 93px;
+  font-size: 14pt;
+  text-align: left;
+  padding-left: 14px;
   list-style-type: none;
   background-color: #fff;
   border: 1px solid #bfbfbf;
+}
+
+.menu-dropdown .menu-categories a {
+  font-size: 0.8rem;
 }
 
 .menu-content a {  /* in 200523 by namu */

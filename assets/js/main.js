@@ -1,8 +1,26 @@
+/*
+ * Scripts for Namu jekyll blog.
+ */
+
 function toggleDropdownMenu () {
-	let displayValue = $('.menu-categories').css('display');
+	let dropdownMenu = $('.menu-categories');
+	let displayValue = dropdownMenu.css('display');
 	if (displayValue == 'none') {
-		$('.menu-categories').css('display', 'inline-block');
+		dropdownMenu.css('display', 'block');
 	} else {
-		$('.menu-categories').css('display', 'none');
-	}
-}
+		dropdownMenu.css('display', 'none');
+	};
+};
+
+$(document).ready(function () {
+	let menuDropdownBars = $('#menu-dropdown-bars');
+	menuDropdownBars.on('click', function (event) {
+		event.stopPropagation();
+		toggleDropdownMenu();
+	});
+	document.onclick = function () {
+		if ($('.menu-categories').css('display') == 'block') {
+			toggleDropdownMenu();
+		};
+	};
+});
