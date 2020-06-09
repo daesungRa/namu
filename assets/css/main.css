@@ -325,7 +325,7 @@ hr {
   font-size: 0.8rem;
 }
 
-.menu-content a {  /* in 200523 by namu */
+.menu-content .content {  /* in 200523 by namu */
   color: #888;
   font-size: 1rem;
   font-weight: 900;
@@ -334,8 +334,9 @@ hr {
   padding-right: 10px;
 }
 
-.menu-content a:hover {  /* in 200523 by namu */
+.menu-content .content:hover {  /* in 200523 by namu */
   color: #343434;
+  cursor: pointer;
 }
 
 .social-icons {

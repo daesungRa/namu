@@ -2,18 +2,24 @@
   <nav class="menu-content">
     <ul class="menu-dropdown">
       <li>
-        <a href="#" id="menu-dropdown-bars">
+        <div class="content" id="menu-dropdown-bars">
           <i class="fa fa-fw fa-bars"></i>
-        </a>
+        </div>
         <ul class="menu-categories">
           {% for item in site.data.settings.dropdown_menu %}
-          <li><a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}">{{ item.name }}</a></li>
+          <li>
+            <a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}" class="content">
+              {{ item.name }}
+            </a>
+          </li>
           {% endfor %}
         </ul>
       </li>
     </ul>
     {% for item in site.data.settings.menu %}
-      <a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}">{{ item.name }}</a>
+      <a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}" class="content">
+        {{ item.name }}
+      </a>
     {% endfor %}
   </nav>
   <nav class="social-icons">
