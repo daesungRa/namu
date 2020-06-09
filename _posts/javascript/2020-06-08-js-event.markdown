@@ -2,8 +2,8 @@
 title:  preventDefault 와 stopPropagation
 date:   2020-06-08 21:55:00 +0900
 author: namu
-categories: js
-permalink: "/js/:year/:month/:day/:title"
+categories: javascript
+permalink: "/javascript/:year/:month/:day/:title"
 image: spools.jpg
 image-view: true
 ---
