@@ -23,14 +23,16 @@ image-view: true
 
 ```html
 <div>
-    <a href="#" onclick="myFunction()">클릭!</a>
+    <a href="#" onclick="myFunction()">
+        클릭!
+    </a>
 </div>
 
 <script>
-function myFunction(event) {
-    event.preventDefault();
-    console.log('클릭됨!');
-};
+    function myFunction(event) {
+        event.preventDefault();
+        console.log('클릭됨!');
+    };
 </script>
 ```
 
@@ -52,25 +54,27 @@ html DOM 에서는 여러 엘리먼트들이 중첩되며 부모 자식 관계�
 <div onclick="divAction();">
     <ul onclick="ulAction();">
         <li onclick="liAction();">
-            <a href="#" onclick="myFunction()">클릭!</a>
+            <a href="#" onclick="myFunction()">
+                클릭!
+            </a>
         </li>
     </ul>
 </div>
 
 <script>
-function divAction(event) {
-    console.log('div 클릭됨!');
-};
-function ulAction(event) {
-    console.log('ul 클릭됨!');
-};
-function liAction(event) {
-    console.log('li 클릭됨!');
-};
-function myFunction(event) {
-    event.stopPropagation();
-    console.log('a 클릭됨!');
-}
+    function divAction(event) {
+        console.log('div 클릭됨!');
+    };
+    function ulAction(event) {
+        console.log('ul 클릭됨!');
+    };
+    function liAction(event) {
+        console.log('li 클릭됨!');
+    };
+    function myFunction(event) {
+        event.stopPropagation();
+        console.log('a 클릭됨!');
+    }
 </script>
 ```
 
