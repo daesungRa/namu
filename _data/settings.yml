@@ -15,6 +15,7 @@ dropdown_menu:
 - {name: '파이썬', path: 'python', url: ''}
 - {name: '도커', path: 'docker', url: ''}
 - {name: '나무야 나무야', path: 'daily', url: ''}
+- {name: '데미안에게', path: 'to-demian', url: ''}
 
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer
 social:
