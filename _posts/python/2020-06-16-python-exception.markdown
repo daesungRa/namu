@@ -50,15 +50,15 @@ if __name__ == '__main__':
 위 코드를 실행하면 다음과 같은 결과가 출력된다.
 
 ```text
-1  ===== start =====
-2  divide 10 by 10!!!
-3      >> 1
-4  divide 10 by 0!!!
-5  Traceback (most recent call last):
-6  File "<input>", line 1, in <module>
-7    File "<input>", line 3, in divide_by_zero
-8  ZeroDivisionError: division by zero
-9  ===== end =====
+===== start =====
+divide 10 by 10!!!
+    >> 1
+divide 10 by 0!!!
+Traceback (most recent call last):
+File "<input>", line 1, in <module>
+  File "<input>", line 3, in divide_by_zero
+ZeroDivisionError: division by zero
+===== end =====
 ```
 
 보면 알겠지만 10을 10으로 나눈 첫 시도에는 문제 없이 1이 출력되었는데, 0으로 나눠지는 두 번째 시도에서는
@@ -93,12 +93,12 @@ if __name__ == '__main__':
 출력은 다음과 같다.
 
 ```text
-1  ===== start =====
-2  divide 10 by 10!!!
-3      >> 1
-4  divide 10 by 0!!!
-5  [division by zero] Oops! "0" for div was no valid number. Try again...
-6  ===== end =====
+===== start =====
+divide 10 by 10!!!
+    >> 1
+divide 10 by 0!!!
+[division by zero] Oops! "0" for div was no valid number. Try again...
+===== end =====
 ```
 
 이제 `div=0` 가 들어와도 예외상황에 발목잡히지 않고 이후 코드가 진행된다!
@@ -132,10 +132,10 @@ except NameError:
 ```
 
 ```text
-1 An exception flew by!
-2 Traceback (most recent call last):
-3   File "<input>", line 2, in <module>
-4 NameError: HiThere
+An exception flew by!
+Traceback (most recent call last):
+  File "<input>", line 2, in <module>
+NameError: HiThere
 ```
 
 이러한 출력이 나타나면서 예외가 처리되고 다음 로직이 실행된다.
@@ -191,17 +191,17 @@ if __name__ == '__main__':
 ```
 
 ```text
-1 ===== start =====
-2 [START] divide 10 by 10!!!
-3 [NORMAL] result is 1.
-4 [FIN] finising division process.
-5 [START] divide 10 by 10!!!
-6 [ERROR][unsupported operand type(s) for /: 'int' and 'str'] Please insert a number. not a string.
-7 [FIN] finising division process.
-8 [START] divide 10 by 0!!!
-9 [ERROR][division by zero] Oops! "0" for div was no valid number. Try again...
-10 [FIN] finising division process.
-11 ===== end =====
+===== start =====
+[START] divide 10 by 10!!!
+[NORMAL] result is 1.
+[FIN] finising division process.
+[START] divide 10 by 10!!!
+[ERROR][unsupported operand type(s) for /: 'int' and 'str'] Please insert a number. not a string.
+[FIN] finising division process.
+[START] divide 10 by 0!!!
+[ERROR][division by zero] Oops! "0" for div was no valid number. Try again...
+[FIN] finising division process.
+===== end =====
 ```
 
 중간에 `div` 로 문자열이 입력된 경우를 추가했다.
