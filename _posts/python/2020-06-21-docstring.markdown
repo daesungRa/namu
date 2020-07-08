@@ -13,8 +13,7 @@ image-view: true
 **개발자는 협업한다.**
 개인 토이 프로젝트를 제외하면 거의 필연적으로 다른 개발자들과 협업한다.
 프로그래밍 언어로 컴퓨터와 소통하는 것 이상으로 타인과의 소통이 중요한 이유이다.
-이 소통을 위해 매우 유용한 기능이 있는데, 그것은 바로 파이썬
-**[docstring](https://wikidocs.net/16050)** 이다.
+이 소통을 위해 매우 유용한 기능이 있는데, 바로 파이썬 **[docstring](https://wikidocs.net/16050)** 이다.
 
 ### Docstring, 문서화
 
@@ -80,4 +79,67 @@ update(...)
 ```docstring```의 내용은 세 개의 홑따옴표 혹은 쌍따옴표로 감싸진다.
 ```One-Line Docstring```의 경우 여는 따옴표와 닫는 따옴표가 같은 라인에 있어야 하며,
 standard convention 으로 따옴표는 ```triple-double quotes```를 사용해야 한다.
+다음을 참고하자.
 
+```python
+class IntegerMaker:
+    """
+    This is integer maker class
+    """
+    def __init__(self):
+        pass
+
+    def make_integer_from_string(self, my_age: str) -> int:
+        """
+        Return 0 or positive integer with string type argument.
+        If the argument is not of type string, it returns integer type value of -1.
+        If the argument is a negative integer, it returns integer type value of -2.
+
+        Args:
+            my_age (str): my age in string type
+
+        Returns:
+            int: The return value converted to integer.
+        """
+        if isinstance(my_age, str):
+            try:
+                result = int(my_age)
+            except ValueError as ve:
+                print(ve)
+            else:
+                if result >= 0:
+                    return result
+                else:
+                    return -2
+        else:
+            return -1
+
+
+if __name__ == '__main__':
+    int_maker = IntegerMaker()
+    help(int_maker.make_integer_from_string)
+    print(int_maker.make_integer_from_string(my_age='100'))
+    print(int_maker.make_integer_from_string(my_age='0'))
+    print(int_maker.make_integer_from_string(my_age=99))
+    print(int_maker.make_integer_from_string(my_age='-1'))
+```
+
+```text
+Help on method make_integer_from_string in module __main__:
+
+make_integer_from_string(my_age:str) -> int method of __main__.IntegerMaker instance
+    Return 0 or positive integer with string type argument.
+    If the argument is not of type string, it returns integer type value of -1.
+    If the argument is a negative integer, it returns integer type value of -2.
+    
+    Args:
+        my_age (str): my age in string type
+    
+    Returns:
+        int: The return value converted to integer.
+
+100
+0
+-1
+-2
+```
