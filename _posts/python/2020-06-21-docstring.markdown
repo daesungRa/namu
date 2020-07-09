@@ -17,7 +17,7 @@ image-view: true
 
 ### Docstring, 문서화
 
-`docstring` 은 ```commenting```주석이 아니다. **'문서화'** 이다. 주석과 문서화의 차이점은 굳이 따지자면
+`docstring` 은 주석(commenting)이 아니다. **'문서화'** 이다. 주석과 문서화의 차이점은 굳이 따지자면
 쪽지와 공식 사용설명서 간의 차이 정도로 볼수 있을 것 같다.
 
 전자는 코드에 대해 설명하다 보니 코드 자체의 가독성이 떨어진다는 반증이 되기도 하며,
@@ -124,6 +124,8 @@ if __name__ == '__main__':
     print(int_maker.make_integer_from_string(my_age='-1'))
 ```
 
+실행 결과는 다음과 같다.
+
 ```text
 Help on method make_integer_from_string in module __main__:
 
@@ -143,3 +145,6 @@ make_integer_from_string(my_age:str) -> int method of __main__.IntegerMaker inst
 -1
 -2
 ```
+
+순서대로 ```IntegerMaker.make_integer_from_string```의 ```docstring```을 출력하였고,<br/>
+이어서 정의된 내용에 맞는 input/output 을 확인할 수 있다. 끝~!
