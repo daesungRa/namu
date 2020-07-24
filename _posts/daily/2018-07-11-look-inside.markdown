@@ -1,5 +1,5 @@
 ---
-title:  "돌아보기"
+title:  "나를 돌아보기"
 date:   2018-07-11 01:53:35 +0900
 author: namu
 categories: daily
