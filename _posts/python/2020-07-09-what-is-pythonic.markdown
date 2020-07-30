@@ -9,6 +9,23 @@ image-view: true
 
 ---
 
+
+---
+
+[목차]
+
+1. [들어가며](#들어가며)
+2. [파이썬의 철학, PEP8](#파이썬의-철학)
+3. [파이썬스러운 코드의 장점](#파이썬스러운-코드의-장점)
+4. [인덱스와 슬라이스](#인덱스와-슬라이스)
+5. [접근제한자](#접근제한자)
+6. [프로퍼티](#프로퍼티)
+7. [리펙토링의 냄새가 나는 경우](#리펙토링의-냄새가-나는-경우)
+
+---
+
+<br>
+
 ### 들어가며
 
 파이썬으로 개발하다 보면 코드를 **파이썬스럽게** 작성해야 한다는 말을 심심치 않게 듣는다.
@@ -52,7 +69,7 @@ Namespaces are one honking great idea -- let's do more of those!
 
 ### PEP8
 
-파이썬 철학을 담고 있는 가장 표준적인 Convention은 [**```PEP8```**](https://www.python.org/dev/peps/pep-0008/) 이다.
+파이썬 철학을 담고 있는 표준은 [**```PEP8```**](https://www.python.org/dev/peps/pep-0008/)이다.
 여기서 다 살펴볼 수는 없으므로, 몇 가지만 짚어보자.
 
 - [Tabs or Spaces?](https://www.python.org/dev/peps/pep-0008/#id18)
@@ -91,7 +108,9 @@ Namespaces are one honking great idea -- let's do more of those!
 [철학](#파이썬의-철학)이 반영되는 것으로, 보통 더 나은 성능을 낸다. 또한 코드도 더 작고 이해하기 쉽다.
 무엇보다 전체 개발팀이 동일한 패턴과 구조에 익숙해지면서 실수를 줄이고 문제의 본질에 보다 집중할 수 있다.
 
-### 파이썬스럽다, 인덱스와 슬라이스
+그럼 이제 파이썬스러운 코드의 몇 가지 특징들을 살펴보자.
+
+### 인덱스와 슬라이스
 
 1. list 의 마지막 요소 가져오기
     - C에서는 배열 길이에서 1을 뺀 위치의 요소를 가져오지만, 파이썬에서는 음수 인덱스를 활용한다.
@@ -126,3 +145,153 @@ nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 interval = slice(2, 8, 2)
 print(nums[interval])  # [3, 5, 7]
 ```
+
+### 접근제한자
+
+다른 언어들은 ```public```, ```private```, ```protected``` 등의 접근제한자를 가지지만,
+파이썬의 모든 객체 프로퍼티와 함수의 속성은 ```public```이다. 다만 밑줄```underscore```로 시작하는 속성은 ```private```을
+의미하기는 하지만, 문법상 **강제되지는 않는다.**
+
+```python
+class Score:
+    def __init__(self, kor: int, eng: int, math: int):
+        self.kor = kor
+        self.eng = eng
+        self.math = math
+        self._avg = round((kor + eng + math) / 3, 2)
+```
+
+학생 점수 평균을 구하는 ```Score``` 클래스에서 _avg 속성은 ```private```으로 표현되지만, 외부에서 직접 접근은 가능하다.
+이는 기본적으로 모든 객체의 속성과 함수는 ```public``` 이라는 파이썬의 특성을 반영한 결과이다.
+따라서 개발자는 밑줄```underscore```을 통해 해당 속성이 ```private```으로 활용되고 있음을 인지해야 한다.
+
+
+- 간혹 밑줄 두개로 private 속성을 정의할 수 있다고 착각할 수 있는데, 이는 클래스 확장시 각 클래스 고유의 속성이나 메서드를
+특정하기 위한 [name mangling](https://www.geeksforgeeks.org/name-mangling-in-python/)의 방식이다.
+
+### 프로퍼티
+
+파이썬 객체의 속성```attribute```에 직접적인 접근을 차단하면서 부가적인 로직과 함께 간접접근하도록 하려면
+[**프로퍼티**```@property```](https://www.programiz.com/python-programming/property)를 사용한다.
+(```@property```는 [python decorator]() 이다.)
+
+```python
+import re
+
+
+EMAIL_FORMAT = re.compile(r"[^@]+@[^@]+[^@]+")
+
+
+def _is_valid_email(potentially_valid_email: str):
+    return re.match(EMAIL_FORMAT, potentially_valid_email) is not None
+
+
+class User:
+    def __init__(self, username):
+        self.username = username
+        self._email = None
+
+    @property
+    def email(self):
+        return self._email
+
+    @email.setter
+    def email(self, new_email):
+        if not _is_valid_email(potentially_valid_email=new_email):
+            raise ValueError(f'[INVALID] "{new_email}" is not valid.')
+        self._email = new_email
+
+
+if __name__ == '__main__':
+    user1 = User(username='first-user')
+    print(f'[USERNAME] {user1.username} / [EMAIL] {user1.email}')  # _email is None
+    user1.email = 'fir@st.user'
+    print(f'[USERNAME] {user1.username} / [EMAIL] {user1.email}')  # Set to _email
+```
+
+밑줄을 사용함으로써 이메일 값은 객체의 ```private```타입 속성으로 정의되었다.
+
+자바에서는 이러한 속성에 ```getter and setter```메서드를 직접 생성하여 접근에 제한을 두지만,
+파이썬에서는 프로퍼티 데코레이터를 활용하여 보다 간결하고 명시적으로 동일한 작업을 진행할 수 있다.
+출력은 다음과 같다.
+
+```text
+[USERNAME] first-user / [EMAIL] 
+[USERNAME] first-user / [EMAIL] fir@st.user
+```
+
+최초 ```User```객체를 생성하면서 username 이 세팅되었지만, email 은 세팅되지 않았으므로 username 만 출력된다.
+다음 라인에서 이메일을 세팅하면서 ```email setter```메서드가 호출되어 _email 속성에 값이 들어갔다.
+
+프로퍼티 데코레이터를 활용하면 ```user1.email``` 하나만으로 ```getter and setter``` 모두 동작한다니 신기하지 않은가?
+이것이 간결성과 명시성을 추구하는 파이썬의 특징이다.
+
+또한 프로퍼티를 사용하는 이유는 부가적인 로직 때문이기도 하다.
+위 예제에서는 이메일 세팅 시 그것이 유효한 형식인지 검증하는 로직이 포함된다.
+
+- ```getter and setter```를 사용하는 일반적인 이유는 객체의 메서드가 오직 하나의 동작만을 수행해야 한다는
+[명령-쿼리 분리```command and query separation - CC08```](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation)
+원칙에 있다.
+파이썬 프로퍼티 또한 이러한 원칙의 연장선이다.
+
+### 리펙토링의 냄새가 나는 경우
+
+파이썬 코드에서 흔히 발생하는 잠재적인 문제들을 피할 수 있는 **관용적 작성방식**이 있다.
+이러한 방어코드는 안티 패턴을 정당화하는 시나리오가 사실상 없다고 말할 수 있으므로,
+코드리뷰 중 해당 문제를 발견한다면 제안된 방식으로 리팩토링하는 것이 좋다.
+
+#### a. 변경 가능한(mutable) 파라미터의 기본 값
+
+```python
+def wrong_user_display(user_metadata: dict = {'name': 'John', 'age': 30}):
+    name = user_metadata.pop('name')
+    age = user_metadata.pop('age')
+    return f'{name} ({age})'
+```
+
+여기서는 기본인자를 뮤터블한 객체로 활용하면서도 그것 자체를 함수 내부적으로 수정해 버리는(pop 사용)
+문제가 발생한다. 이는 잠재적인 에러의 가능성을 내포한다.
+
+```python
+def wrong_user_display(user_metadata: dict = {'name': 'John', 'age': 30}):
+    name = user_metadata.pop('name')
+    age = user_metadata.pop('age')
+    return f'{name} ({age})'
+
+if __name__ == '__main__':
+    print(wrong_user_display())
+    print(wrong_user_display({'name': 'Jane', 'age': 25}))
+    print(wrong_user_display())
+```
+
+```text
+John (30)
+Jane (25)
+Traceback (most...):
+    File ...
+    File ... in wrong_user_display
+        name = user_metadata.pop('name')
+KeyError: 'name'
+```
+
+한 번의 스크립트 실행 동안 ```wrong_user_display``` 가 여러 번 호출된다면
+그것은 최초 하나의 객체만을 가리킨다(같은 객체의 주소가 메모리에 계속 남아 있음을 의미).
+
+따라서 최초 호출 이후 별도 파라미터 없이 기본인자를 다시 활용하는 경우
+이전에 user_metadata 로부터 pop 을 통해 name 키를 지워버린 상태이기 때문에 ```KeyError``` 로 이어진다.
+
+이러한 문제를 리팩토링하는 방법은 기본인자로 ```None```을 사용하는 것이다.
+그리고 ```None```일 시 함수 내부에서 기본값을 할당하도록 하면 해결된다.
+
+```python
+def wrong_user_display(user_metadata: dict = None):
+    if user_metadata is None:
+        user_metadata = {'name': 'John', 'age': 30}
+    name = user_metadata.pop('name')
+    age = user_metadata.pop('age')
+    return f'{name} ({age})'
+```
+
+파이썬에서 함수 내부는 독립적인 스코프이므로(생명주기 상), 매 호출 시마다 기본값이 손실 없이 새롭게 할당된다.
+
+#### b. 내장(built-in) 타입 확장
