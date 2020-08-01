@@ -37,30 +37,9 @@ image-view: true
 아무래도 파이썬을 사용한다면 파이썬스럽게 코드를 짜는 것이 여러 가지 면에서 효과적이지 않을까?<br>
 그것을 알아보기 위해 다음을 실행해보자.
 
-```python
-import this
-```
-```text
-Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-Complex is better than complicated.
-Flat is better than nested.
-Sparse is better than dense.
-Readability counts.
-Special cases aren't special enough to break the rules.
-Although practicality beats purity.
-Errors should never pass silently.
-Unless explicitly silenced.
-In the face of ambiguity, refuse the temptation to guess.
-There should be one-- and preferably only one --obvious way to do it.
-Although that way may not be obvious at first unless you're Dutch.
-Now is better than never.
-Although never is often better than *right* now.
-If the implementation is hard to explain, it's a bad idea.
-If the implementation is easy to explain, it may be a good idea.
-Namespaces are one honking great idea -- let's do more of those!
-```
+{% gist daesungRa/810b1dc18e80f6baeb7e77358a0778a3 %}
+{% gist daesungRa/eb6e653a107e909d9a716ae40e200cff %}
+
 이것은 python main contributor 인 팀 피터스([Tim peters](https://en.wikipedia.org/wiki/Tim_Peters_(software_engineer)))가
 작성한 파이썬 철학이다. ([The zen of python by Tim peters](https://www.python.org/dev/peps/pep-0020/#id2))
 
@@ -88,12 +67,7 @@ Namespaces are one honking great idea -- let's do more of those!
     - [PEP 257](https://www.python.org/dev/peps/pep-0257)는 좋은 ```docstring``` 규칙을 설명한다. 특히, 여러 줄로 이루어진
     ```docstring```의 종료지점으로 쓰이는 ```double-triple quotation```이 개별 라인으로 존재해야 한다는 사실을 유념할 것.
     
-    ```text
-    """Return a foobang
-    
-    Optional plotz says to frobnicate the bizbaz first.
-    """
-    ```
+    {% gist daesungRa/24b53f0b0100f86b6da59aebf964da3a %}
 
 - [Package and Module Names](https://www.python.org/dev/peps/pep-0008/#id40)
     - 모듈은 짧은 ```all-lowercase``` 이름을 갖는다.
@@ -114,37 +88,17 @@ Namespaces are one honking great idea -- let's do more of those!
 
 1. list 의 마지막 요소 가져오기
     - C에서는 배열 길이에서 1을 뺀 위치의 요소를 가져오지만, 파이썬에서는 음수 인덱스를 활용한다.
-```python
-nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-print(nums[-1])  # 10
-print(nums[-3])  # 8
-print(nums[-5])  # 6
-```
+    {% gist daesungRa/c2e994a381df6f585b7ee7d07d88cece %}
 2. slice 활용하기 (시작:끝:간격)
     - 2번 인덱스(3번째 인덱스)로부터 8번 인덱스(9번째 인덱스) 이전까지 slicing 은 다음과 같이 한다.
     (두번재 파라미터는 **이전까지**인 점 주의)
-```python
-nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-print(nums[2:8])  # [3, 4, 5, 6, 7, 8]
-```
+    {% gist daesungRa/4981cb0c5158ba41a5ca4fde5e918d38 %}
     - 2번 인덱스(3번째 인덱스)로부터 8번 인덱스(9번째 인덱스) 이전까지 2칸 간격으로 slicing 은 다음과 같이 한다.
-```python
-nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-print(nums[2:8:2])  # [3, 5, 7]
-```
+    {% gist daesungRa/bead75ec1b8da55ff1eaf0d87e8225e6 %}
     - 각 파라미터는 생략 가능하다
-```python
-nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-print(nums[6:])  # [7, 8, 9, 10]
-print(nums[:3])  # [1, 2, 3]
-print(nums[::2])  # [1, 3, 5, 7, 9]
-```
+    {% gist daesungRa/c189d0331afcdea26e80b43728b46399 %}
     - slice 는 파이썬 객체이다. 그러므로, 별도로 빌드하여 전달할 수도 있다.
-```python
-nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-interval = slice(2, 8, 2)
-print(nums[interval])  # [3, 5, 7]
-```
+    {% gist daesungRa/7597b01061e3cfdefd3983e69c7a42b2 %}
 
 ### 접근제한자
 
@@ -152,14 +106,7 @@ print(nums[interval])  # [3, 5, 7]
 파이썬의 모든 객체 프로퍼티와 함수의 속성은 ```public```이다. 다만 밑줄```underscore```로 시작하는 속성은 ```private```을
 의미하기는 하지만, 문법상 **강제되지는 않는다.**
 
-```python
-class Score:
-    def __init__(self, kor: int, eng: int, math: int):
-        self.kor = kor
-        self.eng = eng
-        self.math = math
-        self._avg = round((kor + eng + math) / 3, 2)
-```
+{% gist daesungRa/df4f6ba7eb45738fb2910b7c919a1636 %}
 
 학생 점수 평균을 구하는 ```Score``` 클래스에서 _avg 속성은 ```private```으로 표현되지만, 외부에서 직접 접근은 가능하다.
 이는 기본적으로 모든 객체의 속성과 함수는 ```public``` 이라는 파이썬의 특성을 반영한 결과이다.
@@ -175,39 +122,7 @@ class Score:
 [**프로퍼티**```@property```](https://www.programiz.com/python-programming/property)를 사용한다.
 (```@property```는 [python decorator]() 이다.)
 
-```python
-import re
-
-
-EMAIL_FORMAT = re.compile(r"[^@]+@[^@]+[^@]+")
-
-
-def _is_valid_email(potentially_valid_email: str):
-    return re.match(EMAIL_FORMAT, potentially_valid_email) is not None
-
-
-class User:
-    def __init__(self, username):
-        self.username = username
-        self._email = None
-
-    @property
-    def email(self):
-        return self._email
-
-    @email.setter
-    def email(self, new_email):
-        if not _is_valid_email(potentially_valid_email=new_email):
-            raise ValueError(f'[INVALID] "{new_email}" is not valid.')
-        self._email = new_email
-
-
-if __name__ == '__main__':
-    user1 = User(username='first-user')
-    print(f'[USERNAME] {user1.username} / [EMAIL] {user1.email}')  # _email is None
-    user1.email = 'fir@st.user'
-    print(f'[USERNAME] {user1.username} / [EMAIL] {user1.email}')  # Set to _email
-```
+{% gist daesungRa/01707acb9d201099335424374b939904 %}
 
 밑줄을 사용함으로써 이메일 값은 객체의 ```private```타입 속성으로 정의되었다.
 
@@ -215,10 +130,7 @@ if __name__ == '__main__':
 파이썬에서는 프로퍼티 데코레이터를 활용하여 보다 간결하고 명시적으로 동일한 작업을 진행할 수 있다.
 출력은 다음과 같다.
 
-```text
-[USERNAME] first-user / [EMAIL] 
-[USERNAME] first-user / [EMAIL] fir@st.user
-```
+{% gist daesungRa/3ea1fe937ca899b4720d38bd394f0d39 %}
 
 최초 ```User```객체를 생성하면서 username 이 세팅되었지만, email 은 세팅되지 않았으므로 username 만 출력된다.
 다음 라인에서 이메일을 세팅하면서 ```email setter```메서드가 호출되어 _email 속성에 값이 들어갔다.
@@ -242,37 +154,13 @@ if __name__ == '__main__':
 
 #### a. 변경 가능한(mutable) 파라미터의 기본 값
 
-```python
-def wrong_user_display(user_metadata: dict = {'name': 'John', 'age': 30}):
-    name = user_metadata.pop('name')
-    age = user_metadata.pop('age')
-    return f'{name} ({age})'
-```
+{% gist daesungRa/ebe4a1b72b016d69440f0642951d71c2 %}
 
 여기서는 기본인자를 뮤터블한 객체로 활용하면서도 그것 자체를 함수 내부적으로 수정해 버리는(pop 사용)
 문제가 발생한다. 이는 잠재적인 에러의 가능성을 내포한다.
 
-```python
-def wrong_user_display(user_metadata: dict = {'name': 'John', 'age': 30}):
-    name = user_metadata.pop('name')
-    age = user_metadata.pop('age')
-    return f'{name} ({age})'
-
-if __name__ == '__main__':
-    print(wrong_user_display())
-    print(wrong_user_display({'name': 'Jane', 'age': 25}))
-    print(wrong_user_display())
-```
-
-```text
-John (30)
-Jane (25)
-Traceback (most...):
-    File ...
-    File ... in wrong_user_display
-        name = user_metadata.pop('name')
-KeyError: 'name'
-```
+{% gist daesungRa/ddf3606f43d0e7f84e4f4c17b0bfcebf %}
+{% gist daesungRa/06bfbb03230a9baabefd6bc4bde58b81 %}
 
 한 번의 스크립트 실행 동안 ```wrong_user_display``` 가 여러 번 호출된다면
 그것은 최초 하나의 객체만을 가리킨다(같은 객체의 주소가 메모리에 계속 남아 있음을 의미).
@@ -283,14 +171,7 @@ KeyError: 'name'
 이러한 문제를 리팩토링하는 방법은 기본인자로 ```None```을 사용하는 것이다.
 그리고 ```None```일 시 함수 내부에서 기본값을 할당하도록 하면 해결된다.
 
-```python
-def wrong_user_display(user_metadata: dict = None):
-    if user_metadata is None:
-        user_metadata = {'name': 'John', 'age': 30}
-    name = user_metadata.pop('name')
-    age = user_metadata.pop('age')
-    return f'{name} ({age})'
-```
+{% gist daesungRa/d59cddf1200e1c013e3058542d88c349 %}
 
 파이썬에서 함수 내부는 독립적인 스코프이므로(생명주기 상), 매 호출 시마다 기본값이 손실 없이 새롭게 할당된다.
 

@@ -447,6 +447,10 @@ th, td {
   text-align: left;
 }
 
+.gist .gist-meta { /* 200801 */
+	display: none !important;
+}
+
 /*
   Social media icons
 */
