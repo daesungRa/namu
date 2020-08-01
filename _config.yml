@@ -35,6 +35,7 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-gist
 
 defaults:
   -
