@@ -90,7 +90,7 @@ PLATFORMS
 DEPENDENCIES
   jekyll (~> 3.7.4)
   jekyll-feed (~> 0.9)
-  jekyll-gist
+  jekyll-gist (~> 1.5.0)
   jekyll-paginate
   jekyll-seo-tag
   jekyll-sitemap

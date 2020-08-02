@@ -24,10 +24,10 @@ end
 install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
   gem "tzinfo", "~> 1.2"
   gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-  gem 'jekyll-paginate'
-  gem 'jekyll-sitemap'
-  gem 'jekyll-seo-tag'
-  gem 'jekyll-gist'
+  gem "jekyll-paginate"
+  gem "jekyll-sitemap"
+  gem "jekyll-seo-tag"
+  gem "jekyll-gist", "~> 1.5.0"
 end
 
 # Performance-booster for watching directories on Windows
