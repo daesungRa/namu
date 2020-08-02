@@ -86,7 +86,7 @@ $ bundle exec jekyll serve
 
 빌드 잘 된다!
 
-![my_blog01](/assets/img/my_blog01.png)
+![my_blog01](https://daesungra.github.io/namu/assets/img/my_blog01.png)
 
 ### (별첨) gist 추가해보기
 
@@ -95,7 +95,7 @@ gist 는 코드블럭 등을 github 아카이브에 저장해두고 링크를 �
 
 [gist.github.com](https://gist.github.com/) 에 접속하고 github 계정으로 로그인하면 바로 코드블럭을 만들 수 있다.
 
-![gist_smpl01](/assets/img/gist_smpl01.png)
+![gist_smpl01](https://daesungra.github.io/namu/assets/img/gist_smpl01.png)
 
 secret 혹은 public 방식으로 gist 를 create 한 뒤에 생성된 gist 키값을 post 의 원하는 위치에 다음과 같이 추가해주면 된다.
 
@@ -103,6 +103,6 @@ secret 혹은 public 방식으로 gist 를 create 한 뒤에 생성된 gist 키�
 
 그럼 gist.github 사이트의 링크로부터 코드블럭을 불러와 삽입해준다!
 
-![gist_smpl02](/assets/img/gist_smpl02.png)
+![gist_smpl02](https://daesungra.github.io/namu/assets/img/gist_smpl02.png)
 
 끝~
