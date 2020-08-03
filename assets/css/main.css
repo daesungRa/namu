@@ -317,13 +317,17 @@ hr {
   top: 30px;
   left: 0;
   display: none;
-  width: 93px;
+  width: 107px;
   font-size: 14pt;
   text-align: left;
-  padding-left: 14px;
+  padding-left: 0;
   list-style-type: none;
   background-color: #fff;
   border: 1px solid #bfbfbf;
+}
+
+.menu-dropdown .menu-categories li {
+  padding-left: 14px;
 }
 
 .menu-dropdown .menu-categories a {

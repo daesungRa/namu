@@ -7,11 +7,19 @@
         </div>
         <ul class="menu-categories">
           {% for item in site.data.settings.dropdown_menu %}
-          <li>
-            <a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}" class="content">
-              {{ item.name }}
-            </a>
-          </li>
+            {% if item.path == 'daily' %}
+              <li style="border-top: 1px solid #bfbfbf;">
+                <a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}" class="content">
+                  {{ item.name }}
+                </a>
+              </li>
+            {% else %}
+              <li>
+                <a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}" class="content">
+                  {{ item.name }}
+                </a>
+              </li>
+            {% endif %}
           {% endfor %}
         </ul>
       </li>
