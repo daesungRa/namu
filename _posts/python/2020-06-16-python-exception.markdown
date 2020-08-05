@@ -4,8 +4,10 @@ date:   2020-06-16 21:12:00 +0900
 author: namu
 categories: python
 permalink: "/python/:year/:month/:day/:title"
-image: beach.jpg
+image: https://cdn.pixabay.com/photo/2020/06/05/22/21/beach-5264739_1280.jpg
 image-view: true
+image-author: njbateman526
+image-source: https://pixabay.com/ko/users/njbateman526-16908298/
 ---
 
 ### 들어가며

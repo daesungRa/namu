@@ -6,6 +6,8 @@ categories: python
 permalink: "/python/:year/:month/:day/:title"
 image: cards.jpg
 image-view: true
+image-author: none
+image-source: ''
 ---
 
 ### 들어가며

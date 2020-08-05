@@ -4,8 +4,10 @@ date:   2019-07-07 11:50:00 +0900
 author: namu
 categories: to-demian
 permalink: "/to-demian/:year/:month/:day/:title"
-image: demian.jpg
+image: https://i.pinimg.com/originals/7a/7e/e0/7a7ee0c9e5553e438fe2146aa1d0546a.jpg
 image-view: true
+image-author: autumnemond
+image-source: https://www.pinterest.co.kr/pin/376472850093479504/
 ---
 
 > 새는 알에서 나오기 위해 투쟁한다.<br/>

@@ -4,7 +4,7 @@ date:   2020-08-05 20:07:30 +0900
 author: namu
 categories: daily
 permalink: "/daily/:year/:month/:day/:title"
-image: game_addiction.jpg
+image: https://cdn.pixabay.com/photo/2019/04/15/11/42/fortnite-4129124_1280.jpg
 image-view: true
 image-author: 11333328
 image-source: https://pixabay.com/ko/users/11333328-11333328/

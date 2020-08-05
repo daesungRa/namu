@@ -4,8 +4,10 @@ date:   2018-07-11 01:53:35 +0900
 author: namu
 categories: daily
 permalink: "/daily/:year/:month/:day/:title"
-image: forest_deep_01.jpg
+image: https://cdn.pixabay.com/photo/2014/09/07/22/17/forest-438432_1280.jpg
 image-view: true
+image-author: SplitShire
+image-source: https://pixabay.com/ko/users/SplitShire-364019/
 ---
 
 OO 때문에 그제 어제 꽤 많이 힘들었는데,

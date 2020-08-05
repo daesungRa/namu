@@ -6,7 +6,8 @@ categories: python
 permalink: "/python/:year/:month/:day/:title"
 image: pythonic_x.jpg
 image-view: true
-
+image-author: none
+image-source: ''
 ---
 
 

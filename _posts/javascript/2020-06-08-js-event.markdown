@@ -6,6 +6,8 @@ categories: javascript
 permalink: "/javascript/:year/:month/:day/:title"
 image: spools.jpg
 image-view: true
+image-author: none
+image-source: ''
 ---
 
 ## 들어가며

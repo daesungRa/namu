@@ -4,8 +4,10 @@ date:   2020-07-30 22:23:00 +0900
 author: namu
 categories: etc
 permalink: "/etc/:year/:month/:day/:title"
-image: chrome_browser.png
+image: https://cdn.pixabay.com/photo/2016/09/13/11/04/browser-1666982_1280.png
 image-view: true
+image-author: 200degrees
+image-source: https://pixabay.com/ko/users/200degrees-2051452/
 ---
 
 

@@ -6,6 +6,8 @@ categories: daily
 permalink: "/daily/:year/:month/:day/:title"
 image: mountains.jpg
 image-view: true
+image-author: none
+image-source: ''
 ---
 
 시작이란 말은 언제나 가슴 떨리고 아름답다.

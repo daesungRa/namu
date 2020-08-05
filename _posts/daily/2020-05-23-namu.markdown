@@ -4,8 +4,10 @@ date:   2020-05-23 06:30:00 +0900
 author: namu / 신영복 선생님의 '나무야 나무야' 中
 categories: daily
 permalink: "/daily/:year/:month/:day/:title"
-image: sonamu01.jpg
+image: https://cdn.pixabay.com/photo/2017/12/14/02/23/lake-3018125_1280.jpg
 image-view: true
+image-author: Quangpraha
+image-source: https://pixabay.com/ko/users/Quangpraha-7201644/
 ---
 
 > "처음으로 쇠가 만들어졌을 때 세상의 모든 나무들이 두려움에 떨었다.<br/>
