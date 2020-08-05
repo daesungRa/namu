@@ -1,5 +1,5 @@
 ---
-title: what does pythonic mean??
+title: (PYTHONIC) 파이썬스러운 코드의 의미
 date: 2020-07-09 21:30:00 +0900
 author: namu
 categories: python

@@ -1,5 +1,5 @@
 ---
-title:  python exception
+title:  파이썬으로 예외처리하기
 date:   2020-06-16 21:12:00 +0900
 author: namu
 categories: python
