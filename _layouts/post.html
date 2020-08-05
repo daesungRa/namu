@@ -15,7 +15,7 @@ layout: default
   {% if page.image contains '://' %}
   {% assign img_src = page.image %}
   {% else %}
-  {% assign img_src = site.github.url | append: '/assets/img/' | append: page.image %}
+  {% assign img_src = site.github.url | append: '/assets/post-img/' | append: page.image %}
   {% endif %}
   <div class="post-image-content">
     {% if page.title == '소나무' %}

@@ -28,7 +28,7 @@ layout: default
         {% if post.image contains '://' %}
         {% assign img_src = post.image %}
         {% else %}
-        {% assign img_src = site.github.url | append: '/assets/img/' | append: post.image %}
+        {% assign img_src = site.github.url | append: '/assets/post-img/' | append: post.image %}
         {% endif %}
         <div class="thumbnail-container">
           <a href="{{ site.github.url }}{{ post.url }}">
