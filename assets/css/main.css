@@ -222,6 +222,20 @@ hr {
   text-decoration: none;
 }
 
+.post-image-content {
+  margin: 50px 0;
+}
+
+.post-image-content img {
+  margin: 0 !important;
+}
+
+.post-image-content .post-image-source {
+  float: right;
+  color: #9c9c9c;
+}
+
+
 /*
   Pagination
 */

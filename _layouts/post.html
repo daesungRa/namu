@@ -12,13 +12,19 @@ layout: default
 </h2>
 
 {% if page.image and page.image-view %}
-  {% if page.title == '소나무' %}
-    <a name="sonamu">
+  <div class="post-image-content">
+    {% if page.title == '소나무' %}
+      <a name="sonamu">
+        <img src="{{ site.github.url }}/assets/img/{{ page.image }}">
+      </a>
+    {% else %}
       <img src="{{ site.github.url }}/assets/img/{{ page.image }}">
-    </a>
-  {% else %}
-    <img src="{{ site.github.url }}/assets/img/{{ page.image }}">
-  {% endif %}
+    {% endif %}
+    <div class="post-image-source">
+      image by
+      <a href="{{ page.image-source }}">{{ page.image-author }}</a>
+    </div>
+  </div>
 {% endif %}
 
 {{ content }}
