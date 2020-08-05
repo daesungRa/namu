@@ -25,9 +25,14 @@ layout: default
         {% include read-time.html %}
       </span>
       {% if post.image %}
+        {% if post.image contains '://' %}
+        {% assign img_src = post.image %}
+        {% else %}
+        {% assign img_src = site.github.url | append: '/assets/img/' | append: post.image %}
+        {% endif %}
         <div class="thumbnail-container">
           <a href="{{ site.github.url }}{{ post.url }}">
-            <img src="{{ site.github.url }}/assets/img/{{ post.image }}">
+            <img src="{{ img_src }}">
           </a>
         </div>
       {% endif %}

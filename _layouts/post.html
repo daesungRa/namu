@@ -12,13 +12,18 @@ layout: default
 </h2>
 
 {% if page.image and page.image-view %}
+  {% if page.image contains '://' %}
+  {% assign img_src = page.image %}
+  {% else %}
+  {% assign img_src = site.github.url | append: '/assets/img/' | append: page.image %}
+  {% endif %}
   <div class="post-image-content">
     {% if page.title == '소나무' %}
       <a name="sonamu">
-        <img src="{{ site.github.url }}/assets/img/{{ page.image }}">
+        <img src="{{ img_src }}">
       </a>
     {% else %}
-      <img src="{{ site.github.url }}/assets/img/{{ page.image }}">
+      <img src="{{ img_src }}">
     {% endif %}
     <div class="post-image-source">
       image by
