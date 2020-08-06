@@ -23,20 +23,7 @@ image-source: ''
 이 함수는 목적 이벤트 액션 외의 다른 이벤트 액션들을 막기 위해 사용된다.
 예를 들어, a 태그에 onclick 이벤트를 추가한 경우 a 태그 고유의 페이지 이동 액션을 통제하고자 한다면 event.preventDefault 함수를 사용한다.
 
-```html
-<div>
-    <a href="#" onclick="myFunction()">
-        클릭!
-    </a>
-</div>
-
-<script>
-    function myFunction(event) {
-        event.preventDefault();
-        console.log('클릭됨!');
-    };
-</script>
-```
+{% gist daesungra/aad9862ad66852a7210652609b40ce40 %}
 
 위 코드에서 a 태그 클릭 시(onclick 시) **myFunction()** 함수가 호출되며,
 첫 줄의 **event.preventDefault();** 라인으로 인해 a 태그 고유의 **페이지 이동 이벤트가 실행되지 않게** 된다.
@@ -52,33 +39,7 @@ html DOM 에서는 여러 엘리먼트들이 중첩되며 부모 자식 관계�
 원하는 엘리먼트의 이벤트 동작시 **event.stopPropagation()** 함수가 호출되면, 자기 자신 외의 이벤트들은 실행되지 않게 된다.
 정확히는 부모로의 이벤트의 전파를 막는 것인데, a 태그를 클릭하면 li, ul, div 로의 전파가 이루어지지 않는다.
 
-```html
-<div onclick="divAction();">
-    <ul onclick="ulAction();">
-        <li onclick="liAction();">
-            <a href="#" onclick="myFunction()">
-                클릭!
-            </a>
-        </li>
-    </ul>
-</div>
-
-<script>
-    function divAction(event) {
-        console.log('div 클릭됨!');
-    };
-    function ulAction(event) {
-        console.log('ul 클릭됨!');
-    };
-    function liAction(event) {
-        console.log('li 클릭됨!');
-    };
-    function myFunction(event) {
-        event.stopPropagation();
-        console.log('a 클릭됨!');
-    }
-</script>
-```
+{% gist daesungra/f7818637925677cee7303fabaa0588d0 %}
 
 원래는 a 태그를 클릭할 때 그것을 감싸고 있는 li, ul, div 태그로 이벤트가 확산되며 **각각의 onclick 지정함수가 순차적으로 호출**되지만,
 **myFunction()** 의 **event.stopPropagation();** 으로 인해 이벤트 확산이 막히게 된다.

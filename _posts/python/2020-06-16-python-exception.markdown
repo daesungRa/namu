@@ -30,24 +30,7 @@ image-source: https://pixabay.com/ko/users/njbateman526-16908298/
 다음은 **[ZeroDivisionError](https://docs.python.org/ko/3/library/exceptions.html#ZeroDivisionError)** 를 테스트하는
 **divide_by_zero.py** 의 내용이다.
 
-```python
-# divide_by_zero.py
-
-def divide_by_zero(num: int = 10, div: int = 10):
-    """
-    When you insert '0' for div,
-    Exception messages can be printed.
-    """
-    print(f'divide {num} by {div}!!!')
-    print(f'    >> {int(num / div)}')
-
-
-if __name__ == '__main__':
-    print('===== start =====')
-    divide_by_zero(num=10, div=10)
-    divide_by_zero(num=10, div=0)
-    print('===== end =====')
-```
+{% gist daesungra/836548f4031588f80bcde7c330437a48 %}
 
 위 코드를 실행하면 다음과 같은 결과가 출력된다.
 
@@ -71,26 +54,7 @@ ZeroDivisionError: division by zero
 위에서 언급했듯, `try-except` 도구를 사용하면 성공적으로 예외처리를 할 수 있다.
 코드를 수정해 보자.
 
-```python
-# divide_by_zero.py
-
-def divide_by_zero(num: int = 10, div: int = 10):
-    """
-    This time, '0' will be handled by try-except tool.
-    """
-    print(f'divide {num} by {div}!!!')
-    try:
-        print(f'    >> {int(num / div)}')
-    except ZeroDivisionError as e:
-        print(f'[{e}] Oops! "{div}" for div was no valid number. Try again...')
-
-
-if __name__ == '__main__':
-    print('===== start =====')
-    divide_by_zero(num=10, div=10)
-    divide_by_zero(num=10, div=0)
-    print('===== end =====')
-```
+{% gist daesungra/e09dcc2ac1256855352bba86b3f5965f %}
 
 출력은 다음과 같다.
 
@@ -107,31 +71,21 @@ divide 10 by 0!!!
 만약 division 의 결과값이 특정 변수에 담겨야 한다면,
 `except` 처리문 내에 예외 시 변수의 기본값을 세팅함으로써 매끄럽게 처리할 수도 있을 것이다.
 
-```
 - except 처리문에 ZeroDivisionError 뿐만 아니라 여러 타입의 예외를 동시에 포함시킬 수도 있다.
 - 동시에 포함시키지 않고 순차적으로 여러 타입의 except 문을 작성할 수도 있다.
 - 순차적으로 작성 시, 마지막 except 문은 예외 타입 지정을 생략할 수 있다.
 - Exception 클래스는 모든 exception 타입의 상위 클래스로, 타입 구분 없이 예외처리할 때 사용된다.
-```
 
 ### raising exception
 
 **[raise](https://docs.python.org/ko/3/reference/simple_stmts.html#raise)** 문은 강제적으로 예외를 일으킨다.
 사전에 클래스로 정의된 예외상황은 아니지만, 작성자가 원하는 조건에서 예외가 발생하기를 원할 때 사용한다.
 
-```python
-raise NameError('HiThere')
-```
+{% gist daesungra/77980b536dfd906310a45175b01329d9 %}
 
 일으킨 예외를 처리하고 싶다면 다음과 같이 한다.
 
-```python
-try:
-    raise NameError('HiThere')
-except NameError:
-    print('An exception flew by!')
-    raise
-```
+{% gist daesungra/734f681c76120b9409f2b0475fbd2f93 %}
 
 ```text
 An exception flew by!
@@ -162,35 +116,7 @@ NameError: HiThere
 예외가 발생하든 발생하지 않든 항상 실행되어야만 하는 코드를 이곳에 작성하면 된다.
 일반적으로 열었던 파일을 닫을 때 많이 사용된다.
 
-```python
-# divide_by_zero.py
-
-def divide_by_zero(num: int = 10, div: int = 10):
-    """
-    If exception occurs, the except statement is executed,
-    Otherwise, the else statement is executed.
-    Finally statement is always executed.
-    """
-    print(f'[START] divide {num} by {div}!!!')
-    try:
-        result = int(num / div)
-    except ZeroDivisionError as e:
-        print(f'[ERROR][{e}] Oops! "{div}" for div was no valid number. Try again...')
-    except TypeError as te:
-        print(f'[ERROR][{te}] Please insert a number. not a string.')
-    else:
-        print(f'[NORMAL] result is {result}.')
-    finally:
-        print(f'[FIN] finising division process.')
-
-
-if __name__ == '__main__':
-    print('===== start =====')
-    divide_by_zero(num=10, div=10)
-    divide_by_zero(num=10, div='10')
-    divide_by_zero(num=10, div=0)
-    print('===== end =====')
-```
+{% gist daesungra/910212af8b852cf9b043ad70ece57195 %}
 
 ```text
 ===== start =====
@@ -215,32 +141,7 @@ if __name__ == '__main__':
 
 마지막으로 `finally` 가 필요한 **file read/write** 상황을 살펴보자.
 
-```python
-# handling_file.py
-
-def handling_file(command: str = None):
-    fo = []
-    result = ''
-    try:
-        fo = open("myFile.txt")
-        for line in fo:
-            result += f'{line}\n'
-        if command:
-            result += f'\ncommand'
-    except Exception as e:
-        print(f'[ERROR] {e}')
-    else:
-        print(f'[NORMAL] {result}')
-    finally:
-        fo.close()
-        print(f'[FIN] file closed.')
-
-
-if __name__ == '__main__':
-    print('===== start =====')
-    handling_file(command='say hello~!')
-    print('===== end =====')
-```
+{% gist daesungra/369daaecb3894b201e3ca0aa7e6432d3 %}
 
 **myFile.txt** 를 try 문 내에서 `open` 한 뒤, 예외가 발생하면 `except` 문이, 아니라면 `else` 문이 실행되도록 작성한 코드이다.
 예상되는 예외는 해당 파일을 경로 내에서 찾을 수 없는
@@ -251,25 +152,7 @@ if __name__ == '__main__':
 file handling 에 최적화된
 **[with](http://effbot.org/zone/python-with-statement.htm)** 구문을 사용하면 위의 방식보다 훨씬 간단한 코드를 작성할 수도 있다.
 
-```python
-# handling_file.py
-
-def handling_file(command: str = None):
-    fo = []
-    result = ''
-    with open("myFile.txt") as f:
-        for line in f:
-            result += f'{line}\n'
-        if command:
-            result += f'\ncommand'
-    print(f'[NORMAL] {result}')
-
-
-if __name__ == '__main__':
-    print('===== start =====')
-    handling_file(command='say hello~!')
-    print('===== end =====')
-```
+{% gist daesungra/4c7cd8cc234da7220f5fabb620523489 %}
 
 파이썬 **[context manager](https://www.geeksforgeeks.org/context-manager-in-python/)** 에 의해 관리되는 `with` 문은,
 구문이 종료되는 `__exit__` 상황에서 열렸던 파일이 닫힌다.
