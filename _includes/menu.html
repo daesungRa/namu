@@ -8,7 +8,7 @@
         <ul class="menu-categories">
           {% for item in site.data.settings.dropdown_menu %}
             {% if item.path == 'daily' %}
-              <li style="border-top: 1px solid #bfbfbf;">
+              <li style="border-top: 1px solid #bfbfbf; padding-top: 3px;">
                 <a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}" class="content">
                   {{ item.name }}
                 </a>
