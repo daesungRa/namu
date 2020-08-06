@@ -10,6 +10,11 @@ layout: default
     <small class="post-subtitle">by namu</small>
   {% endif %}
 </h2>
+<span class="post-date">
+  <i class="fa fa-calendar" aria-hidden="true"></i>
+  Last updated at :
+  {{ page.date | date: '%Y-%m-%d %H:%M' }}
+</span>
 
 {% if page.image and page.image-view %}
   {% if page.image contains '://' %}
