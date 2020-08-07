@@ -18,11 +18,12 @@ image-source: https://pixabay.com/ko/users/200degrees-2051452/
 1. [들어가며](#들어가며)
 2. [Powerful screenshots](#powerful-screenshots)
 
+[출처]
+
+1. [bitfish, "Use Chrome DevTools Like a Senior Frontend Developer"](
+https://medium.com/javascript-in-plain-english/use-chrome-devtools-like-a-senior-frontend-developer-99a4740674)
+
 ---
-
-<br>
-
-출처: [Use Chrome DevTools Like a Senior Frontend Developer](https://medium.com/javascript-in-plain-english/use-chrome-devtools-like-a-senior-frontend-developer-99a4740674)
 
 ### 들어가며
 

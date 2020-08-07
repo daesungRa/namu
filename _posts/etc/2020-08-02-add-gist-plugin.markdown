@@ -10,6 +10,17 @@ image-author: jekyllrb
 image-source: https://jekyllrb.com/img/jekyll-og.png
 ---
 
+
+---
+
+[목차]
+
+1. [들어가며](#들어가며)
+2. [플러그인 추가하기](#플러그인-추가하기)
+3. [gist 추가해보기](#gist-추가해보기)
+
+---
+
 ### 들어가며
 
 [지킬```jekyll```](https://jekyllrb.com/docs/)은 [```ruby on rails```](https://rubyonrails.org/) 프레임워크 기반
@@ -90,7 +101,7 @@ $ bundle exec jekyll serve
 
 ![my_blog01](https://daesungra.github.io/namu/assets/img/my_blog01.png)
 
-### (별첨) gist 추가해보기
+### gist 추가해보기
 
 gist 는 코드블럭 등을 github 아카이브에 저장해두고 링크를 통해 참조할 수 있는 너무너무 깔끔하고 손쉬운 기능이다.
 이제 플러그인 설치와 빌드가 완료되었으므로, 내 post 에 gist 박스를 추가해보자.

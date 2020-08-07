@@ -23,6 +23,12 @@ image-source: ''
 6. [프로퍼티](#프로퍼티)
 7. [리펙토링의 냄새가 나는 경우](#리펙토링의-냄새가-나는-경우)
 
+[출처]
+
+1. [마리아노 아나야, "파이썬 클린코드", 터닝포인트(2019)](http://www.yes24.com/Product/Goods/69064790)
+2. [PEP8](https://www.python.org/dev/peps/pep-0008/)
+3. [Tim.Peters, The Zen of Python](https://www.python.org/dev/peps/pep-0020/)
+
 ---
 
 <br>
