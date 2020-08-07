@@ -41,9 +41,7 @@ image-source: ''
 
 다음은 dict 자료형의 update 메서드에 대한 `docstring` 을 출력한 내용이다.
 
-```python
-help(dict.update)
-```
+{% gist daesungra/672856ec9f9f8a91b002df8d8bc3692e %}
 
 ```text
 Help on method_descriptor:
@@ -83,48 +81,7 @@ update(...)
 standard convention 으로 따옴표는 ```triple-double quotes```를 사용해야 한다.
 다음을 참고하자.
 
-```python
-class IntegerMaker:
-    """
-    This is integer maker class
-    """
-    def __init__(self):
-        pass
-
-    def make_integer_from_string(self, my_age: str) -> int:
-        """
-        Return 0 or positive integer with string type argument.
-        If the argument is not of type string, it returns integer type value of -1.
-        If the argument is a negative integer, it returns integer type value of -2.
-
-        Args:
-            my_age (str): my age in string type
-
-        Returns:
-            int: The return value converted to integer.
-        """
-        if isinstance(my_age, str):
-            try:
-                result = int(my_age)
-            except ValueError as ve:
-                print(ve)
-            else:
-                if result >= 0:
-                    return result
-                else:
-                    return -2
-        else:
-            return -1
-
-
-if __name__ == '__main__':
-    int_maker = IntegerMaker()
-    help(int_maker.make_integer_from_string)
-    print(int_maker.make_integer_from_string(my_age='100'))
-    print(int_maker.make_integer_from_string(my_age='0'))
-    print(int_maker.make_integer_from_string(my_age=99))
-    print(int_maker.make_integer_from_string(my_age='-1'))
-```
+{% gist daesungra/1d7460c779d3998f453c053d7fde3008 %}
 
 실행 결과는 다음과 같다.
 
