@@ -20,7 +20,11 @@ layout: default
       </h1>
       <span class="home-post-date">
         <i class="fa fa-calendar" aria-hidden="true"></i>
-        {{ post.date | date_to_string }} -
+        {% if post.updated %}
+          {{ post.updated | date: '%Y-%m-%d %H:%M' }} -
+        {% else %}
+          {{ post.date | date: '%Y-%m-%d %H:%M' }} -
+        {% endif %}
         <i class="fa fa-clock-o" aria-hidden="true"></i>
         {% include read-time.html %}
       </span>

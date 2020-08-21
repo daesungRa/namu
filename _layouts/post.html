@@ -12,8 +12,16 @@ layout: default
 </h2>
 <span class="post-date">
   <i class="fa fa-calendar" aria-hidden="true"></i>
-  Last updated at :
-  {{ page.date | date: '%Y-%m-%d %H:%M' }}
+  {% if page.updated %}
+    Created at :
+    {{ page.created | date: '%Y-%m-%d %H:%M' }}<br/>
+    <i class="fa fa-calendar" aria-hidden="true"></i>
+    Updated at :
+    {{ page.updated | date: '%Y-%m-%d %H:%M' }}
+  {% else %}
+    Created at :
+    {{ page.date | date: '%Y-%m-%d %H:%M' }}
+  {% endif %}
 </span>
 
 {% if page.image and page.image-view %}
