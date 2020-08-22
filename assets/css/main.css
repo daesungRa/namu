@@ -203,6 +203,15 @@ hr {
   font-size:0.7rem;
 }
 
+.post-date-content div {
+  display: inline-block;
+}
+
+.post-date-content .post-date-title {
+  width: 62px;
+  margin: 0 3px 0 3px;
+}
+
 @media (max-width: 30rem) {
   .posts h1 {
     font-size: 1.5rem;

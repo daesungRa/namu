@@ -10,19 +10,26 @@ layout: default
     <small class="post-subtitle">by namu</small>
   {% endif %}
 </h2>
-<span class="post-date">
-  <i class="fa fa-calendar" aria-hidden="true"></i>
+<div class="post-date">
   {% if page.updated %}
-    Created at :
-    {{ page.created | date: '%Y-%m-%d %H:%M' }}<br/>
-    <i class="fa fa-calendar" aria-hidden="true"></i>
-    Updated at :
-    {{ page.updated | date: '%Y-%m-%d %H:%M' }}
+    <div class="post-date-content">
+      <i class="fa fa-calendar" aria-hidden="true"></i>
+      <div class="post-date-title">Created at</div>
+      <div>| {{ page.created | date: '%Y-%m-%d %H:%M' }}</div>
+    </div>
+    <div class="post-date-content">
+      <i class="fa fa-calendar" aria-hidden="true"></i>
+      <div class="post-date-title">Updated at</div>
+      <div>| {{ page.updated | date: '%Y-%m-%d %H:%M' }}</div>
+    </div>
   {% else %}
-    Created at :
-    {{ page.date | date: '%Y-%m-%d %H:%M' }}
+    <div class="post-date-content">
+      <i class="fa fa-calendar" aria-hidden="true"></i>
+      <div class="post-date-title">Created at</div>
+      <div>| {{ page.date | date: '%Y-%m-%d %H:%M' }}</div>
+    </div>
   {% endif %}
-</span>
+</div>
 
 {% if page.image and page.image-view %}
   {% if page.image contains '://' %}
