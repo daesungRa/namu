@@ -448,6 +448,9 @@ pre code {
   font-size: .8rem !important;
   line-height: 1.4;
 }
+.gist .gist-file .gist-data table {
+  background-color: #eee;
+}
 .gist code {
   padding: 0;
   color: inherit;
