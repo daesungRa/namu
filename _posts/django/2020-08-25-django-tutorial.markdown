@@ -17,13 +17,14 @@ image-source: https://blog.labdigital.nl/why-python-django-are-our-weapons-of-ch
 
 1. [들어가며](#들어가며)
 2. [1장 프로젝트 생성하기](#1장-프로젝트-생성하기)
-3. [2장](#2장)
-4. [3장](#3장)
-5. [4장](#4장)
-
-[참조]
-
-1. []()
+3. [2장 데이터베이스 설정 및 관리자 기능](#2장-데이터베이스-설정-및-관리자-기능)
+4. [3장 더 많은 뷰와 템플릿](#3장-더-많은-뷰와-템플릿)
+5. [4장 폼과 제네릭 뷰](#4장-폼과-제네릭-뷰)
+6. [5장 테스팅](#5장-테스팅)
+7. [6장 정적 파일들](#6장-정적-파일들)
+8. [7장 관리자 사이트 바꿔보기](#7장-관리자-사이트-바꿔보기)
+9. [8장 재사용 가능한 앱 작성하기](#8장-재사용-가능한-앱-작성하기)
+10. [9장 Django 용 패치 작성하기](#9장-django-용-패치-작성하기)
 
 ---
 
@@ -110,4 +111,126 @@ polls/
 
 이제 ```polls/views.py``` 에 뷰단을 작성하고 polls url 을 등록한 후 화면의 띄워보자.
 
+view 작성
 {% gist daesungra/8906238f7753a26d887b55d666647ecc %}
+
+polls url 작성
+{% gist daesungra/7bfcfdfc218125ef72ab73bcb7d6545f %}
+
+mysite url 작성
+{% gist daesungra/9fead032fa3880a788b65bbac494a4db %}
+
+mysite 가 프로젝트의 메인 앱이기 때문에 이곳에 polls url 을 include 해줘야 한다.<br>
+이곳을 **URLconf** 라고 한다.<br>
+그럼 이제 ```http://localhost:[포트]/polls/``` 로 이동하면
+"Hello, world. You're at the polls index." 문장이 출력된 페이지를 확인할 수 있다.
+
+<br>
+## 2장 데이터베이스 설정 및 관리자 기능
+
+[튜토리얼 안내](https://docs.djangoproject.com/en/3.1/intro/tutorial02/#database-setup)를 따라 SQLite 를 활용한다.<br>
+먼저 환경설정 파일인 ```mysite/settings.py``` 를 살펴보자.
+
+### 프로젝트에 설치된 앱 목록
+```text
+INSTALLED_APPS = [
+    'polls.apps.PollsConfig',  # polls 앱
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+```
+
+### 프로젝트에서 사용할 DB 정의
+```text
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+```
+
+이에 따라 migration 을 실행하면, 각 앱이 필요로 하는 기본 테이블이 만들어지게 된다.
+
+```text
+(venv) $ python manage.py migrate
+```
+
+migration 에서 필요로 하는 정보는
+[**장고 db model**](https://docs.djangoproject.com/en/3.1/ref/models/instances/#django.db.models.Model) 에 기반한다.<br>
+해당 모델정보는 각 앱의 models.py 에 기록되어 있다.<br>
+polls 앱에서는 **Question** 및 **Choice** 두 모델을 사용하며, 후자는 전자에 종속적이다.
+
+- question 테이블의 필드 : question_text: str, pub_date: datetime
+- Choice 테이블의 필드 : choice_text: str, votes: int
+
+### polls 앱의 model 정의
+{% gist daesungra/502cfbe26ea1aef0c92eb36de446018e %}
+
+[django.db.models.Model](https://docs.djangoproject.com/en/3.1/ref/models/instances/#django.db.models.Model)
+클래스에는 CharField, IntegerField, DateTimeField, ForeignKey 타입 등의 변수가 존재한다.
+
+추가로 ```\_\_str\_\_``` 매직 메서드를 통해 각 text 필드값이 그대로 반환되도록 하였고,
+```was_published_recently``` 메서드를 통해 등록된 ```pub_date``` 가 당일인지(정확히는 1일 이내) 체크하도록 하였다.
+
+이제 polls 앱의 model 을 정의했으니 settings 의 INSTALLED_APPS 목록에 추가된 것을 확인하고 migration 을 진행하면 된다.
+
+### migration 만들기
+model 에 변경사항이 있으면 새로운 migration 을 만든다
+```text
+(venv) $ python manage.py makemigrations polls
+```
+이렇게 만들어진 migration 은 ```polls/migrations/0001_initial.py``` 와 같이 앱 디렉토리 내에 생성되며,
+git 을 통해 버전관리가 가능하다.
+
+### 쿼리 확인
+쿼리가 잘 생성되었는지 확인 차원이므로 넘어가도 된다.
+```text
+(venv) $ python manage.py sqlmigrate polls 0001
+```
+
+### migration 실행
+```text
+(venv) $ python manage.py migrate
+```
+이 migrate 명령은 매우 강력하며, **데이터 손실 없이 DB 를 라이브로 업그레이드 하는 데 특화**되어 있다.
+
+모델을 작성하고 실제 테이블 스키마가 생성되었다면 이제 python 코드상에서 다음과 같이 활용할 수 있다.
+### api 를 통해 model 활용
+다음은 파이썬 코드상에서 model 활용 예제이다.
+{% gist daesungra/18b41a995b6b525be941a0e2e79eca20 %}
+
+### 관리자 기능 - admin 앱에 polls 관리기능 추가
+
+### 관리자 기능 - admin 사용자 만들기
+
+
+> TIMEZONE 설정에 유의할 것.
+> > datetime 객체를 활용한다면 무조건 aware 객체여야만 한다.
+> > 이는 서로 다른 시간대 간의 변환 가능성을 보장하기 위함이다.
+> > Django 는 기본적으로 'UTC' timezone 이므로, 'Asia/Seoul' timezone 에서 변환을 염두에 두거나 TIME_ZONE 설정을 맞춰줘야 한다.
+
+<br>
+## 3장 더 많은 뷰와 템플릿
+
+<br>
+## 4장 폼과 제네릭 뷰
+
+<br>
+## 5장 테스팅
+
+<br>
+## 6장 정적 파일들
+
+<br>
+## 7장 관리자 사이트 바꿔보기
+
+<br>
+## 8장 재사용 가능한 앱 작성하기
+
+<br>
+## 9장 Django 용 패치 작성하기
