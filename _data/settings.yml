@@ -15,7 +15,7 @@ dropdown_menu:
 - {name: '파이썬', path: 'python', url: ''}
 - {name: '장고', path: 'django', url: ''}
 - {name: '도커', path: 'docker', url: ''}
-- {name: '기타', path: 'etc', url: ''}
+- {name: '잡동사니', path: 'etc', url: ''}
 - {name: '나무야 나무야', path: 'daily', url: ''}
 - {name: '데미안에게', path: 'to-demian', url: ''}
 
