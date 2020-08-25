@@ -13,6 +13,7 @@ menu:
 dropdown_menu:
 - {name: '자바스크립트', path: 'javascript', url: ''}
 - {name: '파이썬', path: 'python', url: ''}
+- {name: '장고', path: 'django', url: ''}
 - {name: '도커', path: 'docker', url: ''}
 - {name: '기타', path: 'etc', url: ''}
 - {name: '나무야 나무야', path: 'daily', url: ''}
