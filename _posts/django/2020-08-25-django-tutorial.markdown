@@ -204,18 +204,55 @@ git 을 통해 버전관리가 가능하다.
 다음은 파이썬 코드상에서 model 활용 예제이다.
 {% gist daesungra/18b41a995b6b525be941a0e2e79eca20 %}
 
-### 관리자 기능 - admin 앱에 polls 관리기능 추가
-
 ### 관리자 기능 - admin 사용자 만들기
+> INSTALLED_APPS 에 등록된 [_django.contrib.auth_](https://docs.djangoproject.com/en/3.1/topics/auth/#module-django.contrib.auth) 앱이다.
 
+```admin``` 사이트는 ```polls``` 뿐 아니라 프로젝트에서 사용되는 모든 앱의 관리를 위한 별개의 사이트로, 관리자 외 접근 불가이다.
+먼저 관리자 계정을 생성해보자.
+
+```text
+(venv) $ python manage.py createsuperuser
+Username: admin
+Email address: admin@example.com
+Password: **********
+Password (again): *********
+Superuser created successfully.
+```
+
+이러면 끝이다. 정말 간단하다.<br>
+이제 ```http://localhost:[PORT]/admin/``` 에 접속해 로그인한 뒤 등록된 각종 컨텐츠들을 관리(CRUD)할 수 있다.
+
+### 관리자 기능 - admin 앱에 polls 관리기능 추가
+마찬가지로 polls 앱을 매우 간단하게 admin 에 등록할 수 있다.
+{% gist daesungra/56d36771f1d434e4001ce649dcd2397f %}
 
 > TIMEZONE 설정에 유의할 것.
-> > datetime 객체를 활용한다면 무조건 aware 객체여야만 한다.
-> > 이는 서로 다른 시간대 간의 변환 가능성을 보장하기 위함이다.
-> > Django 는 기본적으로 'UTC' timezone 이므로, 'Asia/Seoul' timezone 에서 변환을 염두에 두거나 TIME_ZONE 설정을 맞춰줘야 한다.
+>> datetime 객체를 활용한다면 무조건 aware 객체여야만 한다.
+>> 이는 서로 다른 시간대 간의 변환 가능성을 보장하기 위함이다.
+>> Django 는 기본적으로 'UTC' timezone 이므로, 'Asia/Seoul' timezone 에서 변환을 염두에 두거나 TIME_ZONE 설정을 맞춰줘야 한다.
+>>> 일반적으로 저장시에는 항상 'UTC' timezone 으로, 사용자에게 보여줄 때는 그에 맞는 timezone 으로 변환하는 것을 원칙으로 한다.
+
+이제 다음과 같이 admin 사이트를 활용할 수 있다.
+
+![admin-main](https://docs.djangoproject.com/en/3.1/_images/admin03t.png)
+![admin-polls-questions](https://docs.djangoproject.com/en/3.1/_images/admin04t.png)
+![admin-polls-questions-content](https://docs.djangoproject.com/en/3.1/_images/admin05t.png)
 
 <br>
 ## 3장 더 많은 뷰와 템플릿
+
+뷰(view)는 사용자에게 보여지는 화면을 구성한다.<br>
+사용자의 모든 행동은 일차적으로 뷰를 통해 이루어진다.<br>
+
+적절한 뷰를 제공하기 위해 명료한 URL 을 지정해야 하는데,
+'URLconfs' 에 어떻게 하면 보다 [restful](https://ko.wikipedia.org/wiki/REST) 한 url 을 등록할 수 있을지 항상 고민해야 한다.
+
+### 더 많은 뷰 > detail, results, vote
+단순히 작성된 컨텐츠를 반환하는 **HttpResponse** 을 활용한다.
+{% gist daesungra/d1f1fe4eebbe62131bc2878bbde4cf9a %}
+polls urls 에 위 뷰들을 추가등록한다.
+{% gist daesungra/5bfe02513013cb98dc51b546cfc632e7 %}
+이 ```urlpatterns``` 는 프로젝트 ```mysite 의 URLconfs``` 에 등록된다.
 
 <br>
 ## 4장 폼과 제네릭 뷰
