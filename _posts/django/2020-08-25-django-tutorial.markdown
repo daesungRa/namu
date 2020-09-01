@@ -254,8 +254,67 @@ polls urls 에 위 뷰들을 추가등록한다.
 {% gist daesungra/5bfe02513013cb98dc51b546cfc632e7 %}
 이 ```urlpatterns``` 는 프로젝트 ```mysite 의 URLconfs``` 에 등록된다.
 
+### 실제로 뭔가를 하는 뷰
+다음은 최근 5개의 Questions 를 반환하는 뷰이다.
+{% gist daesungra/939ceb9a0b02fc60fe927702f0314c89 %}
+그러나 하드코딩된 5개의 Questions 문자열을 단순히 반환하기보다는 Django 에서 제공하는
+[TEMPLATES](https://docs.djangoproject.com/en/3.1/ref/settings/#std:setting-TEMPLATES) 을 활용하면 더 좋아보인다.<br>
+이를 위해 먼저 polls 디렉토리 안에 templates 디렉토리를 생성한 후 index.html 템플릿 파일을 만들어 보자.
+{% gist daesungra/3197dfc351dcd3b5190e976527ca661d %}
+
+> 템플릿 네임스페이스
+>> 'polls/templates/index.html' 이 적절해 보이나,
+>> 다른 앱의 동일한 템플릿 이름과 구분하기 위하여 특정 앱의 네임스페이스를 지정하는 것이 좋다.
+>> 이제 이 템플릿은 네임스페이스를 포함한 'polls/index.html' 로 사용된다.
+
+이제 만들어진 템플릿을 활용하도록 뷰를 업데이트한다. Django 의 template loader 를 활용한다.
+{% gist daesungra/5f5ab96c78ab97e7ab1e21303efe8f5f %}
+
+### 뷰를 생성하는 일반적 패턴
+HttpResponse 가 렌더링된 template 을 반환하는 위 방식을 함축하는 관용적(idion) 방법이 있다.<br>
+그것은 [render()](https://docs.djangoproject.com/en/3.1/topics/http/shortcuts/#django.shortcuts.render) 함수를 사용하는 것이다.
+{% gist daesungra/fa1a48eeb1420b780ffe7878fc0bb5aa %}
+이런 관용적 방식은 템플릿 로드를 필요로 하는 뷰에서 필요에 따라 사용할 수 있다.
+
+### 404 에러 발생시키기
+detail 페이지를 호출할 때 존재하지 않는 Question 번호를 제공하는 경우 404 에러를 발생시킨다.
+조회 시 try 후 [Http404](https://docs.djangoproject.com/en/3.1/topics/http/views/#django.http.Http404)
+장고 에러를 raise 시킬 수 있겠지만, 보다 관용적인 방법이 있다.
+[get_object_or_404()](https://docs.djangoproject.com/en/3.1/topics/http/shortcuts/#django.shortcuts.get_object_or_404)
+shortcut 함수가 그것이다.
+{% gist daesungra/674a755cf62c9401eaf55c606e5dfee0 %}
+get_object_or_404() 는 제공받은 키값을 모델의
+[get()](https://docs.djangoproject.com/en/3.1/ref/models/querysets/#django.db.models.query.QuerySet.get)
+함수에 전달해 조회하는 한편, 존재하지 않는 경우 Http404 를 raise 시킨다.
+- get() 대신에 filter() 를 사용하는 것 외에 완전 동일한
+[get_list_or_404()](https://docs.djangoproject.com/en/3.1/topics/http/shortcuts/#django.shortcuts.get_list_or_404)
+shortcut 함수도 존재한다. list 가 없으면 Http404 를 raise 시키는 것도 동일하다.
+
+### 템플릿 엔진 사용하기
+템플릿 엔진을 사용하여 뷰로부터 제공된 context 변수를 다룰 수 있다.
+{% gist daesungra/805328b36a0abe5d304d76fc2eb80df9 %}
+
+### 하드코딩된 URLs 제거하기
+하드코딩된 URLs 은 템플릿이 많을 경우 URL 도메인 변경에 일일히 대처하기 어렵다는 문제점이 있다.
+보다 유연한 대처를 위해 **'polls/index.html'** 에서 각 question detail 화면으로 링크되는 a 태그의 href 부분을 변경해 보자.
+{% gist daesungra/6cacad476e421f2326108d9fb18c2376 %}
+
+이렇게 되면 polls.urls 의 path name(여기서는 'detail')을 사용하므로,
+앱의 url 패턴이 변경되어도 별도로 각 템플릿들을 수정하지 않을 수 있다.
+
+### URL 이름 네임스페이싱(Namespacing URL names)
+Django 프로젝트 내에 수많은 앱이 존재할 수 있고, 각각에 동일한 이름의 뷰가 존재할 수 있다.<br>
+이를 구분하기 위하여 urls.py 에 앱의 네임스페이스인 **app_name** 을 지정할 수 있다.
+{% gist daesungra/db33a17ba2801d2d71a6a8593b62b9c0 %}
+지정한 **app_name**(polls) 을 polls/index.html 의 detail url 에 명시해 주자.
+{% gist daesungra/e51d7744f52f1bff063e5e5baa331cf8 %}
+
 <br>
 ## 4장 폼과 제네릭 뷰
+
+polls 앱에서 투표를 실행하는 폼(**html <form>**)을 작성해 보자. 투표는 'polls/templates/polls/detail.html' 에서 진행된다.
+{% gist daesungra/584e8f9ff56ecdb32a2d535a687616b3 %}
+앞에서 언급했던 **네임스페이싱된 유연한 url 템플릿 패턴**을 html form 태그에 적용했다.
 
 <br>
 ## 5장 테스팅

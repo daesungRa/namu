@@ -55,7 +55,7 @@ def _int_to_binary(N: int):
 
 def solution(N: int):
     if not isinstance(N, int) and N < 0:
-        raise ValueError(f'Number {N} is not an positive Integer.')
+        raise ValueError(f'Number {N} is not a positive Integer.')
     
     bin_list = _int_to_binary(N)
     count = 0
