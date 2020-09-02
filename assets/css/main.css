@@ -478,6 +478,21 @@ th, td {
   text-align: left;
 }
 
+.post-container table {
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.post-container table thead {
+  background-color: #eee;
+}
+
+.post-container table tr {
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+}
+
 /*
   Social media icons
 */

@@ -14,7 +14,7 @@ image-source: https://www.codility.com/solutions/customers/flatiron-health-case-
 <br>
 ## 들어가며
 
-[**\_Codility_\_**](https://app.codility.com/programmers/) 를 통한 내 첫번째 알고리즘 코딩 공부이다.<br>
+[**_Codility_**](https://app.codility.com/programmers/) 를 통한 내 첫번째 알고리즘 코딩 공부이다.<br>
 다음 Question 은 Lesson 1 으로써
 [Iterations](https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c) 에 대한 내용이다.
 
