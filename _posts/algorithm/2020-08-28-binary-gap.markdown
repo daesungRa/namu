@@ -1,6 +1,7 @@
 ---
 title:  "[CODILITY][01] BinaryGap"
-date:   2020-08-28 19:35:12 +0900
+created:   2020-08-28 19:35:12 +0900
+updated:   2020-08-28 19:35:12 +0900
 author: namu
 categories: algorithm
 permalink: "/algorithm/:year/:month/:day/:title"

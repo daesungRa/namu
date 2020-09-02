@@ -1,6 +1,7 @@
 ---
 title: Django tutorial 정리
-date: 2020-08-25 21:17:34 +0900
+created: 2020-08-25 21:17:34 +0900
+updated: 2020-09-91 22:36:24 +0900
 author: namu
 categories: django
 permalink: "/django/:year/:month/:day/:title"
