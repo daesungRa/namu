@@ -19,3 +19,7 @@ XDG_CACHE_HOME/
 [._]s[a-rt-v][a-z]
 [._]ss[a-gi-z]
 [._]sw[a-p]
+
+### Test ###
+test/*
+./test/*
