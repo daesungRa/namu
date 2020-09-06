@@ -1,7 +1,7 @@
 ---
 title:  "[KAKAO2020][01] 문자열 다루기"
 created:   2020-09-02 22:38:25 +0900
-updated:   2020-09-02 22:38:25 +0900
+updated:   2020-09-06 20:42:14 +0900
 author: namu
 categories: algorithm
 permalink: "/algorithm/:year/:month/:day/:title"
@@ -59,10 +59,79 @@ image-source: https://tech.kakao.com/blog/
 3. 제한사항을 지킬 것.
 
 ```python
+# division of string
+
+
+def main(s: str) -> int:
+    if s is None:
+        raise TypeError(f'Please input specific string.')
+    elif not isinstance(s, str):
+        raise TypeError(f'"{s}" is not a string.')
+    elif len(s) < 1 or len(s) > 1000:  # [제한사항1] s의 길이는 1 이상 1,000 이하입니다.
+        raise ValueError(f'String length is out of range.(1 to 1000)')
+    s = s.lower()  # [제한사항2] s는 알파벳 소문자로만 이루어져 있습니다.
+
+    string_length = len(s)  # shortest string length
+    count = 1  # division count unit
+    while count <= len(s) / 2:
+        # divide by count -> 1, 2, ..., len(s) // 2
+        div_list = [s[idx:idx+count] for idx in range(0, len(s), count)]
+
+        result_string = ''
+        unit = ''
+        unit_count = 0
+        for idx, div in enumerate(div_list):
+            if unit == div:
+                unit_count += 1
+            else:
+                result_string += f'{unit_count > 1 and unit_count or ""}{unit}'
+                unit = div
+                unit_count = 1
+
+            if idx + 1 == len(div_list):
+                result_string += f'{unit_count > 1 and unit_count or ""}{unit}'
+
+        print(f'[divide by {count}] {s} -> {result_string} / {len(result_string)}')
+        if len(result_string) < string_length:
+            string_length = len(result_string)
+        count += 1
+    return string_length
+
+
+if __name__ == '__main__':
+    print(main('aabbaccc'))  # '2a2ba3c', 7
+    print(main('ababcdcdababcdcd'))  # '2ababcdcd', 9
+    print(main('abcabcdede'))  # '2abcdede', 8
+    print(main('abcabcabcabcdededededede'))  # '2abcabc2dedede', 14
+    print(main('xababcdcdababcdcd'))  # 'xababcdcdababcdcd', 17
 ```
 
 <br>
 ## 출제 의도
 
+- 문자열을 다룰 수 있고, 아래 예시와 같이 문자열과 관련된 다양한 작업을 할 수 있는지 파악
+    - 문자열 자르기
+    - 부분 문자열 얻기
+    - 문자열 비교하기
+    - 문자열 길이 얻기
+
 <br>
 ## 문제 풀이
+
+첫 번째로 배치된, 가장 쉬운 문제입니다. 문자열 길이가 최대 1,000으로 제한이 크지 않기 때문에,
+가능한 모든 방법을 탐색하면 됩니다. 문자열 길이가 N일 때, 길이가 N/2 보다 크게 잘랐을 때는 길이가 줄지 않습니다.
+따라서 1 ~ N/2 길이로 자르는 방법을 모두 탐색한 후 그중 가장 짧은 방법을 선택하면 됩니다.
+
+<br>
+## 후기
+
+(성능 신경x)가능한 모든 방법을 탐색하면 된다는 점에서 그리디 유형 문제라고 판단된다.<br>
+일단 나는 제시된 문제 풀이 아이디어를 잘 캐치했다. 문자열을 다룰 수 있는지에 대한 부분과,
+문자열 길이 N에 대해 그 절반 길이 이하까지만 divide 하면 된다는 아이디어를 캐치함.
+
+풀이상 핵심은,
+1. N//2 단위까지 문자열 분할하여 리스트로 저장
+2. 리스트 저장 시 comprehension 활용여부 -> ```[s[idx:idx+count] for idx in range(0, len(s), count)]```
+3. 연속된 문자열단위마다 counting 하기, 문자열 비교, 길이 도출 등등..
+
+이정도?
