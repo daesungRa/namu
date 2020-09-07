@@ -458,6 +458,9 @@ pre code {
   background-color: transparent;
   border-radius: 0;
 }
+.gist .gist-file .gist-data table tr {
+  border: none !important;
+}
 
 /*
   Tables
@@ -474,7 +477,7 @@ table, th, td {
 }
 
 th, td {
-  padding: 15px;
+  padding: 2px;
   text-align: left;
 }
 
