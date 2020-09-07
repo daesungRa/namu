@@ -58,53 +58,7 @@ image-source: https://tech.kakao.com/blog/
 2. 각 분해 단위 결과값의 길이를 저장, 가장 짧은 경우를 반환한다.
 3. 제한사항을 지킬 것.
 
-```python
-# division of string
-
-
-def main(s: str) -> int:
-    if s is None:
-        raise TypeError(f'Please input specific string.')
-    elif not isinstance(s, str):
-        raise TypeError(f'"{s}" is not a string.')
-    elif len(s) < 1 or len(s) > 1000:  # [제한사항1] s의 길이는 1 이상 1,000 이하입니다.
-        raise ValueError(f'String length is out of range.(1 to 1000)')
-    s = s.lower()  # [제한사항2] s는 알파벳 소문자로만 이루어져 있습니다.
-
-    string_length = len(s)  # shortest string length
-    count = 1  # division count unit
-    while count <= len(s) / 2:
-        # divide by count -> 1, 2, ..., len(s) // 2
-        div_list = [s[idx:idx+count] for idx in range(0, len(s), count)]
-
-        result_string = ''
-        unit = ''
-        unit_count = 0
-        for idx, div in enumerate(div_list):
-            if unit == div:
-                unit_count += 1
-            else:
-                result_string += f'{unit_count > 1 and unit_count or ""}{unit}'
-                unit = div
-                unit_count = 1
-
-            if idx + 1 == len(div_list):
-                result_string += f'{unit_count > 1 and unit_count or ""}{unit}'
-
-        print(f'[divide by {count}] {s} -> {result_string} / {len(result_string)}')
-        if len(result_string) < string_length:
-            string_length = len(result_string)
-        count += 1
-    return string_length
-
-
-if __name__ == '__main__':
-    print(main('aabbaccc'))  # '2a2ba3c', 7
-    print(main('ababcdcdababcdcd'))  # '2ababcdcd', 9
-    print(main('abcabcdede'))  # '2abcdede', 8
-    print(main('abcabcabcabcdededededede'))  # '2abcabc2dedede', 14
-    print(main('xababcdcdababcdcd'))  # 'xababcdcdababcdcd', 17
-```
+{% gist daesungra/1c76b0c7d9d362ae12c811476bd271ba %}
 
 <br>
 ## 출제 의도
