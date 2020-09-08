@@ -1,0 +1,155 @@
+---
+title:  "[코테준비] 기본, 그리디, 구현"
+created:   2020-09-08 22:29:25 +0900
+updated:   2020-09-09 01:24:14 +0900
+author: namu
+categories: algorithm
+permalink: "/algorithm/:year/:month/:day/:title"
+image: https://cdn.pixabay.com/photo/2017/11/12/18/32/book-2943383__480.png
+image-view: true
+image-author: 200degrees
+image-source: https://pixabay.com/ko/users/200degrees-2051452/
+---
+
+<br>
+## 들어가며
+
+[안경잡이개발자](https://ndb796.tistory.com/)님의
+[이것이 취업을 위한 코딩테스트이다 with python 유튭 강의](https://www.youtube.com/watch?v=Lytj_xcw8mE&list=PLRx0vPvlEmdBFBFOoK649FlEMouHISo8N)에서
+발췌했다.
+
+<br>
+## 순열과 조합
+
+순열과 조합은 모든 경우의 수를 고려해야 할 때 사용하는 완전탐색 알고리즘이다.<br>
+**순열**: 서로 다른 n개에서 서로 다른 r개를 선택하여 일렬로 나열하는 것
+- nPr = n * (n - 1) * (n - 2) * ... * (n - r + 1)
+- 10P5 = 10 * 9 * 8 * 7 * 6
+
+```python
+# permutation
+from itertools import permutations, product
+
+
+# 순열
+data = ['A', 'B', 'C']
+result = list(permutations(data, 3))
+print(result)  # [('A', 'B', 'C'), ('A', 'C', 'B'), ('B', 'A', 'C'), ('B', 'C', 'A'), ('C', 'A', 'B'), ('C', 'B', 'A')]
+
+# 중복 순열
+result = list(product(data, repeat=2))
+print(result)  # [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'B'), ('B', 'C'), ('C', 'A'), ('C', 'B'), ('C', 'C')]
+```
+
+**조합**: 서로 다른 n개에서 순서에 상관 없이 서로 다른 r개를 선택하는 것
+- nCr = nPr / r! = n * (n - 1) * (n - 2) * ... * (n - r + 1) / r * (r - 1) * (r - 2) * ... * 2 * 1
+- 10C5 = (10 * 9 * 8 * 7 * 6) / (5 * 4 * 3 * 2 * 1)
+
+```python
+# permutation
+from itertools import combinations, combinations_with_replacement
+
+
+# 조합
+data = ['A', 'B', 'C']
+result = list(combinations(data, 2))
+print(result)  # [('A', 'B'), ('A', 'C'), ('B', 'C')]
+
+# 중복 조합
+result = list(combinations_with_replacement(data, 2))
+print(result)  # [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'B'), ('B', 'C'), ('C', 'C')]
+```
+
+<br>
+## 그리디
+
+현재 상황에서 단순히 가장 좋은 것만 선택하는 탐욕적 알고리즘이다.
+핵심 아이디어을 얼마나 정확하게 파악하고 그대로 구현해 내는지가 관건이다.
+
+**거스름 돈 문제**: 500원, 100원, 50원, 10원짜리 조합 중에서 거스름돈 N원을 구성하는 동전의 최소 개수 구하기
+- 핵심 아이디어 >> 당연히 500원으로만 구성할수록 최소 동전이다!
+
+```python
+N = 1260  # 원
+def solution(N):
+    result = 0  # 동전개수
+    coins = [500, 100, 50, 10]
+
+    for coin in coins:
+        result += N // coin
+        N %= coin
+    return result
+```
+
+<br>
+## 구현: 시뮬레이션과 완전 탐색
+
+구현 문제는 **풀이를 떠올리는 것은 쉽지만 소스코드로 옮기기 어려운 문제**를 의미한다.
+
+**행렬(Matrix)**은 알고리즘 문제에서 2차원 공간 좌표계를 나타낼 때 많이 쓰이는데,
+x축을 행(row, i, 세로 방향으로 증감)으로 y축을 열(column, j, 가로 방향으로 증감)로 본다. 이를 i와 j의 이중 반복문으로 표현 가능하다.
+
+**방향 벡터**는 2차원 공간에서 좌표를 움직일때 쓰인다. 보통 dx와 dy벡터 리스트를 정의하고 현재 위치로부터 인덱스에 따라 방향을 이동한다.
+```python
+# 동, 북, 서, 남
+dx = [0, -1, 0, 1]
+dy = [1, 0, -1, 0]
+
+# 현재 위치
+x, y = 2, 2
+
+for i in range(4):
+    nx = x + dx[i]
+    ny = y + dy[i]
+    print(nx, ny)
+```
+좌표를 이동하다가 만약 행렬의 범위 바깥으로 벗어난다면 그것은 무시한다(벡터 변하지 않음).
+
+**상하좌우 문제**: 여행가 A가 N x N 크기 공간의 (1, 1) 위치에서부터 정의된 방향 벡터(L, R, U, D)에 따라
+입력된 plans 만큼 이동하기
+- 정사각형 공간 범위를 벗어나면 움직임은 무시된다
+
+```python
+# N 입력
+n = int(input())
+x, y = 1, 1
+plans = input().split()
+
+# L, R, U, D
+dx = [0, 0, -1, 1]
+dy = [-1, 1, 0, 0]
+move_types = ['L', 'R', 'U', 'D']
+
+for plan in plans:
+    for idx, move_type in enumerate(move_types):
+        if plan == move_type:
+            nx = x + dx[idx]
+            ny = y + dy[idx]
+
+            # filter exceed
+            if 0 < nx < n + 1:
+                x = nx
+            if 0 < ny < n + 1:
+                y = ny
+print(x, y)
+```
+
+**문자열 재정렬 문제**: 알파벳 대문자와 숫자(0 ~ 9)로만 구성된 문자열에서 알파벳 대문자 오름차순 출력 이후
+모든 숫자를 더한 값을 이어서 출력하기
+```python
+input_string = input()
+result = []
+value = 0
+
+for unit in input_string:
+    if unit.isalpha():
+        result.append(unit.upper())
+    else:
+        value += int(unit)
+
+result.sort()
+if value > 0:
+    result.append(str(value))
+
+print(''.join(result))
+```
