@@ -153,3 +153,77 @@ if value > 0:
 
 print(''.join(result))
 ```
+
+<br>
+## 배열의 특정 연속된 구간을 처리하는 경우
+
+연속된 구간이 짧다면 성능상 문제가 없겠지만, 데이터가 백만개라고 하면 O(N²) 으로 시간복잡도가 너무 커진다.
+연속된 수 N 이 커짐에 따라 그 개수만큼 더 탐색을 진행해야 하기 때문이다.
+그러나 아래의 알고리즘들을 활용하면, N 개의 수를 전체 한 번만 탐색하면 되는 O(N) 의 시간복잡도가 충족된다. 
+
+**투 포인터**: 자연수로 구성된 수열 중 합이 5인 부분 연속 수열의 개수 구하기
+
+투 포인터는 리스트에 순차적으로 접근해야 할 때 두 개의 점을 이용해 위치를 기록하면서 처리하는 기법이다.
+
+| 1 | 2 | 3 | 4 | 5 |
+
+```python
+from collections import deque
+
+def two_pointer(n: int, m: int, num_list: list):
+    start, end = 0, 0
+    partial_sum = 0
+    check_queue = deque()
+    count = 0
+    while start < n:
+        while partial_sum < m and end < n:
+            partial_sum += num_list[end]
+            check_queue.append(num_list[end])
+            end += 1
+        if partial_sum == m:
+            print(list(check_queue))
+            count += 1
+        partial_sum -= num_list[start]
+        check_queue.popleft()
+        start += 1
+    return count
+
+
+if __name__ == '__main__':
+    two_pointer(n=5, m=5, num_list=[1, 2, 3, 2, 5])
+```
+
+**구간 합**: N 개의 정수로 구현된 수열에서 M 개의 쿼리에서 표현되는 각각의 구간 합 구하기
+
+쿼리는 **[L, R]** 구간을 의미하며, 구간 합을 구하면 된다.<br>
+아이디어는 간단하다. **접두사 합Prefix Sum**을 구하는 것.
+수열 list 에서 각 인덱스의 prefix sum 테이블을 구한 뒤,
+쿼리에서 지정된 R 의 누적합에서 L - 1 의 누적합을 빼면 된다. -> O(N + M)
+
+| 10 | 20 | 30 | 40 | 50 |
+
+```python
+def section_sum(num_list: list, query_list: list):
+    sum_list = []
+    prefix_sum = [0]
+    summary = 0
+    for num in num_list:
+        summary += num
+        prefix_sum.append(summary)
+    print(f'[PREFIX-SUM] {prefix_sum}')  # [0, 10, 30, 60, 100, 150]
+    for query in query_list:
+        sum_list.append(prefix_sum[query[1]] - prefix_sum[query[0] - 1])
+    return sum_list
+
+
+if __name__ == '__main__':
+    # [60, 70, 140]
+    section_sum(
+        num_list=[10, 20, 30, 40, 50],
+        query_list=[  # [[L, R]]
+            [1, 3],
+            [3, 4],
+            [2, 5],
+        ]
+    )
+```

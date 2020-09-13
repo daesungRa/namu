@@ -62,6 +62,23 @@ print(queue)  # deque([1, 2, 3])
 <br>
 ## 재귀 함수
 
+재귀 함수는 무한 루프에 빠지지 않도록 종료조건을 명시하는 것이 관건이다.
+다음은 재귀 함수를 활용한 팩토리얼 구현 예제이다.
+
+```python
+# recursive -> factorial
+
+
+def factorial(i):
+    if i <= 1:  # 종료조건 명시!
+        return 1
+    return i * factorial(i - 1)
+
+
+if __name__ == '__main__':
+    print(factorial(5))
+```
+
 <br>
 ## DFS
 
@@ -96,18 +113,38 @@ GRAPH = {
 def dfs_solution(graph: dict, start_node: str):  # LIFO
     visited = []
     stack = [start_node]
-
     while stack:
         node = stack.pop()
         if node not in visited:
             visited.append(node)
             stack.extend(reversed(graph[node]))  # 깊은 것이 나중에 들어가도록 역정렬
-
     return visited
+
 
 if __name__ == '__main__':
     # ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
     print(dfs_solution(graph=GRAPH, start_node='A'))
+```
+
+위의 기본 DFS 알고리즘에서 핵심 로직은 반복문으로 구성되었다.
+이것을 보다 간편하게 구현하고 싶을 때 stack 특성을 활용하여 재귀함수를 이용할 수도 있다.
+이때는 재귀 호출 시마다 공통적으로 사용하는 visited list 를 전달해줘야 한다.
+
+```python
+# DFS using recursive
+
+
+def dfs_recursive(graph: dict, visited: list, node: str):  # LIFO
+    visited.append(node)
+    for next_node in graph[node]:
+        if next_node not in visited:  # 더 이상 방문되지 않은 노드가 없는 경우가 종료조건!
+            dfs_recursive(graph=graph, visited=visited, node=next_node)
+    return visited
+
+
+if __name__ == '__main__':
+    # ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
+    print(dfs_recursive(graph=GRAPH, visited=[], node='A'))
 ```
 
 <br>
@@ -141,7 +178,6 @@ def bfs_solution(graph: dict, start_node: str):  # FIFO
     visited = []
     queue = deque()
     queue.append(start_node)
-
     while queue:
         # pop(0)보다 덱(deque)의 popleft()가 더 빠르다
         #   pop(0) -> 단순 list 자료형으로 pop(0) 시마다 재정렬이 필요하다
@@ -150,8 +186,8 @@ def bfs_solution(graph: dict, start_node: str):  # FIFO
         if node not in visited:
             visited.append(node)
             queue.extend(graph[node])
-
     return visited
+
 
 if __name__ == '__main__':
     # ['A', 'B', 'C', 'H', 'D', 'I', 'J', 'M', 'E', 'G', 'K', 'F', 'L']
