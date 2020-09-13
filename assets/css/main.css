@@ -496,6 +496,10 @@ th, td {
   border-bottom: 1px solid #aaa;
 }
 
+.post-container table th, td {
+  padding-left: 15px;
+}
+
 /*
   Social media icons
 */
