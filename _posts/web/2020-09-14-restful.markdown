@@ -1,0 +1,34 @@
+---
+title:  "RESTful 하다는 것의 의미"
+created:   2020-09-14 19:39:14 +0900
+updated:   2020-09-14 19:39:14 +0900
+author: namu
+categories: computer-science
+permalink: "/computer-science/:year/:month/:day/:title"
+image: https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile6.uf.tistory.com%2Fimage%2F216CED33596713631F9267
+image-view: true
+image-author: sjh836.tistory.com
+image-source: https://sjh836.tistory.com/86
+---
+
+
+---
+
+[목차]
+
+1. [REST](#rest)
+
+[참조]
+
+1. []
+
+---
+
+<br>
+## 들어가며
+
+<br>
+## REST
+
+<br>
+## RESTful 하다는 것의 의미
