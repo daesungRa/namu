@@ -1,0 +1,105 @@
+---
+title:  "[알고리즘] Dynamic programming"
+created:   2020-09-14 23:09:11 +0900
+updated:   2020-09-14 23:09:11 +0900
+author: namu
+categories: algorithm
+permalink: "/algorithm/:year/:month/:day/:title"
+image: https://cdn.pixabay.com/photo/2017/11/12/18/32/book-2943383__480.png
+image-view: true
+image-author: 200degrees
+image-source: https://pixabay.com/ko/users/200degrees-2051452/
+---
+
+
+---
+
+[목차]
+
+1. [Dynamic programming](#dynamic-programming)
+2. [피보나치 구현](#피보나치-구현)
+
+---
+
+<br>
+## 들어가며
+
+[안경잡이개발자](https://ndb796.tistory.com/)님의
+[이것이 취업을 위한 코딩테스트이다 with python 유튭 강의](https://www.youtube.com/watch?v=vRFXpqWDbRU&list=PLRx0vPvlEmdBFBFOoK649FlEMouHISo8N&index=5)에서
+발췌했다.
+
+<br>
+## Dynamic programming
+
+일반적으로 **_다이나믹dynamic_** 이라는 용어는 런타임 중 임시 데이터를 힙heap 영역에 동적으로 할당하는 것을 의미하지만,
+알고리즘에서는 실제 런타임은 아니지만 이미 계산된 값을 별도의 메모리에 캐싱한다는 점에서 관용적?으로 사용된다.
+
+코딩테스트에서 이 알고리즘이 필요한지 바로 캐치하기 어려운 경우가 많으므로
+그리디, 완전탐색 등을 빠르게 적용해 보고 문제해결이 되지 않을 때(<del>냄새가 날때</del>) 바로 적용해 본다.
+
+**활용근거**는 다음과 같다.
+
+1. **최적 부분 구조(Optimal Substructure)** 인가?
+    - 큰 문제를 작은 문제로 나눌 수 있으며 작은 문제의 답을 모아서 큰 문제 해결
+    - 대표적으로 피보나치 수열이 있다(Ni-2 + Ni-1 = Ni)
+2. **중복되는 부분 문제(Overlapping Subproblem)** 인가?
+    - 동일한 작은 문제를 반복적으로 해결
+
+이것을 **구현하는 방식**에는 다음 두 가지가 있다.
+
+1. **탑다운(Top down)**
+    - 큰 문제에서 작은 문제 순으로 재귀적 호출
+    - 직관적이고 빠르게 구현 가능하나, stack 메모리를 사용하기에 성능이 상대적으로 느리다
+    - 피보나치 기하급수 O(2^n)
+2. **보텀업(Bottom up)**
+    - 작은 문제에서 큰 문제로 반복 수행
+    - 구현을 생각해내기 까다롭지만 상대적으로 성능이 낫다
+    - 피보나치 선형 O(N)
+
+<br>
+## 피보나치 구현
+
+Fibonacci 는 기하급수적으로 상승하는 O(2^n) 의 대표적인 다이나믹 프로그래밍 예제이다. -> 황금비
+
+| f(1) | f(2) | f(3) | f(4) | f(5) | f(6) | f(7) | f(8) |
+|:--|:--|:--|:--|:--|
+| 1 | 1 | 2 | 3 | 5 | 8 | 13 | 21 |
+
+**[탑다운]단순 재귀적 구현**: 다이나믹의 특징인 최적 부분 구조에 착안해 탑다운으로 단순 재귀 호출을 한다
+
+```python
+# simple recursive
+def f(n):
+    if n <= 2:
+        return 1
+    return f(n - 1) + f(n - 2)
+
+print(f(4))  # 3
+print(f(6))  # 8
+print(f(8))  # 21
+```
+
+8번째까지의 결과 예상값을 보면 알겠지만, 피보나치에서 모든 순서의 값은 그것의 전과 전전 순서에 대한 연산이 필요하게 된다.
+이를 단순 재귀적으로 구현해버리면 최초 입력 값 n 이 증가하는 만큼 동일한 반복연산 횟수도 기하급수적으로 많아진다.
+
+예를 들어 f(6) 을 단순 재귀적으로 호출한다면 **동일한 f(4) 연산이 2회, 동일한 f(3) 연산이 3회, 동일한 f(2) 연산이 5회 반복**된다.
+
+**[탑다운]메모이제이션Memoization**: 위와 같이 동일하게 반복되는 중복연산의 결과값을 메모리에 캐싱Caching 해두는 방법이다
+
+```python
+# memoization recursive (max 100)
+caching_list = [0] * 100
+def memoi_f(n):
+    if n <= 2:
+        return 1
+    
+    if caching_list[n] != 0:
+        return caching_list[n]  # return caching data
+    
+    caching_list[n] = memoi_f(n - 1) + memoi_f(n - 2)  # caching
+    return caching_list[n]
+```
+
+결과값 자체는 동일하게 기하급수적으로 증가하지만, 메모리 캐싱으로 인해 연산 횟수는 n 회이다. -> O(N)
+
+**[보텀업]반복문으로 구현**: 주어진 수 n만큼 아래에서부터 반복적으로 상승시킨다
