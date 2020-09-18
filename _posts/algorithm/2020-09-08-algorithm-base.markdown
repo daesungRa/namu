@@ -16,7 +16,7 @@ image-source: https://pixabay.com/ko/users/200degrees-2051452/
 
 [안경잡이개발자](https://ndb796.tistory.com/)님의
 [이것이 취업을 위한 코딩테스트이다 with python 유튭 강의](https://www.youtube.com/watch?v=Lytj_xcw8mE&list=PLRx0vPvlEmdBFBFOoK649FlEMouHISo8N)에서
-발췌했다.
+참조했다.
 
 <br>
 ## 순열과 조합
