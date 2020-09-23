@@ -305,3 +305,49 @@ def mining_solution(n, m, mine):
         result = max_value > result and max_value or result
     return result
 ```
+
+직접 찾아가기는 힘들다. 컴퓨터의 힘을 빌려야 한다.<br>
+아이디어는 보텀업 방식으로 j - 1 번 열의 left_up, left, left_down 중 max 를 활용하는 것이다.
+초기값은 주어진 _mine_ 리스트의 j = 0 번 값들을 그대로 넣어주고, 점화식은 다음과 같이 작성한다.
+
+- ```dd[i][j] = mine[i][j] + max(left_up, left, left_down)```
+
+완성된 누적 dd 리스트에서 마지막 j 열의 최대값을 반환하면 된다.
+
+<br>
+## 실전 풀이
+
+프로그래머스 [고득점 kit](https://programmers.co.kr/learn/courses/30/parts/12263) 에 출제된 문제들이다.
+
+**N으로 표현**: 주어진 수 N 과 사칙연산을 활용해서 number 를 표현할 수 있는 방법 중 N 사용횟수의 최소값 구하기
+
+N = 5, number = 12 로 주어졌을 때,
+
+12 = 5 + 5 + (5 / 5) + (5 / 5)
+12 = 55 / 5 + 5 / 5
+12 = (55 + 5) / 5
+
+로 5 를 사용한 횟수는 각각 6, 5, 4 이고, 이중 가장 작은 경우는 4 이다(5 를 4 번 사용한 경우)
+
+제한사항은 다음과 같다
+
+- N은 1 이상 9 이하입니다.
+- number는 1 이상 32,000 이하입니다.
+- 수식에는 괄호와 사칙연산만 가능하며 나누기 연산에서 나머지는 무시합니다.
+- 최솟값이 8보다 크면 -1을 return 합니다.
+
+입출력 예
+
+| N | number | return |
+|:--|:--|:--|
+| 5 | 12 | 4 |
+| 2 | 11 | 3 |
+
+```python
+def solution(N, number):
+    answer = 0
+    return answer
+```
+
+N 사용횟수의 최소값은 8 보다 클수 없는 제한조건에 착안하여
+N 의 개수 1 에서부터 N 의 개수 8 까지의 각각 조합 가능한 number 의 목록을 캐싱하여 반환한다.
