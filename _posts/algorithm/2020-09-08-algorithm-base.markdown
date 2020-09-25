@@ -1,7 +1,7 @@
 ---
 title:  "[알고리즘] 기본, 그리디, 구현"
 created:   2020-09-08 22:29:25 +0900
-updated:   2020-09-09 01:24:14 +0900
+updated:   2020-09-25 23:45:14 +0900
 author: namu
 categories: algorithm
 permalink: "/algorithm/:year/:month/:day/:title"
@@ -161,37 +161,56 @@ print(''.join(result))
 연속된 수 N 이 커짐에 따라 그 개수만큼 더 탐색을 진행해야 하기 때문이다.
 그러나 아래의 알고리즘들을 활용하면, N 개의 수를 전체 한 번만 탐색하면 되는 O(N) 의 시간복잡도가 충족된다. 
 
-**투 포인터**: 자연수로 구성된 수열 중 합이 5인 부분 연속 수열의 개수 구하기
+**투 포인터1**: 자연수로 구성된 수열 중 합이 5인 부분 연속 수열의 개수 구하기
 
 투 포인터는 리스트에 순차적으로 접근해야 할 때 두 개의 점을 이용해 위치를 기록하면서 처리하는 기법이다.
 
 | 1 | 2 | 3 | 4 | 5 |
 
 ```python
-from collections import deque
-
-def two_pointer(n: int, m: int, num_list: list):
-    start, end = 0, 0
-    partial_sum = 0
-    check_queue = deque()
-    count = 0
-    while start < n:
-        while partial_sum < m and end < n:
-            partial_sum += num_list[end]
-            check_queue.append(num_list[end])
+def two_pointer(m, nums):
+    start, end, partial_sum, count = 0, 0, 0, 0
+    while start < len(nums):
+        while partial_sum < m and end < len(nums):
+            partial_sum += nums[end]
             end += 1
         if partial_sum == m:
-            print(list(check_queue))
             count += 1
-        partial_sum -= num_list[start]
-        check_queue.popleft()
+        partial_sum -= nums[start]
         start += 1
     return count
-
-
-if __name__ == '__main__':
-    two_pointer(n=5, m=5, num_list=[1, 2, 3, 2, 5])
 ```
+
+m = 5 로 주어진다면, start 포인터와 end 포인터 둘다 인덱스 0 에서부터 시작해서
+인덱스 1 씩 올려가며 구간합이 5 인 부분합의 개수를 count 한다.
+
+먼저 end 인덱스를 반복해 올려가며 더하는데, 주어진 수 5 보다 같거나 커지는 경우 반복을 종료하고 조건에 부합하며 count 를 1 올린다.
+그다음 start 인덱스를 1 올리고 다음 end 반복을 수행한다.
+
+만약 end 가 주어진 리스트 nums 을 마지막 인덱스에 도달하면 멈추고, start 만 1 씩 증가시키며 count 조건을 확인한다.
+
+**투 포인터2**: 자연수로 구성된 수열 중 주어진 인덱스 구간의 부분합 중 가장 큰 수 구하기
+
+같은 기법을 활용하여 이번에는 주어긴 구간합 중 최대값을 구한다.
+
+| 1 | 2 | 3 | 4 | 5 |
+
+```python
+def two_pointer2(m, nums):
+    partial_sum = 0
+    for i in range(m):
+        partial_sum += nums[i]
+    result = partial_sum
+    start, end = 0, m
+    while end < len(nums):
+        partial_sum -= nums[start]
+        partial_sum += nums[end]
+        result = partial_sum > result and partial_sum or result
+        start, end = start + 1, end + 1
+    return result
+```
+
+인덱스 구간(간격)은 m 으로 주어지고, 각 구간합 중 최대값을 result 에 저장하여 반환한다.
 
 **구간 합**: N 개의 정수로 구현된 수열에서 M 개의 쿼리에서 표현되는 각각의 구간 합 구하기
 
