@@ -341,7 +341,7 @@ hr {
   top: 30px;
   left: 0;
   display: none;
-  width: 107px;
+  width: 150px;
   font-size: 14pt;
   text-align: left;
   padding-left: 0;
@@ -351,11 +351,35 @@ hr {
 }
 
 .menu-dropdown .menu-categories li {
-  padding-left: 14px;
+  position: relative;
+  height: 40px;
+}
+
+.menu-dropdown .menu-categories li:hover {
+  background-color: #dfdfdf;
+  color: #343434;
+  cursor: pointer;
 }
 
 .menu-dropdown .menu-categories a {
   font-size: 0.8rem;
+}
+
+.menu-dropdown .menu-categories .menu-img {
+  position: absolute;
+  top: 9px;
+  left: 10px;
+  width: 20px;
+}
+
+.menu-dropdown .menu-categories .menu-img img {
+  margin: 0 !important;
+}
+
+.menu-dropdown .menu-categories .menu-name {
+  position: absolute;
+  top: 6px;
+  left: 40px;
 }
 
 .menu-content .content {  /* in 200523 by namu */
