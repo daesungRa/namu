@@ -62,7 +62,7 @@ function activateToggleMenuBarContents (scroll) {
 	} else {
 		// Remove menu-bar-home
 		menuBar.css({'background-color': '#fff'});
-		$('.header-menu *').css({'color': '#555'});
+		$('.header-menu *').css({'color': '#888'});
 		if ($('#menu-bar-home')) {
 			$('.header-menu .menu-content').css({'position': ''});
 			$('.header-menu .menu-content #menu-bar-home').remove();
