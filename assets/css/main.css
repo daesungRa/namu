@@ -318,6 +318,21 @@ hr {
   z-index: 99;
 }
 
+.header-menu #menu-bar-home {
+  position: absolute;
+  width: 40px;
+  top: 1px;
+  left: 162px;
+}
+
+.header-menu .social-icons #go-to-top {
+  position: absolute;
+  width: 40px;
+  top: 800px;
+  right: -40px;
+  cursor: pointer;
+}
+
 .menu-content {
   float: left;
 }
