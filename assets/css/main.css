@@ -329,7 +329,7 @@ hr {
   position: absolute;
   width: 40px;
   top: 800px;
-  right: -40px;
+  right: 0;
   cursor: pointer;
 }
 
