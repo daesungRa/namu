@@ -1,7 +1,7 @@
 ---
 title:  "[알고리즘] DFS, BFS"
 created:   2020-09-09 02:12:24 +0900
-updated:   2020-09-10 23:24:10 +0900
+updated:   2020-09-27 18:22:23 +0900
 author: namu
 categories: algorithm
 permalink: "/algorithm/:year/:month/:day/:title"
@@ -15,8 +15,10 @@ image-source: https://pixabay.com/ko/users/200degrees-2051452/
 ## 들어가며
 
 [안경잡이개발자](https://ndb796.tistory.com/)님의
-[이것이 취업을 위한 코딩테스트이다 with python 유튭 강의](https://www.youtube.com/watch?v=PqzyFDUnbrY&list=PLRx0vPvlEmdBFBFOoK649FlEMouHISo8N&index=3)에서
+[**_이것이 취업을 위한 코딩테스트이다 with python 유튭 강의_**](https://www.youtube.com/watch?v=PqzyFDUnbrY&list=PLRx0vPvlEmdBFBFOoK649FlEMouHISo8N&index=3)에서
 참조했다.
+
+\+ [**_프로그래머스 dfs, bfs 고득점 kit 문제들_**](https://programmers.co.kr/learn/courses/30/parts/12421)도 추가했다.
 
 <br>
 ## 스택과 큐
@@ -193,3 +195,57 @@ if __name__ == '__main__':
     # ['A', 'B', 'C', 'H', 'D', 'I', 'J', 'M', 'E', 'G', 'K', 'F', 'L']
     print(bfs_solution(graph=GRAPH, start_node='A'))
 ```
+
+<br>
+## 실전 풀이
+
+프로그래머스 [고득점 kit](https://programmers.co.kr/learn/courses/30/parts/12421) 에 출제된 문제들이다.
+
+**타겟 넘버**: n 개의 음이 아닌 정수 리스트를 각각 적절히 더하거나 빼서 타겟 넘버를 만드는 방법의 수 구하기
+
+제한사항은 다음과 같다
+
+- 주어지는 숫자의 개수는 2개 이상 20개 이하입니다.
+- 각 숫자는 1 이상 50 이하인 자연수입니다.
+- 타겟 넘버는 1 이상 1000 이하인 자연수입니다.
+
+입출력 예
+
+| numbers | target | return |
+|:--|:--|:--|
+| [1, 1, 1, 1, 1] | 3 | 5 |
+
+```python
+from itertools import product
+
+
+def dfs_solution(numbers, target):
+    result = [numbers[0], -numbers[0]]
+    for num_idx in range(1, len(numbers)):
+        temps = []
+        for num in result:
+            temps.append(num + numbers[num_idx])
+            temps.append(num - numbers[num_idx])
+        result = temps
+    return result.count(target)
+
+
+def permutation_solution(numbers, target):
+    set_list = [(x, -x) for x in numbers]
+    dup_permu = product(*set_list)
+    sum_mapping = list(map(sum, dup_permu))
+    return sum_mapping.count(target)
+```
+
+두 풀이법은 주어진 numbers 의 각 요소를 깊이우선탐색 원리에 따라 더하거나 빼는 경우의 수들을 반복해서 구해내는 점에서 원리적으로 같다.
+
+**_dfs_solution_** 은 numbers 의 첫 번째 수의 + 혹은 - 값을 초기값으로 시작하여
+나머지 numbers 의 요소들을 누적적으로 더하거나 빼나간다.
+
+**_permutation_solution_** 은 중복순열을 사용하는 방법이다.
+먼저 주어진 numbers 의 모든 더하기 빼기 사례들을 나열하고(set_list),
+그 사례들에 따라 모든 경우의 수를 중복까지 허용한 중복순열로 나타낸다(dup_permu).
+그렇게 구해진 순열의 각 경우들을 sum 하여(sum_mapping) 그중 target 과 같은 결과들을 count 한다.
+
+이 풀이법들은 numbers 의 길이 n 에 따라 2 의 배수로 분기되는 **이진 트리의 양상을 보이며, O(2ⁿ) 의 시간복잡도**를 갖는다.
+말단 노드들 중 target 값을 같는 경우를 count 해야 하므로 사실상 완전 탐색방식이다.
