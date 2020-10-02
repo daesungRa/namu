@@ -39,11 +39,19 @@ function getGoToTopElem () {
 };
 
 function activateToggleMenuBarContents (scroll) {
-	let menuBar = $('.header-menu');
 	if (scroll > 1) {
 		// Set menu-bar-home
-		menuBar.css({'background-color': '#555'});
-		$('.header-menu *').css({'color': '#fff'});
+		$('.header-menu').css({'background-color': '#555', 'opacity': 0.8});
+		$('.header-menu > nav > a, #menu-dropdown-bars > i').css({'color': '#fff'});
+		$('.menu-dropdown .menu-categories li').css({'background-color': '#555'});
+		$('.menu-dropdown .menu-categories li').hover(function () {
+			$(this).css({'background-color': '#cfcfcf', 'cursor': 'pointer'});
+			$(this).find('a').css({'color': '#222'});
+		}, function () {
+			$(this).css({'background-color': '#555', 'cursor': 'pointer'});
+			$(this).find('a').css({'color': '#fff'});
+		});
+		$('.menu-dropdown .menu-categories li a').css({'color': '#fff'});
 		let menuBarHome = document.getElementById('menu-bar-home');
 		if (menuBarHome === null || menuBarHome === 'undefined') {
 			$('.header-menu .menu-content').css({'position': 'relative'});
@@ -61,8 +69,17 @@ function activateToggleMenuBarContents (scroll) {
 		};
 	} else {
 		// Remove menu-bar-home
-		menuBar.css({'background-color': '#fff'});
-		$('.header-menu *').css({'color': '#888'});
+		$('.header-menu').css({'background-color': '#fff', 'opacity': 1});
+		$('.header-menu > nav > a, #menu-dropdown-bars > i').css({'color': '#888'});
+		$('.menu-dropdown .menu-categories li').css({'background-color': '#fff'});
+		$('.menu-dropdown .menu-categories li').hover(function () {
+			$(this).css({'background-color': '#cfcfcf', 'cursor': 'pointer'});
+			$(this).find('a').css({'color': '#222'});
+		}, function () {
+			$(this).css({'background-color': '#fff', 'cursor': 'pointer'});
+			$(this).find('a').css({'color': '#888'});
+		});
+		$('.menu-dropdown .menu-categories li a').css({'color': '#888'});
 		if ($('#menu-bar-home')) {
 			$('.header-menu .menu-content').css({'position': ''});
 			$('.header-menu .menu-content #menu-bar-home').remove();
