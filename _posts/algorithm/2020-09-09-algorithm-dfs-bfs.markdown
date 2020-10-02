@@ -249,3 +249,90 @@ def permutation_solution(numbers, target):
 
 이 풀이법들은 numbers 의 길이 n 에 따라 2 의 배수로 분기되는 **이진 트리의 양상을 보이며, O(2ⁿ) 의 시간복잡도**를 갖는다.
 말단 노드들 중 target 값을 같는 경우를 count 해야 하므로 사실상 완전 탐색방식이다.
+
+**네트워크**: 주어진 컴퓨터의 개수 n, 노드 간 연결정보 2차원 배열 computers 를 토대로 총 네트워크 개수 구하기
+
+제한사항은 다음과 같다
+
+- 컴퓨터의 개수 n은 1 이상 200 이하인 자연수입니다.
+- 각 컴퓨터는 0부터 n-1인 정수로 표현합니다.
+- i번 컴퓨터와 j번 컴퓨터가 연결되어 있으면 computers[i][j]를 1로 표현합니다.
+- computer[i][i]는 항상 1입니다.
+
+입출력 예
+
+| n | computers | return |
+|:--|:--|:--|
+| 3 | [[1, 1, 0], [1, 1, 0], [0, 0, 1]] | 2 |
+| 3 | [[1, 1, 0], [1, 1, 1], [0, 1, 1]] | 1 |
+
+```python
+from collections import deque  # for BFS
+
+
+# Using DFS
+def make_graph(n, computers):
+    graph = {i: set() for i in range(n)}
+    for idx1, com1 in enumerate(computers):
+        for idx2, com2 in enumerate(com1):
+            if com2 == 1 and idx1 != idx2:
+                graph[idx1].add(idx2)
+    return graph
+
+
+def dfs(graph, start_node):
+    visited = []
+    stack = [start_node]
+    while stack:
+        node = stack.pop()
+        if node not in visited:
+            visited.append(node)
+            stack.extend(reversed(list(graph[node])))
+    return sorted(visited)
+
+
+def solution(n, computers):
+    nodes = sorted([node for node in range(n)])
+    graph = make_graph(n, computers)
+    visited = dfs(graph, 0)
+    answer = 1
+    while nodes != visited:
+        for node in nodes:
+            if node not in visited:
+                visited.extend(dfs(graph, node))
+                visited.sort()
+                answer += 1
+    return answer
+
+
+# Using BFS
+def solution(n, computers):
+    def bfs(node, visited):
+        queue = deque()
+        queue.append(node)
+        visited[node] = 1
+        while queue:
+            v = queue.pop(0)
+            for i in range(n):
+                if computers[v][i] == 1 and visited[i] == 0:
+                    visited[i] = 1
+                    queue.append(i)
+        return visited
+    visited = [0 for i in range(n)]
+    answer = 0
+    for i in range(n):
+        try:
+            visited = bfs(visited.index(0), visited)
+            answer += 1
+        except ValueError as ve:
+            print(f'[LIST-INDEX-ERROR] {ve}')
+    return answer
+```
+
+컴퓨터의 개수 n 과 연결정보 computers 로 graph 를 만들어 첫 번째 컴퓨터(0 번 인덱스)부터 dfs 탐색을 실시한다.
+
+만약 **하나의 네트워크**라면 모든 노드를 방문했을 것이므로, 최초 반환된 visited list 가 전체 node list 와 같을 것이다.
+**두개 이상의 네트워크**라면 분절된 노드가 있을 것이므로, 정렬된 node list 에서 방문되지 않은 가장 낮은 노드부터 시작해
+한번 더 dfs 탐색을 실시하며, 새로운 탐색 시마다 네트워크 개수를 1씩 증가시킨다. 이때 반환된 visited list 는 기존의 그것에 extend 시킨다.
+
+다른 사람이 푼 **bfs 방식**도 visited list 를 채워나가되, 분절된 노드가 있다면 네트워크 개수를 1씩 증가시키며 추가 탐색하는 원리는 같다.
