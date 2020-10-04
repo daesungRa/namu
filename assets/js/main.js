@@ -43,6 +43,11 @@ function activateToggleMenuBarContents (scroll) {
 		// Set menu-bar-home
 		$('.header-menu').css({'background-color': '#555', 'opacity': 0.8});
 		$('.header-menu > nav > a, #menu-dropdown-bars > i').css({'color': '#fff'});
+		if (screen.width < 769) {
+			$('.menu-dropdown .menu-categories').css({'border': 'none', 'top': '35px'});
+		} else {
+			$('.menu-dropdown .menu-categories').css({'border': 'none', 'top': '32px'});
+		};
 		$('.menu-dropdown .menu-categories li').css({'background-color': '#555'});
 		$('.menu-dropdown .menu-categories li').hover(function () {
 			$(this).css({'background-color': '#cfcfcf', 'cursor': 'pointer'});
@@ -71,6 +76,11 @@ function activateToggleMenuBarContents (scroll) {
 		// Remove menu-bar-home
 		$('.header-menu').css({'background-color': '#fff', 'opacity': 1});
 		$('.header-menu > nav > a, #menu-dropdown-bars > i').css({'color': '#888'});
+		if (screen.width < 769) {
+			$('.menu-dropdown .menu-categories').css({'border': '1px solid #bfbfbf', 'top': '34px'});
+		} else {
+			$('.menu-dropdown .menu-categories').css({'border': '1px solid #bfbfbf', 'top': '31px'});
+		};
 		$('.menu-dropdown .menu-categories li').css({'background-color': '#fff'});
 		$('.menu-dropdown .menu-categories li').hover(function () {
 			$(this).css({'background-color': '#cfcfcf', 'cursor': 'pointer'});

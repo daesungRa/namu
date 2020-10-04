@@ -13,6 +13,13 @@
 
   <link rel="stylesheet" href="{{ site.github.url }}/assets/css/main.css">
   <link rel="stylesheet" href="{{ site.github.url }}/assets/css/syntax.css">
+
+  <!-- Split web/mobile (201004. by Daesung Ra) -->
+  <link rel="stylesheet" type="text/css" media="screen and (min-width: 769px)"
+        href="{{ site.github.url }}/assets/css/common-web.css">
+  <link rel="stylesheet" type="text/css" media="screen and (min-width: 0) and (max-width: 768px)"
+        href="{{ site.github.url }}/assets/css/common-mobile.css">
+
   <!-- Use Atom -->
   {% feed_meta %}
   <!-- Use RSS-2.0 -->
