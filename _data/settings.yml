@@ -14,6 +14,7 @@ dropdown_menu:
 - {name: '자바스크립트', path: 'javascript', icon: 'javascript', url: ''}
 - {name: '파이썬', path: 'python', icon: 'python', url: ''}
 - {name: '장고, 플라스크', path: 'django', icon: 'django', url: ''}
+- {name: '데이터베이스', path: 'database', icon: 'database', url: ''}
 - {name: '도커', path: 'docker', icon: 'docker', url: ''}
 - {name: '알고리즘, 코테', path: 'algorithm', icon: 'algorithm', url: ''}
 - {name: 'CS', path: 'computer-science', icon: 'cs', url: ''}
