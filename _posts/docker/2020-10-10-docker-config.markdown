@@ -120,7 +120,7 @@ Docker compose, git(없다면) 까지 체크하여 모두 설치하자.
 먼저 docker 사용만을 위한 SUDO 계정을 만들어 보자
 
 root 로 접속 후 도커유저 생성
-```commandline
+```text
 ra@ra-VirtualBox:/$ su
 Password:
 root@ra-VirtualBox:/$ adduser docker-user
@@ -135,7 +135,7 @@ root@ra-VirtualBox:/$
 ### docker workdir
 
 docker-user 로 접속 후 작업 디렉토리 만들기
-```commandline
+```text
 root@ra-VirtualBox:/$ su - docker-user
 docker-user@ra-VirtualBox:~$ pwd
 /home/docker-user
@@ -154,4 +154,5 @@ total 0
 docker-user@ra-VirtualBox:~$ 
 ```
 
-이후부터 ```/home/docker-user/workdir/base``` 디렉토리에 ubuntu 18.04 LTS 베이스 이미지를 만들고 실습을 진행하기
+이후부터 ```/home/docker-user/workdir/base``` 디렉토리에
+ubuntu 18.04 LTS 베이스 이미지를 만들고 실습을 진행할 것이다.
