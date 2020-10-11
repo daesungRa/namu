@@ -5,7 +5,7 @@ updated:   2020-10-09 22:32:18 +0900
 author: namu
 categories: database
 permalink: "/database/:year/:month/:day/:title"
-image: https://cdn.pixabay.com/photo/2018/03/30/15/11/poly-3275592_1280.jpg
+image: https://cdn.pixabay.com/photo/2018/04/06/13/46/poly-3295857_1280.jpg
 image-view: true
 image-author: Manuchi
 image-source: https://pixabay.com/ko/users/manuchi-1728328/
