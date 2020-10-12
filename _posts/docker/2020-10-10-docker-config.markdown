@@ -100,7 +100,7 @@ Docker compose, git(없다면) 까지 체크하여 모두 설치하자.
     - apt 업데이트(```sudo apt update```) 이후 기본 툴들을 설치한다(```sudo apt install vim curl make git``` 등등).
     - 혹시 존재할지 모르는 예전 도커 툴들을 삭제한다(```sudo apt remove docker docker.io docker-engine```).
 
-![docker config 01]({{ site.url }}/assets/post-img/docker_config01.png)
+![docker config 01](https://daesungra.github.io/namu/assets/post-img/docker_config01.png)
 
 <br>
 ## Ubuntu 에 도커 설치하기
@@ -110,7 +110,7 @@ Docker compose, git(없다면) 까지 체크하여 모두 설치하자.
 이제 기본 명령어로 잘 설치되었는지 체크해보자.<br>
 ```docker -v``` ```docker images``` ```docker ps -a```
 
-![docker config 01]({{ site.url }}/assets/post-img/docker_config02.png)
+![docker config 02](https://daesungra.github.io/namu/assets/post-img/docker_config02.png)
 
 <br>
 ## Docker 작업환경 만들기
@@ -120,14 +120,8 @@ Docker compose, git(없다면) 까지 체크하여 모두 설치하자.
 먼저 docker 사용만을 위한 SUDO 계정을 만들어 보자
 
 root 로 접속 후 도커유저 생성
-```text
-ra@ra-VirtualBox:/$ su
-Password:
-root@ra-VirtualBox:/$ adduser docker-user
-...
-root@ra-VirtualBox:/$ usermod -aG sudo docker-user
-root@ra-VirtualBox:/$ 
-```
+
+![docker config 03](https://daesungra.github.io/namu/assets/post-img/docker_config03.png)
 
 명령 ```usermod``` 에서 ```-aG``` 옵션은 사용자를 보조 그룹에 추가하는 옵션이다.
 새로 추가한 ```docker-user``` 유저는 sudo 권한을 갖는 보조그룹에 추가되었다.
@@ -135,24 +129,8 @@ root@ra-VirtualBox:/$
 ### docker workdir
 
 docker-user 로 접속 후 작업 디렉토리 만들기
-```text
-root@ra-VirtualBox:/$ su - docker-user
-docker-user@ra-VirtualBox:~$ pwd
-/home/docker-user
-docker-user@ra-VirtualBox:~$ mkdir -p ./workdir/base
-docker-user@ra-VirtualBox:~$ ls -lR
-.:
-total 16
-drwxrwxr-x 3 docker-user docker-user 4096 10월 11 16:55 workdir
 
-./workdir:
-total 4
-drwxrwxr-x 2 docker-user docker-user 4096 10월 11 17:22 base
-
-./workdir/base:
-total 0
-docker-user@ra-VirtualBox:~$ 
-```
+![docker config 04](https://daesungra.github.io/namu/assets/post-img/docker_config04.png)
 
 이후부터 ```/home/docker-user/workdir/base``` 디렉토리에
 ubuntu 18.04 LTS 베이스 이미지를 만들고 실습을 진행할 것이다.
