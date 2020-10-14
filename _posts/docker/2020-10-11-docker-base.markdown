@@ -25,7 +25,7 @@ image-source: https://pixabay.com/ko/users/manuchi-1728328/
 ## 들어가며
 
 앞서 **```VirtualBox Ubuntu 18.04 LTS```** 가상머신으로
-[```Docker 실습환경```](./2020-10-10-docker-config.markdown)을 만들어 보았다.
+[```Docker 실습환경```](https://daesungra.github.io/namu/docker/2020/10/10/docker-config)을 만들어 보았다.
 이때 ```/home/docker-user/workdir/base``` 디렉토리까지 생성했었는데,
 **Base 우분투 이미지**를 이 위치에서 만들게 된다.
 
