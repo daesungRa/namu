@@ -33,15 +33,5 @@ image-source: https://pixabay.com/ko/users/manuchi-1728328/
 ## Base 우분투 이미지 만들기
 
 먼저 Dockerfile 을 만든다. 경로는 ```/home/docker-user/workdir/base/Dockerfile``` 이다.
-```commandline
-FROM ubuntu:18.04
-MAINTAINER Ra Daesung "daesungra@gmail.com"
 
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=Asia/Seoul
-
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update && apt-get install -y nginx vim curl git wget make llvm
-RUN mkdir /DATA
-
-WORKDIR /DATA
-```
+![docker base 01](https://daesungra.github.io/namu/assets/post-img/docker_base01.png)
