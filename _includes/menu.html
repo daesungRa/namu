@@ -14,6 +14,7 @@
                 </a>
                 <a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}" class="content menu-name">
                   {{ item.name }}
+                  <small id="{{ item.path }}-count"> (5)</small>
                 </a>
               </li>
             {% else %}
@@ -23,6 +24,7 @@
                 </a>
                 <a href="{{ site.github.url }}/{{ item.path }}/{{ item.url }}" class="content menu-name">
                   {{ item.name }}
+                  <small id="{{ item.path }}-count"> (5)</small>
                 </a>
               </li>
             {% endif %}
@@ -41,3 +43,23 @@
   </nav>
   <hr class="header-hr"/>
 </div>
+
+<script>
+  CATEGORIES = {};
+</script>
+<!--  <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>  -->
+{%- for post in site.posts -%}
+  <script>
+    if ('{{ post.categories }}' in CATEGORIES) {
+      CATEGORIES['{{ post.categories }}']++
+    } else {
+      CATEGORIES['{{ post.categories }}'] = 1
+    };
+  </script>
+{%- endfor -%}
+<script>
+  let categoryKeys = Object.keys(CATEGORIES);
+  $.each(categoryKeys, function (idx, key) {
+      $(`#${key}-count`).text(` (${CATEGORIES[key]})`);
+  });
+</script>
