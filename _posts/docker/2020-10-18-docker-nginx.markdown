@@ -74,6 +74,26 @@ nginx 이미지를 만들 것이기 때문에 server-nginx 디렉토리를 지�
 
 ![docker nginx 04](https://daesungra.github.io/namu/assets/post-img/docker_nginx04.png)
 
-이미지가 잘 생성되었다!
+이미지가 잘 생성되었다! 이제 컨테이너를 실행해보자.
+
+![docker nginx 05](https://daesungra.github.io/namu/assets/post-img/docker_nginx05.png)
+
+- -i : interactive 모드로써 STDIN 이 활성화된다. bash 명령을 입력할 때 Not attached 여도 표준입력 가능.
+- -t : pseudo-TTY 모드로써 bash 명령의 결과가 셸 라인에 표시된다.
+- -d : detached 모드로써 컨테이너가 백그라운드 데몬으로 실행된다.
+- --name : 컨테이너 이름 지정
+- -p : 컨테이너가 수용할 포트정보. 위 경우 컨테이너 외부에서 8243 포트로 request 가 들어가면 컨테이너 내부에서는 80 포트로 수용한다.
+
+이후 컨테이너화할 이미지 이름을 태그와 함께입력한다.
+그러면 이미지 생성 시 지정한 CMD 가 자동으로 실행된다(nginx -g "daemon off;").
+
+이제 ```docker ps -a``` 커맨드로 잘 실행중인 것을 확인할 수 있다.
+
+![docker nginx 06](https://daesungra.github.io/namu/assets/post-img/docker_nginx06.png)
+
+컨테이너 외부인 Host OS 상에서 ```curl localhost:8243``` 으로 호출하면 ```run``` 시에 지정한 8243 포트 -> 80 포트로
+컨테이너에 들어간다. 이를 주시하고 있던 nginx 에 의해 default 페이지가 출력된 것을 확인할 수 있다.
+
+```exec``` 명령으로 컨테이너에 들어가 ```service``` 확인을 하면 nginx 가 실행중임을 볼 수 있다.
 
 다음으로는 경량 python 웹 프레임워크의 끝판왕, ```Flask 베이스 이미지```를 만들어보자.
