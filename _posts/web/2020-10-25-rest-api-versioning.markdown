@@ -86,8 +86,7 @@ Accept-version: v1
 Accept-version: v2
 ```
 
-<br>
-## Versioning using Accept header
+#### Versioning using Accept header
 
 ```content negotiation``` 은 ```a clean set of URLs``` 를 보존할 수 있도록 할지 모르지만,
 당신은 여전히 서로 다른 버전 하에서 제공되는 특정 내용에 대한 복잡성을 다뤄야만 할 것입니다.
