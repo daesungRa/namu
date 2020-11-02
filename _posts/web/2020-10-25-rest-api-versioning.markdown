@@ -7,8 +7,8 @@ categories: web
 permalink: "/web/:year/:month/:day/:title"
 image: https://cdn.pixabay.com/photo/2018/04/06/13/46/poly-3295856_1280.png
 image-view: true
-image-author: sjh836.tistory.com
-image-source: https://sjh836.tistory.com/86
+image-author: Manuchi
+image-source: https://pixabay.com/ko/users/manuchi-1728328/
 ---
 
 
