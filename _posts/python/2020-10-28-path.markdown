@@ -1,0 +1,24 @@
+---
+title: 경로 관련 패키지를 다뤄보자
+created: 2020-10-28 20:25:27 +0900
+updated: 2020-10-28 20:25:27 +0900
+author: namu
+categories: python
+permalink: "/python/:year/:month/:day/:title"
+image: https://cdn.pixabay.com/photo/2015/09/18/09/12/dog-945241_1280.jpg
+image-view: true
+image-author: 729714
+image-source: https://pixabay.com/ko/users/729714-729714/
+---
+
+
+---
+
+[목차]
+
+1. [들어가며](#들어가며)
+
+---
+
+<br>
+### 들어가며
