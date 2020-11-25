@@ -1,5 +1,5 @@
 ---
-title: 경로 관련 패키지를 다뤄보자
+title: 파이썬에서 경로 다루기
 created: 2020-10-28 20:25:27 +0900
 updated: 2020-10-28 20:25:27 +0900
 author: namu
@@ -12,13 +12,33 @@ image-source: https://pixabay.com/ko/users/729714-729714/
 ---
 
 
----
+<br>
+## os.path vs Path
 
-[목차]
+파이썬으로 파일의 경로를 다룰 때는 [```os.path```](https://docs.python.org/ko/3/library/os.path.html#module-os.path) 혹은 
+[```pathlib```](https://docs.python.org/3/library/pathlib.html) 를 활용합니다.
+후자는 경로를 다루는데 있어서 [```Path```](https://docs.python.org/3/library/pathlib.html#concrete-paths) 
+객체를 중심으로 접근하는 방식으로, 파이썬 3.4 버전부터 빌트인 모듈로 포함되고 있습니다.
 
-1. [들어가며](#들어가며)
+관점에 따라 다르지만, 현재는 프로그래머에게 있어서 객체지향 방식이 읽거나 활용하기 편하다는 의견이 더 우세합니다.
+저도 **_path = os.path.join(path1, path2)_** 이런 방식보다는 **_path = path1 / path2_** 와 같은 방식이 더 편합니다^^
 
----
 
 <br>
-### 들어가며
+## os.path
+
+운영체제 종속 기능을 사용하는 이식성 있는 여러 툴들을 제공하는 ```os``` 패키지의 경로 관리 모듈이 ```os.path```입니다.
+위에서 언급했듯이 ```pathlib``` 가 본격적으로 사용되기 이전까지 일반적인 경로탐색 방식이었습니다.
+
+```python
+import os
+
+
+mydir = os.getcwd()  # current path. 'pwd' in posix system
+myfilename = 'myfilename.txt'
+
+filepath = os.path.join(mydir, myfilename)
+print(filepath)  # /my/dir/myfilename.txt
+```
+
+위 코드에서 filepath 는 현재 작업경로에 있는 'myfilename.txt' 의 절대경로를 나타냅니다.
