@@ -13,14 +13,14 @@ image-source: https://pixabay.com/ko/users/729714-729714/
 
 
 <br>
-## os.path vs Path
+## os.path vs pathlib
 
 파이썬으로 파일의 경로를 다룰 때는 [```os.path```](https://docs.python.org/ko/3/library/os.path.html#module-os.path) 혹은 
 [```pathlib```](https://docs.python.org/3/library/pathlib.html) 를 활용합니다.
 후자는 경로를 다루는데 있어서 [```Path```](https://docs.python.org/3/library/pathlib.html#concrete-paths) 
 객체를 중심으로 접근하는 방식으로, 파이썬 3.4 버전부터 빌트인 모듈로 포함되고 있습니다.
 
-관점에 따라 다르지만, 현재는 프로그래머에게 있어서 객체지향 방식이 읽거나 활용하기 편하다는 의견이 더 우세합니다.
+관점에 따라 다를 수 있지만, 현재는 프로그래머에게 있어서 객체지향 방식이 읽거나 활용하기 편하다는 의견이 많습니다.
 저도 **_path = os.path.join(path1, path2)_** 이런 방식보다는 **_path = path1 / path2_** 와 같은 방식이 더 편합니다^^
 
 
@@ -30,15 +30,27 @@ image-source: https://pixabay.com/ko/users/729714-729714/
 운영체제 종속 기능을 사용하는 이식성 있는 여러 툴들을 제공하는 ```os``` 패키지의 경로 관리 모듈이 ```os.path```입니다.
 위에서 언급했듯이 ```pathlib``` 가 본격적으로 사용되기 이전까지 일반적인 경로탐색 방식이었습니다.
 
+### os.path.join() os.path.abspath()
+
 ```python
 import os
 
 
-mydir = os.getcwd()  # current path. 'pwd' in posix system
-myfilename = 'myfilename.txt'
+my_dir = os.getcwd()  # current path. 'pwd' in posix system
+my_file_name = 'my_file_name.txt'
 
-filepath = os.path.join(mydir, myfilename)
-print(filepath)  # /my/dir/myfilename.txt
+file_path = os.path.join(my_dir, my_file_name)
+print(file_path)  # /my/dir/my_file_name.txt
+
+abs_file_path = os.path.abspath(file_path)
+print(abs_file_path)  # /absolute/my/dir/my_file_name.txt
 ```
 
-위 코드에서 filepath 는 현재 작업경로에 있는 'myfilename.txt' 의 절대경로를 나타냅니다.
+```os.path.join()``` 함수는 넘겨받은 두 인자를 결합한 경로를 문자열로 반환합니다.
+따라서 ```file_path``` 는 현재 작업경로에 있는 'my_file_name.txt' 파일을 경로와 함께 나타냅니다.
+
+```os.path.abspath()``` 함수는 넘겨받은 경로 문자열에 대한 절대경로를 문자열로 반환합니다.
+따라서 ```abs_file_path``` 는 ```file_path``` 의 숨겨진 절대경로를 모두 나타냅니다.
+만약 ```file_path``` 가 이미 절대경로라면 동일한 문자열을 반환하겠죠?
+
+### os.path.dirname() os.path.basename() os.path.split()
