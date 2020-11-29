@@ -160,7 +160,7 @@ print(file_path.suffix)  # '.txt'
 <br>
 ## File I/O
 
-파일을 정확히 다루기 위해서 경로 패키지들이 사용됩니다.
+파일을 정확히 다루기 위해 앞서 설명한 경로 관련 툴들을 사용합니다.
 이하에서는 ```os.path``` 와 ```pathlib``` 를 활용한 파일 다루기를 해보겠습니다.
 편의를 위해 Posix 시스템에서 '/home/namu' 디렉토리를 기반으로 하겠습니다.
 
@@ -174,24 +174,47 @@ my_dir = '/home/namu/'
 my_file_name = 'my_file_name.txt'
 file_path = os.path.join(my_dir, my_file_name)
 
+# Check directory existence
 if not os.path.exists(my_dir):
     print('Directory not exist. Create a new one.')
     os.mkdir(my_dir)
 
+# Write file
 with open(file_path, 'a', encoding='utf-8') as f:
     for i in range(5):
         f.write(f'[{i + 1}] new line!\n')
 
+# Read file
 with open(file_path, 'r', encoding='utf-8') as f:
     lines = f.readlines()
     for line in lines:
         print(line)
 
+# Remove file
 if os.path.exists(file_path):
     print('Removing file...')
     os.remove(file_path)
     print('Done.')
 ```
+
+```os.path.join()``` 함수로 경로를 조합한 뒤, 디렉토리 존재유무 체크,
+파일 열기-쓰기-읽기 순으로 진행되었습니다.
+마지막에는 생성되었던 파일을 삭제하였습니다. 출력은 다음과 같습니다.
+
+```text
+[1] new line!
+[2] new line!
+[3] new line!
+[4] new line!
+[5] new line!
+Removing file...
+Done.
+```
+
+만약 디렉토리가 없었다면, 새로 생성한다는 라인이 포함되었을 것입니다.
+
+> 참조: ```with``` 키워드를 활용한 부분은 
+> [context manager](https://daesungra.github.io/namu/python/2020/08/11/context-manager) 파트를 참조하세요.
 
 <br>
 ## 시스템에 작업 디렉토리 등록하기
