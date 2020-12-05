@@ -12,6 +12,19 @@ image-source: https://pixabay.com/ko/users/729714-729714/
 ---
 
 
+---
+
+[순서]
+
+1. [os.path vs pathlib](#ospath-vs-pathlib)
+2. [os.path](#ospath)
+3. [pathlib](#pathlib)
+4. [파일 입출력하기](#파일-입출력하기)
+5. [시스템에 작업 디렉토리 등록하기](#시스템에-작업-디렉토리-등록하기)
+
+---
+
+
 <br>
 ## os.path vs pathlib
 
@@ -158,9 +171,9 @@ print(file_path.suffix)  # '.txt'
 각각 순서대로 파일명, 확장자를 제외한 파일명, 확장자를 의미합니다.
 
 <br>
-## File I/O
+## 파일 입출력하기
 
-파일을 정확히 다루기 위해 앞서 설명한 경로 관련 툴들을 사용합니다.
+파이썬에서는 파일을 정확히 다루기 위해 앞서 설명한 경로 관련 툴들을 사용합니다.
 이하에서는 ```os.path``` 와 ```pathlib``` 를 활용한 파일 다루기를 해보겠습니다.
 편의를 위해 Posix 시스템에서 '/home/namu' 디렉토리를 기반으로 하겠습니다.
 
