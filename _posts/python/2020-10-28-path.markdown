@@ -149,6 +149,7 @@ print(abs_file_path)  # /absolute/my/dir/my_file_name.txt
 ```python
 from pathlib import Path
 
+
 my_dir = Path.cwd()  # same as os.getcwd(), but returns a Path object
 my_file_name = 'my_file_name.txt'
 file_path = my_dir / my_file_name
@@ -225,6 +226,17 @@ Done.
 ```
 
 만약 디렉토리가 없었다면, 새로 생성한다는 라인이 포함되었을 것입니다.
+
+### pathlib 활용
+
+```python
+from pathlib import Path
+
+
+my_dir = '/home/namu/'
+my_file_name = 'my_file_name.txt'
+file_path = Path(my_dir, my_file_name)
+```
 
 > 참조: ```with``` 키워드를 활용한 부분은 
 > [context manager](https://daesungra.github.io/namu/python/2020/08/11/context-manager) 파트를 참조하세요.
