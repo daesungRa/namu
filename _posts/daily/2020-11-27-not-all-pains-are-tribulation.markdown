@@ -1,7 +1,7 @@
 ---
 title:  "고통과 고난에 대한 고찰"
-created: 2020-10-17 17:01:07 +0900
-updated: 2020-10-18 13:23:27 +0900
+created: 2020-11-27 17:01:07 +0900
+updated: 2020-11-28 13:23:27 +0900
 author: namu
 categories: daily
 permalink: "/daily/:year/:month/:day/:title"
