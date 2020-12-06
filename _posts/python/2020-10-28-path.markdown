@@ -174,7 +174,7 @@ print(file_path.suffix)  # '.txt'
 <br>
 ## 파일 입출력하기
 
-파이썬에서는 파일을 정확히 다루기 위해 앞서 설명한 경로 관련 툴들을 사용합니다.
+파이썬에서는 **파일을 정확히 다루기 위해** 앞서 설명한 경로 관련 툴들을 사용합니다.
 이하에서는 ```os.path``` 와 ```pathlib``` 를 활용한 파일 다루기를 해보겠습니다.
 편의를 위해 Posix 시스템에서 '/home/namu' 디렉토리를 기반으로 하겠습니다.
 
@@ -213,7 +213,13 @@ if os.path.exists(file_path):
 
 ```os.path.join()``` 함수로 경로를 조합한 뒤, 디렉토리 존재유무 체크,
 파일 열기-쓰기-읽기 순으로 진행되었습니다.
-마지막에는 생성되었던 파일을 삭제하였습니다. 출력은 다음과 같습니다.
+
+파일을 열기 위해 사용된 빌트인 함수 [```open```](https://docs.python.org/3/library/functions.html#open) 은
+조합된 문자열 경로 ```file_path``` 를 받습니다.
+두 번째 인자 'a' 는 'append' 모드를 의미하며, 'r' 은 'read' 모드입니다. 'w' 는 'write' 모드로 사용됩니다.
+그리고 세 번째 인자는 해당 파일을 'utf-8' 으로 인코딩하여 open 합니다.
+
+마지막 부분에서는 생성되었던 파일을 삭제하였습니다. 출력은 다음과 같습니다.
 
 ```text
 [1] new line!
@@ -227,19 +233,115 @@ Done.
 
 만약 디렉토리가 없었다면, 새로 생성한다는 라인이 포함되었을 것입니다.
 
+> 참조: ```with``` 키워드를 활용한 부분은 
+> [컨텍스트 매니저context manager](https://daesungra.github.io/namu/python/2020/08/11/context-manager) 파트를 참조하세요.
+
 ### pathlib 활용
 
 ```python
 from pathlib import Path
 
 
-my_dir = '/home/namu/'
+my_dir = Path('/home/namu/')   # Use Path object
 my_file_name = 'my_file_name.txt'
-file_path = Path(my_dir, my_file_name)
+file_path = my_dir / my_file_name
+
+# Create directory if it doesn't exist.
+my_dir.mkdir(parents=True, exist_ok=True)
+
+# Write file
+with file_path.open(mode='a', encoding='utf-8') as f:
+    for i in range(5):
+        f.write(f'[{i + 1}] new line!\n')
+
+# Read file
+with file_path.open(mode='r', encoding='utf-8') as f:
+    lines = f.readlines()
+    for line in lines:
+        print(line)
+
+# Remove file
+if file_path.exists():
+    print('Removing file...')
+    file_path.unlink()
+    print('Done.')
 ```
 
-> 참조: ```with``` 키워드를 활용한 부분은 
-> [context manager](https://daesungra.github.io/namu/python/2020/08/11/context-manager) 파트를 참조하세요.
+```os.path``` 를 활용한 과정과 동일합니다.
+다만 디렉토리 존재유무를 확인하는 부분에서 ```Path``` 객체의 내장 메서드
+[```mkdir```](https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir) 은 넘거받는 인자에 따라
+디렉토리 존재유무 확인과 디렉토리 생성을 한 번에 할 수 있도록 합니다. 또한 parents=True 는 상위 디렉토리까지 연쇄적으로 생성하도록 합니다.
+
+파일을 열기 위해 사용하는 ```Path``` 의 메서드
+[```open```](https://docs.python.org/3/library/pathlib.html#pathlib.Path.open) 은
+빌트인 함수인 [```open```](https://docs.python.org/3/library/functions.html#open) 과 사실상 동일하게 동작합니다.
+
+```pathlib``` 를 활용한 코드의 출력은 다음과 같습니다.
+
+```text
+[1] new line!
+[2] new line!
+[3] new line!
+[4] new line!
+[5] new line!
+Removing file...
+Done.
+```
 
 <br>
 ## 시스템에 작업 디렉토리 등록하기
+
+파이썬 스크립트를 실행하기 위해서는 **시스템에 작업 디렉토리의 경로가 등록되어 있어야 합니다.**
+코드 레벨에서 절대 경로로 스크립트를 실행한다면 시스템에 등록할 필요가 없겠지만,
+일반적으로는 작업 디렉토리 이하 상대 경로나 파일명만을 가지고 스크립트를 실행하기 때문입니다.
+상대 경로를 사용하는 이유는 등록된 작업 디렉토리에 위치한 다른 모듈들에 대한 import,
+다양한 os 에서 적합하게 실행하기 위한 목적 등이 있습니다.
+
+다음과 같은 구조의 파이썬 프로젝트를 생각해 봅시다.
+
+```text
+/project - /main - /module1 - __init__.py
+         |       L /module2 - __init__.py
+         L /scripts - my_script.py
+```
+<small>(<del>못그렸어도 양해좀..</del>)</small>
+
+현재 실행하려는 스크립트는 ```/project/scripts/my_script.py``` 입니다.
+그리고 이 스크립트는 ```/project/main/module1``` 을 ```from main import module1``` 의 형태로 import 하고 있습니다.
+아무 조건도 없는 상태에서 이 스크립트를 내가 원하는 타이밍에 실행시키려면 프로젝트 작업 디렉토리를 시스템에 등록해야 합니다.
+
+위에서 살펴본 경로 패키지들로 스크립트를 구성해 봅시다.
+
+### os.path 확용
+
+```python
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+from main import module1
+
+
+if __name__ == '__main__':
+    # Write script contents
+```
+
+### pathlib 활용
+
+```python
+import sys
+from pathlib import Path
+sys.path.append(Path(__file__).resolve().parent.parent)
+
+from main import module1
+
+
+if __name__ == '__main__':
+    # Write script contents
+```
+
+각각 ```os.path``` 와 ```pathlib``` 를 사용했지만, 결과는 동일합니다.
+현재 실행하는 스크립트 파일(\_\_file\_\_)의 절대 경로를 구하고, 그것의 상위-상위 디렉토리 경로를 구해
+```sys.path``` 에 추가하였습니다.
+
+이제 ```/project/main/module1``` 모듈을 import 가능합니다!
