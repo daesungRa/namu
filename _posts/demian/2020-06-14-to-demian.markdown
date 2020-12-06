@@ -2,8 +2,8 @@
 title:  2020-06-14
 date:   2020-06-14 11:50:00 +0900
 author: namu
-categories: to-demian
-permalink: "/to-demian/:year/:month/:day/:title"
+categories: 'demian'
+permalink: "/demian/:year/:month/:day/:title"
 image: https://i.pinimg.com/originals/7a/7e/e0/7a7ee0c9e5553e438fe2146aa1d0546a.jpg
 image-view: true
 image-author: autumnemond

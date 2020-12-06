@@ -21,7 +21,7 @@ dropdown_menu:
 - {name: 'WEB, HTTP', path: 'web', icon: 'web', url: ''}
 - {name: '잡동사니', path: 'etc', icon: 'package', url: ''}
 - {name: '나무야 나무야', path: 'daily', icon: 'favicon', url: ''}
-- {name: '데미안에게', path: 'to-demian', icon: 'book', url: ''}
+- {name: '데미안에게', path: 'demian', icon: 'book', url: ''}
 
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer
 social:
