@@ -34,7 +34,7 @@ image-source: https://pixabay.com/ko/users/729714-729714/
 객체를 중심으로 접근하는 방식으로, 파이썬 3.4 버전부터 빌트인 모듈로 포함되고 있습니다.
 
 관점에 따라 다를 수 있지만, 현재는 프로그래머에게 있어서 객체지향 방식이 읽거나 활용하기 편하다는 의견이 많습니다.
-저도 **_path = os.path.join(path1, path2)_** 이런 방식보다는 **_path = path1 / path2_** 와 같은 방식이 더 편합니다^^
+저도 **_path = os.path.join(path1, path2)_** 이런 방식보다는 **_path = path1 / path2_** 와 같은 방식이 더 편합니다
 
 
 <br>
@@ -139,7 +139,7 @@ print(abs_file_path)  # /absolute/my/dir/my_file_name.txt
 이것은 경로를 조합한다는 면에서 ```os.path.join()``` 과 같은 효과를 발휘합니다.
 (연산자에 대한 자세한 설명은 [```Operators```](https://docs.python.org/3/library/pathlib.html#operators) 를 참조하세요)
 
-그리고 ```Path``` 객체에서 절대 경로를 구할때는 ```Path.resolve()``` 함수를 사용합니다.
+그리고 ```Path``` 객체에서 절대 경로를 구할때는 ```Path.resolve()``` 메서드를 사용합니다.
 
 ### 디렉토리 경로, 파일명 구하기
 
