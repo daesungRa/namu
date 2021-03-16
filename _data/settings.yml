@@ -20,6 +20,7 @@ dropdown_menu:
 - {name: 'CS', path: 'computer-science', icon: 'cs', url: ''}
 - {name: 'WEB, HTTP', path: 'web', icon: 'web', url: ''}
 - {name: '문제해결경험', path: 'solving-problem', icon: 'solving_problem', url: ''}
+- {name: '방통대수업정리', path: 'knou', icon: 'book', url: ''}
 - {name: '잡동사니', path: 'etc', icon: 'package', url: ''}
 - {name: '나무야 나무야', path: 'daily', icon: 'favicon', url: ''}
 - {name: '데미안에게', path: 'demian', icon: 'book', url: ''}
