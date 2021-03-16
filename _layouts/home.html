@@ -38,7 +38,7 @@ layout: default
             {% endif %}
             <div class="thumbnail-container">
               <a href="{{ site.github.url }}{{ post.url }}">
-                <img src="{{ img_src }}">
+                <img src="{{ img_src }}" alt="{% if post.alt %}{{ post.alt }}{% else %}post image in home{% endif %}">
               </a>
             </div>
           {% endif %}

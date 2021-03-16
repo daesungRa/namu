@@ -40,10 +40,10 @@ layout: default
   <div class="post-image-content">
     {% if page.title == '소나무' %}
       <a name="sonamu">
-        <img src="{{ img_src }}">
+        <img src="{{ img_src }}" alt="{% if page.alt %}{{ page.alt }}{% else %}post image{% endif %}">
       </a>
     {% else %}
-      <img src="{{ img_src }}">
+      <img src="{{ img_src }}" alt="{% if page.alt %}{{ page.alt }}{% else %}post image{% endif %}">
     {% endif %}
     <div class="post-image-source">
       image by
