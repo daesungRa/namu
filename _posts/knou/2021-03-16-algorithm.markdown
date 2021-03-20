@@ -41,7 +41,7 @@ image-source: https://unsplash.com/photos/HsTnjCVQ798
 다음은 2021학년도 1학기 알고리즘 수업에 대한 정리입니다.
 
 <br>
-## 알고리즘 학습에 앞서서
+## 1. 알고리즘 학습에 앞서서
 
 ### 컴퓨터 과학에서 알고리즘의 위치
 
@@ -64,7 +64,7 @@ image-source: https://unsplash.com/photos/HsTnjCVQ798
 자료구조는 복습을 통해 우선적으로 학습하게 됩니다.
 
 <br>
-## 알고리즘의 기초
+## 2. 알고리즘의 기초
 
 본 강에서는 알고리즘의 개념, 설계, 분석을 공부하고, 성능을 어떻게 평가할 것인지에 대해 살펴봅니다.
 
@@ -169,7 +169,7 @@ O(n), O(n^2), O(n^3)중 어느 것이 가장 효율적인(연산횟수 ↓) 알�
 이미지 출처: [atoz-develop.tistory.com](https://atoz-develop.tistory.com/entry/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EC%9D%98-%EC%84%A4%EA%B3%84%EC%99%80-%EB%B6%84%EC%84%9D-%EC%8B%9C%EA%B0%84-%EB%B3%B5%EC%9E%A1%EB%8F%84%EC%99%80-%EC%A0%90%EA%B7%BC%EC%84%B1%EB%8A%A5)
 
 <br>
-## 분할정복 알고리즘 1
+## 3. 분할정복 알고리즘 1
 
 <br>
-## 분할정복 알고리즘 2
+## 4. 분할정복 알고리즘 2
