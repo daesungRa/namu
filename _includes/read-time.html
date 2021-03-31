@@ -1,21 +1,27 @@
 {% if post.layout != post %}
   {% assign words = post.content | strip_html | number_of_words %}
   {% if words < 180 %}
-    less than 1 minute read
+    <!-- less than 1 minute read -->
+    &nbsp;1분 미만 읽기
   {% elsif words < 360 %}
-    1 minute read
+    <!-- 1 minute read -->
+    &nbsp;1분 읽기
   {% else %}
-    {{ words | divided_by:180 }} minute read
+    <!-- {{ words | divided_by:180 }} minute read -->
+    &nbsp;{{ words | divided_by:180 }} 분 읽기
   {% endif %}
 {% endif %}
 
 {% if post.layout == post %}
   {% assign words = content | number_of_words %}
   {% if words < 180 %}
-    less than 1 minute read
+    <!-- less than 1 minute read -->
+    &nbsp;1분 미만 읽기
   {% elsif words < 360 %}
-    1 minute read
+    <!-- 1 minute read -->
+    &nbsp;1분 읽기
   {% else %}
-    {{ words | divided_by:180 }} minute read
+    <!-- {{ words | divided_by:180 }} minute read -->
+    &nbsp;{{ words | divided_by:180 }} 분 읽기
   {% endif %}
 {% endif %}
