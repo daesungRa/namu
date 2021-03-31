@@ -1,5 +1,5 @@
 ---
-title:  "MongoDB 에 datetime 객체를 저장하는 두 가지 원칙"
+title:  "MongoDB 에 datetime 객체 저장하기"
 created:   2021-03-21 17:04:25 +0900
 updated:   2021-03-30 01:25:31 +0900
 author: namu
