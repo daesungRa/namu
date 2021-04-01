@@ -179,48 +179,19 @@ db 로부터 조회할 때는 공식 문서의 권장에 따라 **어플리케�
 Base Module for MongoDB
 """
 
-from datetime import datetime
-from pytz import timezone
-
 from pymongo import MongoClient
 from pymongo.collection import Collection
 
-from test.config import CONFIG
 
-
-SERVER_TZ = timezone(CONFIG['tz_name'])
-
-
-class TimeStampedMongodbHandler:
-    tz: timezone
-    _collection: Collection
-
-    def __init__(self, db_name: str, collection_name: str):
-        super().__init__()
-
-        self.tz = SERVER_TZ
-
-        mongo_client = MongoClient("mongodb://localhost:27017/")
-        db = mongo_client[db_name]
-        self._collection = Collection(database=db, name=collection_name)
+class MongodbHandler:
+    _database: MongoClient
     
-    def get(self, **kwargs):
-        return [
-            {
-                **doc,
-                'created': doc['created'].replace(tzinfo=timezone('UTC')).astimezone(tz=self.tz),
-                'updated': doc['updated'].replace(tzinfo=timezone('UTC')).astimezone(tz=self.tz),
-            }
-            for doc in self._collection.find(kwargs)
-        ]
+    def __init__(self, db_name: str):
+        mongo_client = MongoClient("mongodb://localhost:27017/")
+        self._database = mongo_client[db_name]
 
-    def post(self, data: dict):
-        utc_now = datetime.utcnow().replace(tzinfo=timezone('UTC'))
-        return self._collection.insert_one(document={
-            **data,
-            'created': utc_now.astimezone(tz=SERVER_TZ),
-            'updated': utc_now.astimezone(tz=SERVER_TZ),
-        }).inserted_id
+    def get_collection(self, collection_name: str):
+        return Collection(database=self._database, name=collection_name)
 ```
 
 <br>
