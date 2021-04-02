@@ -229,7 +229,7 @@ class TimeStampedDataHandler:
             {
                 **doc,
                 'created': doc['created'].replace(tzinfo=timezone('UTC')).astimezone(tz=self.tz),
-                'updated': doc['created'].replace(tzinfo=timezone('UTC')).astimezone(tz=self.tz),
+                'updated': doc['updated'].replace(tzinfo=timezone('UTC')).astimezone(tz=self.tz),
             }
             for doc in self.collection.find(kwargs)
         ]
@@ -269,9 +269,11 @@ class TestDataHandler(TimeStampedDataHandler):
         super().__init__()
 ```
 
-```base.py```에는 mongodb client 를 세팅하고 원하는 collection 을 반환하는 기본모듈이,<br>
+```base.py```에는 mongodb client 를 세팅하고 원하는 collection 을 반환하는 기본모듈이,
+
 ```handler.py```에는 직접적으로 data 를 다루는 **Time Stamped 기본모듈(data handler)**이 정의되었습니다.
 이 Time Stamped 모듈이 핵심인데, 여기서는 get, post 시 자동으로 datetime 객체(created, updated 필드)들을 컨트롤 해줍니다.
+여기에 추가적으로 put, delete 메서드를 정의하거나 collection 에 대한 validator 를 추가할 수도 있을 것입니다.
 
 ```test.py```에서는 TimeStampedDataHandler 를 상속받아
 test collection 을 통해 데이터를 다루는 TestDataHandler 클래스가 정의되어 있습니다.
