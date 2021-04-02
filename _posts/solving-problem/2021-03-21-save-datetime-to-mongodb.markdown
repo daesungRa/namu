@@ -22,7 +22,7 @@ image-source: https://pixabay.com/ko/users/jarmoluk-143740/
 **[UTC 시간대](https://www.timeanddate.com/time/aboututc.html)를 표준으로 저장**됩니다.
 따라서 이와 다른 시간대라면 datetime 정보 제공 시 프로그램적으로 시간대(이하 timezone)를 조정하는 과정이 필요합니다.
 
-이 포스트에서는 python + mongodb 환경에서 datetime 객체를 저장할 때 지켜야 할 두 가지 원칙에 대해 설명하고자 합니다.
+이 포스트에서는 python + mongodb 환경에서 datetime 객체를 저장할 때 제가 사용하는 두 가지 원칙에 대해 설명하고자 합니다.
 
 <br>
 ## Aware VS Naive
@@ -171,7 +171,8 @@ aware 객체를 mongodb 에 저장할 때는 시간대가 자동 변환되기 �
 db 로부터 조회할 때는 공식 문서의 권장에 따라 **어플리케이션 차원에서 역으로 변환하는 과정**이 필요합니다.
 
 또한 서버의 규모가 커질수록 find 하는 경우는 매우 많아질텐데, 그 모든 조회 코드에 astimezone 메서드를 적용하는 것은 굉장히 비효율적입니다.
-따라서 지금부터 datetime 을 다루는 class 기반 공통 모듈을 만들어 보겠습니다. 프로젝트명은 test 라고 가정합니다.
+따라서 지금부터 mongodb collection 을 이용하며 datetime 을 다루는 class 기반 공통 모듈을 만들어 보겠습니다.
+프로젝트명은 test 라고 가정합니다.
 
 **[~/test/mongodb/base.py]**
 ```python
@@ -183,18 +184,122 @@ from pymongo import MongoClient
 from pymongo.collection import Collection
 
 
-class MongodbHandler:
+class BaseMongo:
     _database: MongoClient
     
     def __init__(self, db_name: str):
         mongo_client = MongoClient("mongodb://localhost:27017/")
         self._database = mongo_client[db_name]
 
-    def get_collection(self, collection_name: str):
+    def get_collection(self, collection_name: str) -> Collection:
         return Collection(database=self._database, name=collection_name)
+
+
+class TestMongo(BaseMongo):
+    def __init__(self):
+        super().__init__(db_name='test')
 ```
+
+**[~/test/mongodb/handler.py]**
+```python
+"""
+Base Time Stamped Data Handler
+"""
+
+from bson.objectid import ObjectId
+
+from datetime import datetime
+from pytz import timezone
+
+from pymongo.collection import Collection
+
+
+class TimeStampedDataHandler:
+    tz: timezone
+    collection: Collection
+
+    def __init__(self):
+        assert self.tz is not None
+        assert self.collection is not None
+
+    def get(self, **kwargs) -> list:
+        if kwargs and '_id' in kwargs:
+            kwargs['_id'] = ObjectId(kwargs['_id'])
+        return [
+            {
+                **doc,
+                'created': doc['created'].replace(tzinfo=timezone('UTC')).astimezone(tz=self.tz),
+                'updated': doc['created'].replace(tzinfo=timezone('UTC')).astimezone(tz=self.tz),
+            }
+            for doc in self.collection.find(kwargs)
+        ]
+
+    def post(self, data: dict) -> ObjectId:
+        utc_now = datetime.utcnow().replace(tzinfo=timezone('UTC'))
+        return self.collection.insert_one({
+            **data,
+            'created': utc_now.astimezone(tz=self.tz),
+            'updated': utc_now.astimezone(tz=self.tz),
+        }).inserted_id
+```
+
+**[~/test/mongodb/test.py]**
+```python
+"""
+Test Data Handler
+"""
+
+from pytz import timezone
+from pymongo.collection import Collection
+
+from test.mongodb.base import TestMongo
+from test.mongodb.handler import TimeStampedDataHandler
+
+from test.config import CONFIG
+
+
+SERVER_TZ = timezone(CONFIG['tz_name'])
+TEST_COLLECTION: Collection = TestMongo().get_collection(collection_name='test')
+
+
+class TestDataHandler(TimeStampedDataHandler):
+    def __init__(self):
+        self.tz = SERVER_TZ
+        self.collection = TEST_COLLECTION
+        super().__init__()
+```
+
+```base.py```에는 mongodb client 를 세팅하고 원하는 collection 을 반환하는 기본모듈이,<br>
+```handler.py```에는 직접적으로 data 를 다루는 **Time Stamped 기본모듈(data handler)**이 정의되었습니다.
+이 Time Stamped 모듈이 핵심인데, 여기서는 get, post 시 자동으로 datetime 객체(created, updated 필드)들을 컨트롤 해줍니다.
+
+```test.py```에서는 TimeStampedDataHandler 를 상속받아
+test collection 을 통해 데이터를 다루는 TestDataHandler 클래스가 정의되어 있습니다.
+다음은 사용 예시입니다.
+
+**[~/test/usage/test.py]**
+```python
+from test.mongodb.test import TestDataHandler
+
+
+if __name__ == '__main__':
+    data = {'type': 'test'}
+    handler = TestDataHandler()
+    inserted_id = handler.post(data)  # ObjectId('6066cc4c6e957a3a5fa3b749')
+    print(handler.get(type='test'))  # [{'_id': ObjectId('6066..'), 'type': 'test', 'created': datetime.datetime(2021, 3, 30, 0, 38, 25, 19000, tzinfo=<DstTzInfo 'Asia/Seoul' KST+9:00:00 STD>), ...]
+```
+
+자세한 내용은 한번 찬찬히 살펴보세요~
 
 <br>
 ## 원칙 정리
 
-datetime 객체를 mongodb 에 저장할 때는 항상 aware datetime 객체를 사용하고, db 에 저장되는 모든 날짜+시간정보는 UTC timezone 기준으로 
+datetime 객체를 mongodb 에 저장할 때는 **항상 aware datetime 객체를 사용**하고,
+db 에 저장되는 모든 날짜+시간정보는 **UTC timezone 기준으로 저장**되는 원칙을 세우도록 합시다.
+
+물론 경우에 따라선 위 원칙대로 하지 않아도 됩니다. 혼선이 없도록 일관성만 지켜주면 되죠.
+예를 들어, 웹앱 단에서도 항상 UTC timezone 를 사용하기로 한다면 mongodb 와 상호작용 시 timezone 변환 로직이 필요 없을 것이고,
+굳이 aware 객체를 사용하지 않을 수도 있을 것입니다.
+이때는 클라이언트나 UI 파트에서 지역에 맞는 시간대로 변환하도록 하면 됩니다.
+
+중요한 것은 자신만의, 혹은 팀 내부적인 원칙을 세우고 일관성 있게 지켜가는 것입니다~
