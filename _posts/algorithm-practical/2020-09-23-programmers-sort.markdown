@@ -3,8 +3,8 @@ title:  "[플머스] 정렬"
 created:   2020-09-13 19:32:15 +0900
 updated:   2020-09-13 23:05:10 +0900
 author: namu
-categories: algorithm
-permalink: "/algorithm/:year/:month/:day/:title"
+categories: algorithm-practical
+permalink: "/algorithm-practical/:year/:month/:day/:title"
 image: https://cdn.pixabay.com/photo/2017/11/12/18/32/book-2943383__480.png
 image-view: true
 image-author: 200degrees

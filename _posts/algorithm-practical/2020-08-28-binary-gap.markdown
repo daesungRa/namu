@@ -3,8 +3,8 @@ title:  "[CODILITY][01] BinaryGap"
 created:   2020-08-28 19:35:12 +0900
 updated:   2020-08-28 19:35:12 +0900
 author: namu
-categories: algorithm
-permalink: "/algorithm/:year/:month/:day/:title"
+categories: algorithm-practical
+permalink: "/algorithm-practical/:year/:month/:day/:title"
 image: https://www.codility.com/wp-content/uploads/2020/03/CodilitySocial.jpg
 image-view: true
 image-author: codility.com

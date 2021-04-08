@@ -16,7 +16,8 @@ dropdown_menu:
 - {name: '장고, 플라스크', path: 'django', icon: 'django', url: ''}
 - {name: '데이터베이스', path: 'database', icon: 'database', url: ''}
 - {name: '도커', path: 'docker', icon: 'docker', url: ''}
-- {name: '알고리즘, 코테', path: 'algorithm', icon: 'algorithm', url: ''}
+- {name: '알고리즘 실전', path: 'algorithm-practical', icon: 'algorithm', url: ''}
+- {name: '알고리즘 이론', path: 'algorithm-theory', icon: 'algorithm', url: ''}
 - {name: 'CS', path: 'computer-science', icon: 'cs', url: ''}
 - {name: 'WEB, HTTP', path: 'web', icon: 'web', url: ''}
 - {name: '문제해결경험', path: 'solving-problem', icon: 'solving_problem', url: ''}

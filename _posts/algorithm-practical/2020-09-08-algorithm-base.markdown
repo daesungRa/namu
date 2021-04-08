@@ -3,8 +3,8 @@ title:  "[알고리즘] 기본, 그리디, 구현"
 created:   2020-09-08 22:29:25 +0900
 updated:   2020-09-25 23:45:14 +0900
 author: namu
-categories: algorithm
-permalink: "/algorithm/:year/:month/:day/:title"
+categories: algorithm-practical
+permalink: "/algorithm-practical/:year/:month/:day/:title"
 image: https://cdn.pixabay.com/photo/2017/11/12/18/32/book-2943383__480.png
 image-view: true
 image-author: 200degrees

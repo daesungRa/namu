@@ -3,8 +3,8 @@ title:  "[KAKAO2020][01] 문자열 다루기"
 created:   2020-09-02 22:38:25 +0900
 updated:   2020-09-06 20:42:14 +0900
 author: namu
-categories: algorithm
-permalink: "/algorithm/:year/:month/:day/:title"
+categories: algorithm-practical
+permalink: "/algorithm-practical/:year/:month/:day/:title"
 image: https://tech.kakao.com/assets/kakaoTech.jpg
 image-view: true
 image-author: tech.kakao.com
