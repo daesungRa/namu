@@ -18,7 +18,8 @@ permalink: /about/
 ## :wave: 소개
 
 안녕하세요, 저는 나무같은 사람이 되고 싶습니다.<br>
-:evergreen_tree:**[소나무 같은 사람이 되는 것]({{ site.baseurl }}{% link _posts/daily/2020-05-23-namu.markdown %})**은
+<a href="{{ site.baseurl }}{% link _posts/daily/2020-05-23-namu.markdown %}" target="_blank">
+**소나무:evergreen_tree: 같은 사람이 되는 것**</a>은
 이미 꽤 많은 사람들의 소망이기도 했습니다.
 
 그러한 사람들이 모여 소나무 숲을 만들듯이,<br>
@@ -39,7 +40,7 @@ permalink: /about/
 
 그것을 위해서는 **일관성과 정직함**이 중요합니다.
 안정감은 코딩을 하거나 협업을 할 때 컨벤션에 따라 항상 일관적이며
-자신이 아는 것, 모르는 것에 대해 정직할 때 나옵니다.
+자신이 아는 것과 모르는 것에 대해 정직할 때 나옵니다.
 문제점에 대해서도 항상 공유하고 동료들과 피드백을 주고받아야 합니다.
 
 나아가 **집요함**도 중요하다고 생각합니다.
@@ -47,9 +48,12 @@ permalink: /about/
 초기 단계에서 나중의 확장성 및 리팩토링의 가능성 등을 고려하여야만 합니다.
 
 현재의 저는 제 조직 내에서 주니어 개발자로써(2021, 이제 막 2년차)
-업무시간 내외로 꾸준히 노력해 나름대로 안정감을 주는 동료가 된 것 같습니다.
+업무시간 내외로 꾸준히 노력하며 나름대로 안정감을 주는 동료가 되어가는 과정 속에 있습니다.
 처음에 업무가 주어졌을 때 선임들의 의심의 눈초리가 아직도 잊혀지지 않습니다.
-그 눈빛을 바꾸기까지 1년, 챗봇 인프라 운영을 담당하면서 성장하기까지 1년이 걸렸네요!:+1:
+그 눈빛을 바꾸기까지 1년, 챗봇 인프라 운영을 담당하며 많은 것들을 배워가면서 또 1년이 흘렀네요!:+1:
+
+하지만 뛰어난 선배 개발자들의 능력을 볼 때마다, 아직도 갈길이 까마득히 멀게만 느껴집니다.
+그래서 다음의 _기술 스택 정리_를 통해 제가 현재 할 수 있는 것들과 앞으로 습득하고자 하는 것들을 모아 봤습니다.
 
 <br>
 ## :computer: 기술 스택
@@ -64,11 +68,15 @@ permalink: /about/
     이를 위해 클래스 기반 패키지, 모듈 함수 재사용 등의 효율적인 사용을 지향합니다.
 
 - **Flask**
-    - 경량의 웹앱을 빠르게 만들기 위한 기본 환경구축 -> **[뉴스마인 API 서버](https://github.com/daesungRa/newsmine)**
-    - 뉴스마인 서버는 **[My Flask](https://github.com/daesungRa/server-flask)** 퀵스타트 프로젝트로부터 만들었습니다.
+    - 경량의 웹앱을 빠르게 만들기 위한 기본 환경구축 -> <a href="https://github.com/daesungRa/newsmine" target="_blank">
+    **뉴스마인 API 서버**</a>
+    - 뉴스마인 서버는 <a href="https://github.com/daesungRa/server-flask" target="_blank">**My Flask**</a>
+     퀵스타트 프로젝트로부터 만들었습니다.
+    - MVC 타입 Flask 프로젝트
 
 - **Django**
-    - Django 는 제 토이 프로젝트에서 현재 개발 중입니다. -> **[뉴스마인 웹](https://github.com/daesungRa/newsmine-web)**
+    - Django 는 제 토이 프로젝트에서 현재 개발 중입니다. -> 
+    <a href="https://github.com/daesungRa/newsmine-web" target="_blank">**뉴스마인 웹**</a>
     - 업무에서 주된 프레임워크가 아니기 때문에 꾸준히 공부중입니다.
 
 - **MongoDB**
