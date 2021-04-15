@@ -1,7 +1,7 @@
 ---
 title:  "[방통대] 데이터베이스 수업 정리"
 created:   2021-03-20 14:42:24 +0900
-updated:   2021-03-21 11:58:15 +0900
+updated:   2021-04-15 11:58:15 +0900
 author: namu
 categories: knou
 permalink: "/knou/:year/:month/:day/:title"

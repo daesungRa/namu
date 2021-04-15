@@ -1,7 +1,7 @@
 ---
 title:  "MongoDB 에 datetime 객체 저장하기"
 created:   2021-03-21 17:04:25 +0900
-updated:   2021-03-30 01:25:31 +0900
+updated:   2021-04-14 01:25:31 +0900
 author: namu
 categories: solving-problem
 permalink: "/solving-problem/:year/:month/:day/:title"
