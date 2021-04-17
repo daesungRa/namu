@@ -18,7 +18,7 @@ permalink: /about/
 
 컨셉은 내가 원하는 키워드를 등록해 놓고, 원하는 시간에 주기적으로 키워드에 해당하는 뉴스를 메일로 받아보는 서비스입니다.
 
-저는 <a href="{{ site.baseurl }}{% link _posts/daily/2020-05-23-namu.markdown %}" target="_blank">소나무같은 개발자</a>가
+저는 <a href="{{ site.github.url }}{% link _posts/daily/2020-05-23-namu.markdown %}" target="_blank">소나무같은 개발자</a>가
 되고 싶습니다.<br>
 그래서 항상 일을 함에 있어 일관성이 있고 정직하고자 노력하고 있습니다.
 
