@@ -57,7 +57,7 @@ image-source: https://unsplash.com/photos/Q9y3LRuuxmg
 데이터베이스 시스템은 이와 같이 많은 데이터를 **저장 및 관리**하고 필요한 데이터를 **신속히 검색**할 수 있도록 보조하는 장치입니다.
 
 **데이터 관리의 역사**
-![history of database](https://daesungra.github.io/namu/assets/post-img/history_of_db.png)
+![history of database]({{ site.github.url }}{% link assets/post-img/history_of_db.png %})
 
 전통적 데이터 관리 방식(데이터베이스 시스템 이전)을 살펴보기 위해 **파일 처리 시스템**에 주목해 봅시다.
 학적, 성적, 수강 관리 어플리케이션이 각각 존재한다고 했을 때, 파일 처리 시스템에서는 이들의 데이터를 파일의 형태로 따로따로 저장했습니다.
@@ -72,7 +72,7 @@ image-source: https://unsplash.com/photos/Q9y3LRuuxmg
 데이터에 접근 가능한 것은 오직 데이터베이스 시스템뿐이며 이 중간관리자를 DBMS(Database Management System)라고 부릅니다.
 
 **데이터베이스 시스템의 구성**
-![structure of database system](https://daesungra.github.io/namu/assets/post-img/structure_of_db_system.png)
+![structure of database system]({{ site.github.url }}{% link assets/post-img/structure_of_db_system.png %})
 
 데이터베이스의 특징은 다음과 같습니다.
 
@@ -87,7 +87,7 @@ image-source: https://unsplash.com/photos/Q9y3LRuuxmg
 - DBMS의 3단계 구조 <small>\> 외부(뷰), 개념, 내부 단계의 스키마 제공</small>
 - 각 단계 사이에는 ```개념-내부 사상```, ```외부-개념 사상```이라는 연결점이 존재
 - 사용자는 외부 단계를 통해서만 데이터를 볼 수 있음, 꼭 필요한 데이터만 필터되어 뷰로 제공됨
-    - ![3 layer of dbms](https://daesungra.github.io/namu/assets/post-img/dbms-3-layer.png)
+    - ![3 layer of dbms]({{ site.github.url }}{% link assets/post-img/dbms-3-layer.png %})
 
 **3. 다중 뷰 제공**
 - 각 사용자가 관심을 갖는 데이터베이스의 일부만을 표현할 수 있는 기능 제공
@@ -139,11 +139,11 @@ image-source: https://unsplash.com/photos/Q9y3LRuuxmg
     - 개념적 데이터 모델링
     - 논리적 데이터 모델링 > 개념 스키마 생성
     - 물리적 데이터 모델링 > 내부 스키마 생성
-    - ![create db system](https://daesungra.github.io/namu/assets/post-img/create_db_system.png)
+    - ![create db system]({{ site.github.url }}{% link assets/post-img/create_db_system.png %})
 - 데이터베이스 모델링의 개념
     - 데이터의 의미를 파악하고 데이터와 관여하는 업무 프로세스를 개념적으로 정의하고 분석하는 작업
     - 모델링의 단계
-    - ![steps of data modeling](https://daesungra.github.io/namu/assets/post-img/steps_of_data_modeling.png)
+    - ![steps of data modeling]({{ site.github.url }}{% link assets/post-img/steps_of_data_modeling.png %})
 
 **데이터 모델**이란 요구사항에 필요한 데이터를 선별하고 구조화하기 위해 표준적으로 정의된 개념 틀이라고 생각하면 됩니다.
 우리가 필요한 데이터는 이렇게 설계된 모델에 맞게 저장 및 사용되죠.
@@ -211,7 +211,7 @@ ER 모델은 실세계의 속성들로 이루어진 **개체(Entity)와 개체 �
     - 이때 '학생' 개체는 전공을 선택하는 과정에서 '학과' 개체와 '전공' 관계를 맺음
     - 이러한 관계는 개체 간 연관성을 나타내며,
     - 관계 집합이란 개체 집합 간의 연결 관계를 의미
-        - ![erd01](https://daesungra.github.io/namu/assets/post-img/erd01.png)
+        - ![erd01]({{ site.github.url }}{% link assets/post-img/erd01.png %})
 - 속성
     - 속성은 개체를 구체적으로 설명하는 것
     - 속성에 포함될 수 있는 값의 특성에 따라 여러 종류로 구분
@@ -246,14 +246,14 @@ ER 모델은 실세계의 속성들로 이루어진 **개체(Entity)와 개체 �
 - 특수 속성과 특수 관계
     - 어떤 학생이 수강 신청을 할때 그 시각을 저장하기 위한 속성은 어느 한쪽 개체에도 없음
     - **관계 집합의 속성**: 이때, 관계 집합의 속성으로써 수강 신청 시각을 표현할 수 있음
-        - ![erd02](https://daesungra.github.io/namu/assets/post-img/erd02.png)
+        - ![erd02]({{ site.github.url }}{% link assets/post-img/erd02.png %})
     - **재귀적 관계**: 한 개체 집합이 자기 자신과 관계 집합을 형성하는 관계
         - ex. 과목 개체 -> 과목코드와 선수과목코드의 관계
     - **특수 관계**
         - 약한 개체 집합: 개체의 존재 유무가 관계를 맺고 있는 다른 개체에 종속되는 개체 집합
         - 강한 개체 집합: 상대적으로 약한 개체 집합과 연결되는 일반 개체 집합. (관계는 1:N 으로 구성)
         - ex. 학생 개체와 계좌 개체 간의 관계. 학생 개체가 사라지면 계좌 개체도 사라짐
-        - ![erd03](https://daesungra.github.io/namu/assets/post-img/erd03.png)
+        - ![erd03]({{ site.github.url }}{% link assets/post-img/erd03.png %})
 
 <br>
 ## 3. 관계형 모델
@@ -272,7 +272,7 @@ ER 모델은 실세계의 속성들로 이루어진 **개체(Entity)와 개체 �
     - 현재 대다수 DBMS의 시초 > RDBMS
 
 > #### 릴레이션의 구성과 특징
-> ![relation01](https://daesungra.github.io/namu/assets/post-img/relation01.png)
+> ![relation01]({{ site.github.url }}{% link assets/post-img/relation01.png %})
 > - 레코드의 유일성: 중복된 레코드의 존재 불가능
 > - 레코드의 무순서성: 레코드 순서는 의미가 없음
 > - 컬럼의 무순서성: 컬럼도 순서가 없으며, 이름과 값의 쌍임
@@ -303,7 +303,7 @@ ER 모델은 실세계의 속성들로 이루어진 **개체(Entity)와 개체 �
 앞서 1장에서 **파일 처리 시스템은 여러 파일에 걸쳐 동일한 데이터가 존재하는 데이터 중복의 문제**가 있다고 했는데,
 외래키를 사용하면 교수가 속한 학과의 정보는 학과 릴레이션에 한 번만 저장되기 때문에 이 문제를 해결할 수 있습니다.
 
-![relation02](https://daesungra.github.io/namu/assets/post-img/relation02.png)
+![relation02]({{ site.github.url }}{% link assets/post-img/relation02.png %})
 
 DBMS(매니지먼트 시스템)는 데이터의 무결성을 만족시키기 위해 **관계형 모델에 제약조건**을 가지고 있습니다.
 파일 처리 시스템에서는 데이터를 넣는 대로 파일에 저장이 되었으나, DBMS 에서는 관리 시스템이 이를 차단하게 됩니다.
@@ -339,13 +339,13 @@ DBMS(매니지먼트 시스템)는 데이터의 무결성을 만족시키기 위
 
 (교수) <- <강의> = (과목)
 
-> ![erd_relation01](https://daesungra.github.io/namu/assets/post-img/erd_relation01.png)
+> ![erd_relation01]({{ site.github.url }}{% link assets/post-img/erd_relation01.png %})
 
 이는 일대다 관계입니다. 따라서 '다'쪽의 과목 릴레이션에 '일'쪽 교수 릴레이션의 PK가 교수번호 FK로써 저장되었습니다.
 
 (학생) - <수강> - (과목)
 
-> ![erd_relation02](https://daesungra.github.io/namu/assets/post-img/erd_relation02.png)
+> ![erd_relation02]({{ site.github.url }}{% link assets/post-img/erd_relation02.png %})
 
 이번에는 다대다의 관계입니다. 학생 릴레이션의 PK, 과목 릴레이션의 PK 각각을 PK, FK 쌍으로 갖는 **수강 릴레이션이 생성**되었습니다.
 여기에는 수강 신청시각의 관계집합의 속성이 컬럼으로 저장될 수 있습니다.
@@ -354,7 +354,7 @@ DBMS(매니지먼트 시스템)는 데이터의 무결성을 만족시키기 위
 
 (학생) <- <<보유>> -> (계좌)
 
-> ![erd_relation03](https://daesungra.github.io/namu/assets/post-img/erd_relation03.png)
+> ![erd_relation03]({{ site.github.url }}{% link assets/post-img/erd_relation03.png %})
 
 기본적으로는 일대일의 관계이지만, 계좌 개체 집합이 약한 개체 집합이므로 강한 개체 집합인 학생 개체 집합의 의존적인 데이터가 사라지면
 약한 개체 집합의 계좌 데이터도 함께 사라져야만 합니다.
@@ -384,11 +384,11 @@ DBMS(매니지먼트 시스템)는 데이터의 무결성을 만족시키기 위
 
 > #### 관계 대수를 활용한 연산 표현
 > - 셀렉션
->   - ![algebra_selection](https://daesungra.github.io/namu/assets/post-img/algebra_selection.png)
+>   - ![algebra_selection]({{ site.github.url }}{% link assets/post-img/algebra_selection.png %})
 > - 프로젝션
->   - ![algebra_projection](https://daesungra.github.io/namu/assets/post-img/algebra_projection.png)
+>   - ![algebra_projection]({{ site.github.url }}{% link assets/post-img/algebra_projection.png %})
 > - Q1. 직위가 '부교수'인 교수의 교수이름을 출력하라.
->   - ![algebra_selection_projection](https://daesungra.github.io/namu/assets/post-img/algebra_selection_projection.png)
+>   - ![algebra_selection_projection]({{ site.github.url }}{% link assets/post-img/algebra_selection_projection.png %})
 >   - 셀력션 후 프로젝션을 수행하는 연산 처리 절차를 표현
 > - 집합 연산자 사용 조건
 >   - 연산을 위해 릴레이션 R과 S의 차수(컬럼의 개수)가 동일
@@ -398,9 +398,9 @@ DBMS(매니지먼트 시스템)는 데이터의 무결성을 만족시키기 위
 >   - 카티션 프로덕트는 서로 다른 컬럼과 레코드를 가지고 있는 두 릴레이션을 결합하는 역할
 > - **조인(JOIN)**
 >   - 조건 상관 없이 결합하는 카티션과 다르게 특정 조건을 만족하는 릴레이션 간 레코드를 결합
->   - ![algebra_join01](https://daesungra.github.io/namu/assets/post-img/algebra_join01.png)
+>   - ![algebra_join01]({{ site.github.url }}{% link assets/post-img/algebra_join01.png %})
 >   - 조인의 연산 처리 절차를 살펴보면, 내부적으로 cartesian 이후 selection 이 수행됨을 확인할 수 있습니다.
->   - ![algebra_join02](https://daesungra.github.io/namu/assets/post-img/algebra_join02.png)
+>   - ![algebra_join02]({{ site.github.url }}{% link assets/post-img/algebra_join02.png %})
 >   - 과목과 교수 릴레이션을 카티션한 후, 교수번호가 동일한 레코드 결과만 셀렉션하는 조인 연산입니다.
 
 위와 같이 여러 조건에 따른 관계성을 표현하는 집합 연산 외에 수량적인 연산이 필요할 수 있습니다.
@@ -409,7 +409,7 @@ DBMS(매니지먼트 시스템)는 데이터의 무결성을 만족시키기 위
 
 다음은 과목 릴레이션의 과목명 개수를 추출하는 count 집계함수의 활용예입니다.
 
-- ![algebra_function01](https://daesungra.github.io/namu/assets/post-img/algebra_function01.png)
+- ![algebra_function01]({{ site.github.url }}{% link assets/post-img/algebra_function01.png %})
 
 여기서는 단순히 과목명의 개수를 추출합니다.
 
@@ -417,7 +417,7 @@ DBMS(매니지먼트 시스템)는 데이터의 무결성을 만족시키기 위
 학과의 개수를 세서? 교수의 명수를 세서?
 한 릴레이션 내에서 특정 조건을 만족하는 개수를 추출할 때는 그룹화(group) 절차를 거칩니다.
 
-- ![algebra_function02](https://daesungra.github.io/namu/assets/post-img/algebra_function02.png)
+- ![algebra_function02]({{ site.github.url }}{% link assets/post-img/algebra_function02.png %})
 
 연산식을 보면, 소속학과에 따라 레코드들을 그룹화하고, 각 그룹의 레코드 개수를 추출함으로써 원하는 결과를 얻었습니다.
 
