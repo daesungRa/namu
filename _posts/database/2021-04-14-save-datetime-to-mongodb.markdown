@@ -3,8 +3,8 @@ title:  "MongoDB 에 datetime 객체 저장하기"
 created:   2021-03-21 17:04:25 +0900
 updated:   2021-04-14 01:25:31 +0900
 author: namu
-categories: solving-problem
-permalink: "/solving-problem/:year/:month/:day/:title"
+categories: database
+permalink: "/database/:year/:month/:day/:title"
 image: https://cdn.pixabay.com/photo/2014/02/04/10/13/clocks-257911_1280.jpg
 image-view: true
 image-author: jarmoluk
