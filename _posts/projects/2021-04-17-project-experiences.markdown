@@ -1,10 +1,10 @@
 ---
 title:  "개발 경험 정리"
 created: 2021-04-14 01:09:24 +0900
-updated: 2021-04-14 01:09:24 +0900
+updated: 2021-04-20 15:06:12 +0900
 author: namu
-categories: daily
-permalink: "/daily/:year/:month/:day/:title"
+categories: projects
+permalink: "/projects/:year/:month/:day/:title"
 image: https://cdn.pixabay.com/photo/2016/12/02/02/09/idea-1876658_1280.jpg
 alt: projects image
 image-view: true
@@ -58,7 +58,7 @@ image-source: https://pixabay.com/users/qimono-1962238/
 데이터 분석과 연관성이 깊은 파이썬을 새로 공부해도 괜찮겠다는 생각을 했다.
 결국 2019년 4월 입사하기로 결정했고, 파이썬과 Flask 프레임워크를 새로 공부하여 두달 뒤 프로젝트에 투입되었다.
 
-다음은 기술적 관점에서 지금까지 프로젝트를 통해 얻은 지식등을 요약한다.
+다음은 기술적 관점에서 지금까지 프로젝트를 통해 얻은 지식을 요약한다.
 
 ### 기술 관점 요약
 
