@@ -34,7 +34,7 @@ image-source: https://pixabay.com/users/qimono-1962238/
 <br>
 ## 들어가며
 
-실무의 프로젝트는 보안 이슈로 인해 상세 업무 단위로 기록하지 않고, 기술 구현 중심으로 기록한다.
+실무의 프로젝트는 보안 이슈로 인해 상세 업무 단위로 기록하지 않고, 사용 기술 중심으로 기록한다.
 하지만 개인 프로젝트는 상관 없이 전 과정을 기록한다.
 
 <br>
@@ -67,8 +67,8 @@ image-source: https://pixabay.com/users/qimono-1962238/
 
 ### A-1. Python
 - 파이썬에서 객체지향 개념
-    - 파이썬은 객체지향만을 위해 최적화되어 설계되지는 않았다. 프로그램의 흐름에 따라 함수 중심으로 구현할 수도 있다.
-    하지만 클래스 및 인스턴스 구현, 상속의 개념을 적용하기에도 수월하기 때문에 객체지향적 프로그래밍에 어려움은 없다.
+    - 파이썬은 함수 중심으로 구현할 수도 있고, 프로그램의 흐름에 따라 순차적으로 빠르게 구현해낼 수도 있다.
+    하지만 클래스 및 인스턴스 구현, 상속의 개념을 적용하기에도 수월하기 때문에 객체지향적 프로그래밍에도 최적화되어 있다.
     나아가 필요에 따라 인터페이스, 추상 클래스와 추상 메서드도 구현할 수 있다.
 
 > #### ■ 인터페이스와 추상 클래스의 차이점 <small>(다형성, 상속)</small>
@@ -189,7 +189,7 @@ image-source: https://pixabay.com/users/qimono-1962238/
     아마 Django 등에서 오래도록 사용되었던 도구일 것이다.
 - Gunicorn
     - <a href="https://docs.gunicorn.org/en/stable/" target="_blank">Gunicorn</a> 또한 WSGI 의 일종이다.
-    이것의 특징은 가볍고 빠르다는 것이다. 간결한 파이썬 환경설정이 특징이며,
+    이것의 특징은 가볍고 빠르다는 것이다. 간결한 파이썬 환경설정이 가능하며,
     여러 개의 worker process 와 threads 로 request 분산 처리가 가능하다.
     따라서 linux 환경에서 구동되는 프로덕션 서버라면 최근의 모던 웹앱에서 상당히 많이 사용된다.(windows 라면 mod_wsgi)
     내 업무환경, 개인 플젝에서도 이것을 WSGI 로 사용하고 있다.
@@ -199,6 +199,7 @@ image-source: https://pixabay.com/users/qimono-1962238/
     - HTTP 프로토콜로 통신하는 웹 서비스에는 웹앱과 함께 웹 서버가 존재한다. 웹앱은 사용자 request 에 대한 동적 처리를 담당한다면,
     웹 서버는 페이지를 응답해주는 정적 처리를 담당한다.
 - Apache 와 같이 Nginx 도 웹 서버의 일종이다.
+    - <a href="https://www.nginx.com/faq/what-is-nginx-how-different-is-it-from-e-g-apache/" target="_blank">How different is it from Apache</a>
 
 ### B. 데이터베이스
 
