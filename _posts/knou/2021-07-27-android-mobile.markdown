@@ -134,7 +134,7 @@ java 파일은 이벤트 요청에 따라 동적인 작업을 수행합니다.
 - 즉, 화면 자체를 액티비티라고 생각하면 편함
 - 따라서 **```MainActivity.java```** 는 사용자와 상호작용하여 새로운 액티비티를 생성하거나 요구사항을 만족시키는 작업을 수행
 
-```python
+```java
 package com.example.myapplication;
 
 import android.os.Bundle;
@@ -382,7 +382,7 @@ visibility 속성은 런타임 중 얼마든지 변경 가능합니다.
 #### (1) TextView 개요
 
 - 화면에 텍스트를 출력하는 위젯
-- 고정된 텍스트를 출력 혹은다른 위젯의 제목을 표시
+- 고정된 텍스트를 출력 혹은 다른 위젯의 제목을 표시
 - TextView 의 속성은 Button, EditText 등의 파생 클래스에도 적용됨
 
 ```text
@@ -439,7 +439,7 @@ visibility 속성은 런타임 중 얼마든지 변경 가능합니다.
 #### (5) textStyle 속성
 
 - 폰트 속성 > normal, bold, italic
-- '|' 로 묶어 두 개 이상의 상수값 지정 가능 (ex. "bold|italic")
+- '\|' 로 묶어 두 개 이상의 상수값 지정 가능 (ex. "bold\|italic")
 
 ---
 
@@ -447,27 +447,492 @@ visibility 속성은 런타임 중 얼마든지 변경 가능합니다.
 
 그럼 **TextView** 연습을 위한 안드로이드 프로젝트를 생성해 보겠습니다.
 
-- R.java
-- MainActivity.java
-- activity_main.xml
-- strings.xml
-- AndroidManifest.xml
+- **R.java** > 컴파일된 주소록
+- **MainActivity.java** > 프로젝트 시작점
+- **activity_main.xml** > 화면 레이아웃
+- **strings.xml** > 문자열 변수
+- **AndroidManifest.xml** > 사양 및 정보
 
-자동으로 생성되는 위 파일들 중 직접적으로 다룰 것은 MainActivity.java, activity_main.xml, strings.xml 세 개입니다.
+자동으로 생성되는 위 파일들 중 직접적으로 다룰 것은 **MainActivity.java**, **activity_main.xml**, **strings.xml** 세 개입니다.
+
+**MainActivity.java** 의 **MainActivity** 클래스는 기본적인 화면 레이아웃을 생성합니다.
+
+```java
+public class MainActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState):
+        setContentView(R.layout.activity_main);
+    }
+}
+```
+
+- **activity_main.xml** 은 레이아웃을 기술
+- **MainActivity** 는 컴파일되어 **R.java** 에 정의된 **activity_main** 레이아웃을 불러와 기본 액티비티에 전개
+    - **setContentView(R.layout.activity_main);**
+- 따라서 레이아웃 내 위젯을 채우려면 그것이 기술되어 있는 **activity_main.xml** 안의 레이아웃을 수정
+    - LinearLayout 안의 TextView
+- TextView 에 변수처리된 문자열이 있다면, **strings.xml** 내에 해당 문자열을 정의하거나 변경
+
+다음은 **activity_main.xml** 레이아웃, 위젯 수정 예제입니다.
+LinearLayout 을 추가하고 그 안에 TextView 위젯을 여러 개 넣습니다.
+
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        android:textColor="#ff0000"
+        android:textSize="18pt"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:text="@string/tv2_name"
+        android:textColor="#ff00ff"
+        android:background="#3355bb"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:text="@string/tv3_name"
+        android:textColor="#707070"
+        android:textSize="3mm"
+        android:typeface="serif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</LinearLayout>
+```
+
+LinearLayout 으로 내부 위젯이 순차적으로 나타나되,
+**android:orientation="vertical"** 속성으로 인해 세로로 보입니다.
+
+첫 번째 위젯은 text 속성에 직접 문자열을 대입하고, 나머지는 **string.xml** 에 변수처리 되었습니다.
+그리고 나머지 속성값들도 확인해볼 수 있습니다.
 
 ---
 
 #### 3.3 TextView 의 속성 (2)
 
+#### (1) typeFace 속성
+
+- 글꼴의 모양 지정, 모바일 메모리 환경 제약으로 인해 폰트 개수에 제약이 있습니다.
+- normal, sans, serif, monospace
+
+#### (2) width, height 속성
+
+- TextView 의 폭과 높이 (그릇의 사이즈!)
+- 절대 크기보다는 상대 크기의 단위를 활용. 기기마다 디스플레이 환경이 다양하기 때문
+
+#### (3) singleLine 속성
+
+- 출력 문자열의 길이가 TextView 위젯의 폭(width)보다 클 때 강제로 한 줄에 출력
+- true or false
+- 넘어가는 부분은 잘리고, 대신 '...' 생략 표시
+
 ---
 
-#### ImageView (1)
+#### 3.4 ImageView (1)
+
+#### (1) ImageView
+
+TextView 가 문자열을 담는 그릇이라면 ImageView 는 그림을 담는 그릇(위젯)입니다.
+
+#### (2) Src 속성
+
+- 출력할 이미지 지정 (아무 값도 없으면 보이는 것이 없음)
+- 색상 정의(#rrggbb 방식) 가능, 외부 이미지 로드 가능
+- 기본적인 프로젝트 내 이미지 저장 경로는 **res \ drawable \\** 폴더 내
+
+```xml
+<ImageView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:src="@drawable/banana"
+    android:tint="#70ff00ff" />
+```
+
+string 변수처리와 같이 **"@drawable/ID"** 와 같은 방식으로 이미지를 지정해줍니다.
+마찬가지로 R.java 에 해당 이미지 경로가 컴파일되어 있기 때문에 id 참조가 가능합니다.
+
+#### (3) image 포맷
+
+- jpg, png, gif 포맷
+- png 포맷은 Alpha 채널이 있어 반투명도 지원
+- 직사각형이 아닌 이미지도 만들 수 있음
+
+#### (4) res \ drawable \\
+
+- 프로젝트 루트 아래에 이 경로가 존재하며, 여기에 이미지 파일들 저장
+- 해상도별
+    - ldpi: 120 정도 낮은 해상도
+    - mdpi: 160 정도 중해상도
+    - hdpi: 240 정도 고해상도
+    - 이미지 추가 시 res \ drawable-mdpi 폴더에 복사
+
+#### (5) ImageView 프로젝트
+
+레이아웃에 ImageView 위젯을 생성해 봅시다.
+
+- 이미지 파일을 res 폴더에 복사
+- **<a href="https://developer.android.com/studio/command-line/aapt2" target="_blank">aapt(Android Asset Packaging Tool)</a>**
+가 컴파일 전에 새로 추가된 이미지 파일을 찾아 R.java 에 **"파일명"으로 id 자동 정의**
+- 위젯 태그에서 참조는 strings.xml 의 그것과 같이 **id 베이스**로 함
+- 따라서 "파일명"은 **영소문자로 작성하되, 공백 없이 특수 기호를 사용하지 말아야 함**(특수문자 중 언더바 정도 허용)
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingTop="30dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:text="@string/sana"
+        android:textColor="#707070"
+        android:textSize="36sp"
+        android:typeface="serif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SmallSp" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sana"
+        android:adjustViewBounds="true"
+        android:maxHeight="180dp"
+        android:contentDescription="@string/sana" />
+
+</LinearLayout>
+```
+
+![CUTY SANA Android]({{ site.github.url }}{% link assets/post-img/cuty_sana_android01.png %})
+
+**maxWidth**, **maxHeight** 속성으로 가로 세로 최대크기를 지정할 수 있으며, **adjustViewBounds** 로 이미지 비율을 유지할 수 있습니다.
+**tint** 속성은 이미지의 색상을 지정합니다.
+무엇보다 에러가 발생하지 않도록 파일명 작성에 유의합시다.
 
 <br>
 ## 4. TextView와 ImageView (2)
+
+본 강의에서는 3강에서 다루던 **ImageView** 를 마무리하고 **Button**, **EditText** 와 함께 레이아웃에 대해 살펴보겠습니다.
+
+---
+
+#### 4.1 ImageView (2)
+
+#### (1) maxHeight, maxWidth, minHeight, minWidth 속성
+
+- 화면에 출력될 이미지의 최소, 최대 너비와 높이를 지정
+- 상대 크기 단위를 사용할 것
+
+#### (2) adjustViewBounds 속성
+
+- 이미지의 종횡비를 유지하는 속성 (true or false)
+
+#### (3) cropToPadding 속성
+
+- Widget 에 주어진 여백에 맞추기 위해 이미지의 일부를 자름
+- 예를 들어, ImageView 의 padding 을 20dp 로 주고 cropToPadding="true" 라면, padding 에 맞춰 이미지가 잘라짐
+
+```xml
+<ImageView
+    android:id="@+id/imageid"
+    android:scaleType="centerCrop"
+    android:padding="20dp"
+    android:cropToPadding="true" />
+```
+
+#### (4) tint 속성
+
+- 이미지에 색조를 입힘 (#aarrggbb)
+- 색조가 위에 덮여 출력
+- 불투명한 색은 src 속성에 단색을 주는 것과 같은 효과
+
+#### (5) scaleType 속성
+
+- 이미지 확대/축소 알고리즘을 지정하여 원래 크기와 다른 이미지를 화면에 표현
+- matrix, fitXY, center, centerCrop 등의 알고리즘
+
+---
+
+#### 4.2 Button 과 EditText
+
+버튼과 텍스트 입력 창입니다.
+이것들은 사용자의 입력을 받아들이는 대표적인 방법입니다.
+
+이 두 클래스는 **TextView** 의 파생 클래스임을 기억합시다. (text 등의 속성 사용가능)
+
+#### (1) Button
+
+- 기본 사각 모양의 버튼
+- 문자열이 들어가 있으며, 사용자가 눌러 명령을 전달할 수 있음
+
+#### (2) EdirText
+
+- 문자열을 입력받는 Widget, 간단히 에디트라 부름
+- TextView 의 모든 속성을 사용할 수 있다
+- 추가로 문자열 편집 관련 메서드 제공
+
+#### (3) ButtonEdit 프로젝트 - Design Layout(activity_main.xml), MainActivity.java
+
+**activity_main.xml** 의 Design 탭에서 드래그 앤 드롭으로 각 위젯을 생성할 수 있지만,
+직접 xml 태그를 타이핑하는 연습을 해서 확실히 이해하도록 합시다.
+
+다음은 **EditText**, **Button** 각각 하나씩 생성한 예제입니다.
+
+```xml
+<EditText
+    android:id="@+id/et_default"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:hint="@string/default_placeholder"
+    android:autofillHints="@string/default_placeholder"
+    android:inputType="text"
+    android:layout_gravity="center" />
+
+<Button
+    android:id="@+id/btn_default"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/btn_confirm"
+    android:layout_gravity="center" />
+```
+
+이렇게 생성한 위젯들은 재사용을 위해 id 변수처리를 해야 합니다. (JAVA 코드에서 활용)
+버튼을 클릭하면 Click Event 가 발생하는데, 이것의 처리는 JAVA 코드 내에서 이루어집니다.
+
+- 버튼 위젯의 ID 를 참조해 **android.widget.Button** 타입의 객체를 생성하여 이것에 **OnClickListener**를 추가
+- 그럼 작성한 함수 내용에 따라 **android.widget.Toast** 가 팝업에 나타남
+
+```java
+...
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+...
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    
+        // Add onclick event to button
+        Button btn = (Button) findViewById(R.id.btn_default);
+        btn.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText edit = (EditText) findViewById(R.id.et_default);
+                String str = edit.getText().toString();
+                Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
+```
+
+앱 실행 시 텍스트 입력 후 CONFIRM 클릭하면 해당 팝업창이 나타납니다.
+
+---
+
+#### 4.3 ViewGroup 의 속성 (1)
+
+이제 레이아웃을 의미하는 **ViewGroup** 의 속성을 살펴보겠습니다.
+
+#### (1) layout_width, layout_height 속성
+
+- View 의 폭과 높이 지정
+- 자신을 감싸고 있는 부모 View 에 따라 **match_parent**, **wrap_content** 등의 값 활용 (부모 크기만큼 / 내부 컨텐츠 크기만큼)
+
+이런 사이즈 값들은 절대값이 아니라 상대값을 활용해 여러 기기에 유동적으로 적용되도록 합니다.
+
+---
+
+#### 4.4 ViewGroup 의 속성 (2)
+
+#### (1) padding 속성
+
+- View 와 내용물 간의 간격 지정
+- padding 이 지정된 ViewGroup 의 내부 위젯은 영향을 받을 수 있음
+- paddingTop, paddingRight, paddingBottom, paddingLeft 로 분화 가능
+
+#### (2) layout_margin 속성
+
+- margin 은 반대로 ViewGroup 과 부모와의 간격 지정
+- 뿐아니라 형제 View 와의 간격에도 영향
+- 이 속성도 마찬가지로 상하좌우 분화 가능
 
 <br>
 ## 5. LinearLayout의 속성
 
 <br>
 ## 6. 렐레티브레이아웃과 프레임레이아웃
+
+**RelativeLayout** 과 **FrameLayout** 은 안드로이드 UI 에서 가장 많이 사용되는 레이아웃입니다.
+특히 **FrameLayout** 은 고유한 특성으로 인해 꼭 필요한 경우가 존재합니다.
+
+---
+
+#### 6.1 RelativeLayout 의 속성 (1)
+
+**RelativeLayout** 은 말 그대로 쟁반(ViewGroup)과 그릇(View, Widget)을 상대적으로 배치하는 것입니다.
+따라서 항상 기준 요소가 필요하고, 그 기준에 따라 상대적인 위치가 정해지므로, XML 요소의 순서와 실제 화면 배치 순서는 무관합니다.
+
+기준 요소는 일반 위젯이 될 수 도 있고, 부모 뷰그룹이 될 수도 있습니다.
+이때, 기준 요소 재사용을 위해 **id 지정은 필수**입니다.
+
+먼저 위젯 간의 상대 속성을 알아봅시다.
+
+#### (1) Widget 간 상대 배치
+
+- **layout_above**: ~의 위에 배치
+- **layout_below**: ~의 아래에 배치
+- **layout_toLeftOf**: ~의 왼쪽에 배치
+- **layout_toRightOf**: ~의 오른쪽에 배치
+- **layout_alignLeft**: ~와 왼쪽 변을 맞춤
+- **layout_alignTop**: ~와 위쪽 변을 맞춤
+- **layout_alignRight**: ~와 오른쪽 변을 맞춤
+- **layout_alignBottom**: ~와 아래쪽 변을 맞춤
+
+먼저 기준 요소를 지정합니다.
+
+```xml
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+    <!-- Target Element -->
+    <TextView
+        android:id="@+id/target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/target_text"
+        android:layout_centerInParent="true"
+        android:textSize="30sp"
+        android:background="#00D8FF" />
+
+</RelativeLayout>
+```
+
+기준 요소에 상대적으로 각 요소들을 배치해 봅니다.
+
+```xml
+...
+    <TextView
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/top_text"
+        android:layout_above="@id/target"
+        android:textSize="12sp"
+        android:background="#1DDB16" />
+
+    <TextView
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/right_text"
+        android:layout_toRightOf="@id/target"
+        android:textSize="12sp"
+        android:background="#1DDB16" />
+
+    <TextView
+        android:id="@+id/bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bottom_text"
+        android:layout_below="@id/target"
+        android:textSize="12sp"
+        android:background="#1DDB16" />
+    ...
+...
+```
+
+**ID "target"** 인 중앙 요소에 상대적인 설정들입니다. 세 개만 작성했는데, 실습을 통해 완성해보면 좋습니다.
+
+#### (2) 부모 ViewGroup or Layout 에 상대 배치
+
+이번에는 부모 요소에 상대적인 배치 속성들입니다.
+
+- **layout_alignParentLeft**: true 이면 부모와 왼쪽 변을 맞춤
+- **layout_alignParentTop**: true 이면 부모와 위쪽 변을 맞춤
+- **layout_alignParentRight**: true 이면 부모와 오른쪽 변을 맞춤
+- **layout_alignParentBottom**: true 이면 부모와 아래쪽 변을 맞춤
+- **layout_alignBaseline**: ~와 베이스라인을 맞춤
+
+- **layout_alignWithParentIfMissing**: layout_toLeftOf 등의 속성에 대해 앵커가 발견되지 않으면 부모를 앵커로 사용
+- **layout_centerHorizontal**: true 이면 부모의 수평 중앙에 배치
+- **layout_centerVertical**: true 이면 부모의 수직 중앙에 배치
+- **layout_centerParent**: true 이면 부모의 수평, 수직 중앙에 배치
+
+부모 요소를 기준으로 위 속성들을 활용해 봅시다.
+
+#### (3) 리소스 컴파일러와의 관계
+
+RelativeLayout 에서 상대적으로 얽혀 있는 여러 요소들의 참조관계는 **컴파일 시 한번에 읽도록** 되어 있습니다.
+이는 **빠른 배치**가 가능하게 하며, 요소 간 종속적 관계에서 **기준이 되는 요소가 XML 상에서 먼저 정의**되어 있어야 참조할 수 있습니다.
+
+#### (4) 배치상의 어려움
+
+계속 설명했듯 RelativeLayout 은 요소 간 상대적이기 때문에 참조관계를 많이 정의하면 할수록 헷갈리기 쉽습니다.
+
+- 헷갈리다는 의미는, **유지보수성의 저하**로 이어질 수 있음 (직관적인 이해가 어려움)
+- 이미 복잡한 상대적 관계를 갖는 요소들이 배치되어 있다면, 그것을 **대체하기가 어려움**
+- 또한, 논리적으로 맞지 않는 관계가 형성될 수 있음 (A -> B and B -> A)
+
+---
+
+#### 6.2 RelativeLayout 의 속성 (2)
+
+일반적으로 **부모와 관계되는 기준 요소를 가장 먼저** 정의하고,
+부모의 변에 달라붙는 위젯, 나머지 상대 요소 순으로 정의하면 의도한 대로 위치하게 됩니다.
+
+---
+
+#### 6.3 AbsoluteLayout 의 속성
+
+---
+
+#### 6.4 FrameLayout 의 속성
