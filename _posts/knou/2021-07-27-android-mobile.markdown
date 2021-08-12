@@ -23,15 +23,15 @@ image-source: https://pixabay.com/users/andrekheren-73289/
 4. [TextView와 ImageView (2)](#4-textview와-imageview-2)
 5. [LinearLayout의 속성](#5-linearlayout의-속성)
 6. [렐레티브레이아웃과 프레임레이아웃](#6-렐레티브레이아웃과-프레임레이아웃)
-7. [](#)
-8. [](#)
-9. [](#)
-10. [](#)
-11. [](#)
-12. [](#)
-13. [](#)
-14. [](#)
-15. [](#)
+7. [레이아웃의 중첩](#7-레이아웃의-중첩)
+8. [Canvas와 Toast](#8-canvas와-toast)
+9. [이벤트 처리](#9-이벤트-처리)
+10. [입력 이벤트 처리](#10-입력-이벤트-처리)
+11. [위젯의 이벤트 처리](#11-위젯의-이벤트-처리)
+12. [액티비티와 인텐트](#12-액티비티와-인텐트)
+13. [ListView와 Spinner](#13-listview와-spinner)
+14. [AlertDialog 1](#14-alertdialog-1)
+15. [AlertDialog 2](#15-alertdialog-2)
 
 ### 참조
 
@@ -803,6 +803,10 @@ public class MainActivity extends AppCompatActivity {
 - 뿐아니라 형제 View 와의 간격에도 영향
 - 이 속성도 마찬가지로 상하좌우 분화 가능
 
+#### (3) padding 과 layout_margin
+
+padding 은 뷰(혹은 레이아웃)의 내부 여백을 채우고, layout_margin 은 속성이 지정된 뷰의 바깥 여백으로 지정되므로 그 특성을 잘 고려합시다.
+
 <br>
 ## 5. LinearLayout의 속성
 
@@ -933,6 +937,142 @@ RelativeLayout 에서 상대적으로 얽혀 있는 여러 요소들의 참조�
 
 #### 6.3 AbsoluteLayout 의 속성
 
+**AbsoluteLayout** 은 RelativeLayout 와는 반대로 **절대 좌표**에 차일드 뷰를 위치시킵니다.
+레이아웃, 뷰그룹, 위젯 간의 **관계나 순서에 관계없이 지정한 고정 좌표에만 배치**되므로, 자유도가 높고 위치가 상대적으로 변화될 걱정이 없습니다.
+
+그러나 **이 레이아웃이 실제적으로 사용되지 않는 이유는, 절대 좌표가 다양한 모바일 환경에 적절히 적용될 수 없기 때문**입니다.
+x, y 축 고정 좌표에 요소를 위치시키면 화면이 큰 모바일에서는 여백이 많이 발생할 것이고, 반대로 작은 화면의 모바일에서는 잘려서 나올 수 있습니다.
+세로 화면, 가로 화면에 따라서도 보여지는 것이 달라지게 됩니다. (<del>공식 문서에서도 사용하지 말라고 합니다.</del>)
+
+- **layout_x**: 가로축 절대 좌표
+- **layout_y**: 세로축 절대 좌표
+
+다음은 JAVA 와 함께 유용하게 사용될 수 있는 **FrameLayout** 을 살펴보겠습니다.
+
 ---
 
 #### 6.4 FrameLayout 의 속성
+
+**FrameLayout** 에서의 모든 요소들은 **순차적으로 중첩**됩니다. 이 말은, 나중에 중첩된 요소가 가장 앞단에 보이게 된다는 의미입니다.
+
+이것은 빈번하게 사용되지는 않지만, 겹겹이 쌓아나가는 특성을 잘 활용하여 필요한 곳에 적용할 수 있습니다.
+
+- Child Views 를 배치하는 규칙이 따로 없음. 항상 좌상단에 나타남.
+- 요소가 두 개 이상일 때는 추가된 순서대로 겹쳐서 표현 (가장 나중 것이 표면에 보임)
+
+특정 조건에 따라 차일드 뷰 하나만 선택적으로 나타나게 할 수 있습니다.
+
+#### (1) FrameLayout 의 속성
+
+- **foreground**: (모든)차일드의 위쪽에 살짝 얹히는 (뚜껑)이미지를 지정함
+- **foregroundGravity**: foreground 이미지의 위치를 결정 (default "fill")
+- **measureAllChildren**:
+    - True 인 경우 레이아웃의 크기를 모든 차일드 뷰 크기에 맞춤 (차일드 중 가장 큰 것)
+    - False 인 경우 차일드 중 visibility 속성값이 visible 인 뷰에만 맞춤
+
+Gravity 는 위치를 지정하므로, foregroundGravity 속성은 뚜껑 이미지의 위치를 지정합니다.
+기본값인 fill 은 이미지가 프레임 전체를 커버하도록 합니다.
+
+#### (2) FrameLayout 과 JAVA 예제
+
+FrameLayout 은 보이거나 안보이거나, 마지막 요소가 나타나거나... 등등의 특성으로 인해 **JAVA 와 동적인 협업**에 사용됩니다.
+
+- Button 의 클릭 이벤트 리스너를 작성하여 ImageView 의 보여짐 여부를 변경하는 예제
+- 이벤트 발생 시 ImageView 의 상태를 조사한 후 visibility 속성을 바꿈
+
+```xml
+<!-- activity_main.xml -->
+
+...
+
+<ImageView
+    android:id="@+id/img"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_launcher" />
+
+<Button
+    android:id="@+id/btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Click, Button" />
+
+...
+```
+
+ImageView 의 이미지는 기본 이미지를 활용했고, visibility 속성이 별도로 지정되어 있지 않으므로 default "visible" 입니다.
+
+```java
+/* MainActivity.java */
+
+...
+
+public class MainActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button btn = (Button) findViewById(R.id.btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ImageView img = (ImageView) findViewById(R.id.img);
+                if (img.getVisibility() == View.VISIBLE) {
+                    img.setVisibility(View.GONE);
+                } else {
+                    img.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+}
+
+...
+```
+
+<br>
+## 7. 레이아웃의 중첩
+
+본 강의에서는 TableLayout, 레이아웃의 중첩, 앱 실행 중에 속성을 바꾸는 것을 학습합니다.
+
+---
+
+#### 7.1 TableLayout
+
+**TableLayout** 은 바둑판이라고 생각하면 됩니다.
+
+---
+
+#### 7.2 레이아웃 중첩 (1)
+
+---
+
+#### 7.3 레이아웃 중첩 (2)
+
+---
+
+#### 7.4 실행중에 속성 바꾸기
+
+<br>
+## 8. Canvas와 Toast
+
+<br>
+## 9. 이벤트 처리
+
+<br>
+## 10. 입력 이벤트 처리
+
+<br>
+## 11. 위젯의 이벤트 처리
+
+<br>
+## 12. 액티비티와 인텐트
+
+<br>
+## 13. ListView와 Spinner
+
+<br>
+## 14. AlertDialog 1
+
+<br>
+## 15. AlertDialog 2
