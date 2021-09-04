@@ -1056,6 +1056,49 @@ public class MainActivity extends Activity {
 <br>
 ## 8. Canvas와 Toast
 
+화면에 무언가를 그리고 출력하기 위한 **Canvas**와 **Toast**에 대해 살펴봅니다.
+
+카톡이 왔을 때 잠깐 화면에 나타났다 사라지는 메시지를 생각하면 됩니다.
+
+---
+
+#### 8.1 Canvas (1)
+
+#### (1) CustomView
+
+**CustomView**는 Canvas에 여러 가지를 그려서 표현하는 새로운 뷰입니다.
+이 뷰는 사용자에 의해 상속되어 확장됩니다.
+
+- View 를 상속받아 onMeasure, onDraw 메서드를 재정의해 출력
+- 원하는 크기와 모양의 이미지 혹은 텍스트를 씀
+
+#### (2) Canvas
+
+- View 의 그리기 표면이며 Canvas 위에 그림을 그리는 메서드를 가짐
+- Canvas 객체는 시스템이 초기화하면서 View 객체의 onDraw 메서드의 인수로 전달됨 (따로 생성할 필요 x)
+
+#### (3) Canvas 의 메서드
+
+- **void drawPoint (float x, float y, Paint paint)**
+- **void drawLine (float startX, float startY, float stopX, float stopY, Paint paint)**
+- **void drawCircle (float cx, float cy, float radius, Paint paint)**
+- **void drawRect (float left, float top, float right, float bottom, Paint paint)**
+- **void drawText (String text, float x, float y, Paint paint)**
+
+Paint 클래스 객체는 보여지는 요소의 속성이나 스타일을 포함합니다.
+
+---
+
+#### 8.2 Canvas (2)
+
+---
+
+#### 8.3 Toast
+
+---
+
+#### 8.4 소리 출력
+
 <br>
 ## 9. 이벤트 처리
 
