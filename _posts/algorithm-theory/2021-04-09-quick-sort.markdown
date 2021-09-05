@@ -54,10 +54,10 @@ def partition(nums: list, init: int, end: int):
 
     while init <= end:  # Until init and end intersect
         # Select a number greater than pivot
-        while nums[init] < pivot:
+        while init < len(nums) and nums[init] < pivot:
             init += 1
         # Select a number smaller than pivot
-        while nums[end] > pivot:
+        while end >= 0 and nums[end] > pivot:
             end -= 1
 
         # Change selected numbers based on pivot
