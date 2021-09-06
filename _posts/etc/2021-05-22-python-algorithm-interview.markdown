@@ -17,6 +17,70 @@ image-source: https://www.facebook.com/AlgorithmInterview/
 [목차]
 
 1. [들어가며](#들어가며)
+2. [파이썬](#파이썬)
+    - 2-1. [기본문법](#기본문법)
+    - 2-2. [코딩 스타일](#코딩-스타일)
+    - 2-3. [빅오](#빅오)
+    - 2-4. [자료형](#자료형)
+    - 2-5. [[**문자열 다루기**] 유효한 펠린드롬](#유효한-펠린드롬)
+    - 2-6. [[**문자열 다루기**] 로그파일 재정렬](#로그파일-재정렬)
+    - 2-7. [[**문자열 다루기**] 가장 흔한 단어](#가장-흔한-단어)
+    - 2-8. [[**문자열 다루기**] 그룹 애너그램](#그룹-애너그램)
+    - 2-9. [[**문자열 다루기**] 가장 긴 팰린드롬 부분 문자열](#가장-긴-팰린드롬-부분-문자열)
+3. [선형 자료구조](#선형-자료구조)
+    - 3-. [파이썬에서의 배열](#파이썬에서의-배열)
+    - 3-. [[**배열**] 두 수의 합](#두-수의-합)
+    - 3-. [[**배열**] 빗물 트래핑](#빗물-트래핑)
+    - 3-. [[**배열**] 세 수의 합](#세-수의-합)
+    - 3-. [[**배열**] 배열 파티션 1](#배열-파티션-1)
+    - 3-. [[**배열**] 자신을 제외한 배열의 곱](#자신을-제외한-배열의-곱)
+    - 3-. [[**배열**] 주식을 사고 팔기 가장 좋은 시점](#주식을-사고-팔기-가장-좋은-시점)
+    - 3-. [[**연결 리스트**] ](#)
+    - 3-. [[**연결 리스트**] ](#)
+    - 3-. [[**연결 리스트**] ](#)
+    - 3-. [[**연결 리스트**] ](#)
+    - 3-. [[**연결 리스트**] ](#)
+    - 3-. [[**연결 리스트**] ](#)
+    - 3-. [[**연결 리스트**] ](#)
+    - 3-. [[**스택, 큐**] ](#)
+    - 3-. [[**스택, 큐**] ](#)
+    - 3-. [[**스택, 큐**] ](#)
+    - 3-. [[**스택, 큐**] ](#)
+    - 3-. [[**스택, 큐**] ](#)
+    - 3-. [[**스택, 큐**] ](#)
+    - 3-. [[**데크, 우선순위 큐**] ](#)
+    - 3-. [[**데크, 우선순위 큐**] ](#)
+    - 3-. [[**해시 테이블**] ](#)
+    - 3-. [[**해시 테이블**] ](#)
+    - 3-. [[**해시 테이블**] ](#)
+    - 3-. [[**해시 테이블**] ](#)
+4. [비선형 자료구조](#비선형-자료구조)
+    - 4-. [[**그래프**] 섬의 개수](#섬의-개수)
+    - 4-. [[**그래프**] 전화번호 문자 조합](#전화번호-문자-조합)
+    - 4-. [[**그래프**] 순열](#순열)
+    - 4-. [[**그래프**] 조합](#조합)
+    - 4-. [[**그래프**] 조합의 합](#조합의-합)
+    - 4-. [[**그래프**] 부분 집합](#부분-집합)
+    - 4-. [[**그래프**] 일정 재구성](#일정-재구성)
+    - 4-. [[**그래프**] 코스 스케줄](#코스-스케줄)
+    - 4-. [[**최단 경로 문제**] 네트워크 딜레이 타임](#네트워크-딜레이-타임)
+    - 4-. [[**최단 경로 문제**] K 경유지 내 가장 저렴한 항공권](#K-경유지-내-가장-저렴한-항공권)
+    - 4-. [[**트리**] 이진 트리의 최대 깊이](#이진-트리의-최대-깊이)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**트리**] ](#)
+    - 4-. [[**힙**] ](#)
+    - 4-. [[**트라이**] ](#)
+5. [알고리즘](#알고리즘)
 
 ---
 
@@ -29,7 +93,7 @@ image-source: https://www.facebook.com/AlgorithmInterview/
 <br>
 ## 파이썬
 
-#### 기본문법
+### 기본문법
 
 - **인덴트**: [**PEP8**](https://www.python.org/dev/peps/pep-0008/#id15) 에 따라 공백 4칸 원칙
 - **네이밍 컨벤션**: class 명을 제외하고 카멜 케이스를 지양 (스네이크 코딩을 지향)
@@ -55,8 +119,16 @@ image-source: https://www.facebook.com/AlgorithmInterview/
 - **print**: ```print('A1', 'B2', sep=',')``` 출력 결과는 "A1, B2"
 - **f-string**: ```a = 'A1'```, ```b = 'B2'```, ```print(f'{a}, {b}')``` 출력 결과는 "A1, B2"
 - **join**: ```print(', '.join(['A1', 'B2']))``` 출력 결과는 "A1, B2"
+- **정렬**
+    - sort: ```[2, 5, 1, 9, 7].sort()``` 출력값 없이 객체가 정렬됨
+    - sorted: ```sorted([2, 5, 1, 9, 7])``` [1, 2, 5, 7, 9] 출력
+    - **익명 함수 활용 정렬**: 커스텀 조건 정렬을 위해 익명 함수 활용 가능. 주로 lambda 를 씀
+        - ```python
+            sorted(['cde', 'cfc', 'abc'], key=lambda x: (x[0], x[-1]))  # ['abc', 'cfc', 'cde']
+            ```
 
-#### 코딩 스타일
+<br>
+### 코딩 스타일
 
 - 개발자는 혼자 일하지 않는다. 그러므로 나만 알아보는 코드는 지양하고, **의미론적이고 간결하고 클린한 코드**를 지향할 것.
 - **변수명과 주석**: 충분히 설명적이면서 간결한 네이밍, 최소한의 적절한 (영어)주석!
@@ -76,12 +148,14 @@ image-source: https://www.facebook.com/AlgorithmInterview/
                 b = []
         ```
 
-#### 빅오
+<br>
+### 빅오
 
 - 시간복잡도는 어떤 알고리즘을 수행하는 데 걸리는 시간을 설명하는 계산복잡도
 - Big-oh 는 최악의 수행시간을 나타내는 점근성능 표기법 (점근적 상한)
 
-#### 자료형
+<br>
+### 자료형
 
 - 시퀀스
     - 가변: list
@@ -92,3 +166,331 @@ image-source: https://www.facebook.com/AlgorithmInterview/
 - ```collections.Counter([1, 2, 2, 3, 4, 4, 4])```: 각 아이템 개수를 계산해 dict 로 반환
 - ```collections.OrderedDict(dict)```: 순서가 보장되는 dict
 - 파이썬은 원시 타입(Primitive type)을 지원하지 않음. 객체 타입(참조형)을 채택
+
+<br>
+### [문자열 다루기] 유효한 펠린드롬
+
+**펠린드롬**이란 뒤집어도 같은 말이 되는 단오 또는 문장을 의미합니다.
+
+```python
+"""
+Palindrome:
+    제약사항: 영문숫자, 대소문자 구분하지 않음.
+"""
+
+import re
+from collections import deque
+
+def palindrome_deque(string: str) -> bool:
+    deq = deque([s.lower() for s in string if s.isalnum()])
+    while len(deq) > 1:
+        if deq.popleft() != deq.pop():
+            return False
+    return True
+
+
+var1 = 'A man, a plan, a canal: Panama'
+var2 = 'race a car'
+print(palindrome_deque(string=var1))  # True
+print(palindrome_deque(string=var2))  # False
+
+
+def palindrome_slicing(string: str) -> bool:
+    string = string.lower()  # 소문자로 통일
+    string = re.sub('[^a-z0-9]', '', string)  # 특수문자 필터
+    return string == string[::-1]  # 역 슬라이싱!
+
+print(palindrome_slicing(string=var1))  # True
+print(palindrome_slicing(string=var2))  # False
+```
+
+- **```덱(deque)```** 자료구조 사용 시 list 자료구조보다 성능이 나음
+- ```list.pop(0)``` 연산의 경우 O(n) 의 시간복잡도를 가지지만, (재정렬을 위한 전체 탐색)
+- ```deque.popleft()``` 연산은 O(1) 이다. (연결 리스트이므로 재정렬 불필요)
+- slicing 을 활용하면 앞뒤 조건비교하지 않아 더 간결해짐
+
+> **문자열 슬라이싱**
+>> 파이썬에서 문자열은 배열처럼 곧바로 인덱싱하여 다룰 수 있습니다.
+>> 별도의 자료구조에 매핑하여 사용하는 것보다 거의 항상 나은 성능을 나타냅니다.
+
+<br>
+### [문자열 다루기] 로그파일 재정렬
+
+조건은 다음과 같습니다.
+
+1. 로그의 가장 앞 부분은 식별자이다.
+2. 문자로 구성된 로그가 숫자 로그보다 앞에 온다.
+3. 식별자는 순서에 영향을 끼치지 않지만, 문자가 동일한 경우 식별자 순으로 한다.
+4. 숫자 로그는 입력 순서대로 한다.
+
+[1] Input
+```python
+["digl 8 1 5 1", "letl art can", "dig2 3 6", "let2 own kit dig", "let3 art zero"]
+```
+
+[2] Output
+```python
+["letl art can", "let3 art zero", "let2 own kit dig", "digl 8 1 5 1", "dig2 3 6"]
+```
+
+```python
+def reorder_log_files(logs: list) -> list:
+    letters, digits = [], []
+    for log in logs:
+        if log.split()[1].isdigit():
+            digits.append(log)
+        else:
+            letters.append(log)
+
+    letters.sort(key=lambda x: (x.split()[1:], x.split()[0]))
+    return letters + digits
+
+
+logs = ["digl 8 1 5 1", "letl art can", "dig2 3 6", "let2 own kit dig", "let3 art zero"]
+reorder_log_files(logs=logs)  # ["letl art can", "let3 art zero", "let2 own kit dig", "digl 8 1 5 1", "dig2 3 6"]
+```
+
+숫자로 된 로그는 입력 순서대로 맨 뒤에 붙고, 문자로 된 로그는 ```(1)문자열 순 (2)키순``` 우선순위대로 정렬합니다.
+(이 정렬부위가 정렬 키로 람다함수가 쓰여진 곳)
+
+<br>
+### [문자열 다루기] 가장 흔한 단어
+
+금지된 단어를 제외한 가장 흔하게 등장하는 단어를 출력합니다.
+대소문자 구분하지 않으며, 구두점 또한 무시합니다.
+
+```python
+import re
+import collections
+from typing import List
+
+
+def most_common_word(paragraph: str, banned: List[str]) -> str:
+    words = [
+        word
+        for word in re.sub(r'[^\w]', ' ', paragraph).lower().split()
+        if word not in banned
+    ]
+
+    # [CASE 1] Using collections.Counter
+    counts = collections.Counter(words)
+    return counts.most_common(1)[0][0]
+    
+    # [CASE 2] Using collections.defaultdict
+    # counts = collections.defaultdict(int)
+    # for word in words:
+    #     counts[word] += 1
+    # return max(counts, key=counts.get)
+
+
+paragraph = 'Bob hit a ball, the hit BALL flew far after it was hit.'
+banned = ['hit']
+print(most_common_word(paragraph=paragraph, banned=banned))  # 'ball'
+```
+
+<br>
+### [문자열 다루기] 그룹 애너그램
+
+문자열 배열을 입력받아 애너그램 단위로 그룹핑합니다.
+
+> **애너그램?**
+>> 일종의 언어유희로, 동일한 문자열을 재배열하여 다른 뜻을 가진 단어로 바꾸는 것을 말합니다.
+
+애너그램을 판단하는 가장 간단한 방법은 정렬하여 비교하는 것입니다. 동일 문자열로 구성되어 결국 같아지기 때문입니다.
+
+```python
+from collections import defaultdict
+
+
+def make_anagram(anagrams: defaultdict, word: str) -> dict:
+    anagrams[''.join(sorted(word))].append(word)
+    return anagrams
+
+words = ['eat', 'tea', 'tan', 'ate', 'nat', 'bat']
+anagrams = defaultdict(list)
+for word in words:
+    make_anagram(anagrams=anagrams, word=word)
+
+print([sorted(value) for value in anagrams.values()])  # [['ate', 'eat', 'tea'], ['nat', 'tan'], ['bat']]
+```
+
+<br>
+### [문자열 다루기] 가장 긴 팰린드롬 부분 문자열
+
+가장 긴 팰린드롬 부분 문자열의 길이를 출력합니다.
+
+> **Longest Common Substring**
+>> 최장 공통 부분 문자열은 여러 입력 문자열 중 공통된 가장 긴 부분 문자열을 찾는 문제입니다.
+>> 보통은 다이나믹 프로그래밍으로 풀지만, 하나의 입력 문자열 중 가장 긴 팰린드롬을 찾는 문제이므로,
+>> **투 포인터** 방식을 활용할 수 있습니다.
+
+```python
+import re
+
+
+def get_sub_palindrome(string: str, left: int, right: int) -> str:
+    # Expanding from substring length 2 or 3
+    while left >= 0 and right < len(string) and string[left] == string[right]:
+        left -= 1
+        right += 1
+    return string[left + 1:right]
+
+
+def solution(string):
+    # 영소문자, 특수문자 제거
+    string = string.lower()
+    string = re.sub('[^a-z0-9]', '', string)
+
+    # 한 글자이거나, 문자열 전체가 펠린드롬인 경우
+    if len(string) < 2 or string == string[::-1]:
+        return len(string)
+
+    # 가장 긴 부분 펠린드롬 구하기
+    answer = ''
+    for i in range(0, len(string) - 1):
+        answer = max(
+            answer,
+            get_sub_palindrome(string, i, i + 1),
+            get_sub_palindrome(string, i, i + 2),
+            key=len
+        )
+    return len(answer)
+```
+
+<br>
+## 선형 자료구조
+
+선형 자료구조는 순차적(sequential)인 객체를 다룹니다.
+
+### 파이썬에서의 배열
+
+파이썬에서의 배열은 **동적 자료형**입니다.
+
+이 말은, 주어지는 데이터에 따라서 할당된 메모리 공간이 가변적이라는 의미입니다.
+이는 정적 할당 자료형보다는 처리속도 면에서 불리하긴 하지만, 사용자 편의성 측면에서의 이점이 더 크다고 볼 수 있습니다.
+
+현실적으로 막대하게 큰 데이터나 가변성이 너무 높은 데이터가 아닌 이상 성능적인 이슈는 큰 문제가 되지 않습니다. (충분히 빠름)
+
+파이썬에서 동적 배열은 초기 할당영역을 작게 잡았다가, 모두 채워지면 **더블링Doubling 이후 모두 복사하는 방식**으로 처리합니다.
+초반에는 2배씩 늘리다가 전체적으로는 약 1.125배 수준으로 늘려갑니다.
+
+> **파이썬에서 대표적인 동적 배열은 _list_ 자료구조입니다.**
+
+<br>
+### [배열] 두 수의 합
+
+덧셈하여 타겟을 만들 수 있는 배열의 두 숫자 인덱스를 리턴합니다.
+
+[1] Input
+```python
+nums, target = [2, 7, 11, 15], 9
+```
+
+[2] Output
+```python
+[0, 1]
+```
+
+```python
+"""
+Brute-Force, O(n^2)
+"""
+
+def get_two_sum_index_that_match_target1(nums: list, target: int) -> list:
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == target:
+                return [i, j]
+    return []
+
+
+nums, target = [2, 7, 11, 15], 9
+print(get_two_sum_index_that_match_target1(nums, target))
+```
+
+```python
+"""
+Use keyword "in", O(n)
+"""
+
+def get_two_sum_index_that_match_target2(nums: list, target: int) -> list:
+    for idx, num in enumerate(nums):
+        complement = target - num
+        if complement in nums[idx + 1:]:
+            return [idx, nums.index(complement)]
+    return []
+
+
+nums, target = [2, 7, 11, 15], 9
+print(get_two_sum_index_that_match_target2(nums, target))
+```
+
+```python
+"""
+Use reverse dict, advanced O(n)
+    -> find the index directly by dict
+
+풀이 3: 첫 번째 수를 뺀 결과 키 조회
+    -> 인덱스와 값을 바꿔 값을 key 로 갖는 dict 자료형을 활용합니다.
+    -> 첫 번째 수를 뺀 나머지 key 값에 해당하는 value 가 곧 찾는 인덱스가 되도록 합니다.
+    -> 나머지 key 값이 주어진 데이터에 없을 수도 있으므로, 조건처리를 잘 해줍니다.
+"""
+
+def get_two_sum_index_by_dict(nums: list, target: int) -> list:
+    nums_map = {}
+    for idx, num in enumerate(nums):
+        if target - num in nums_map:
+            return [nums_map[target - num], idx]  # find directly using hash key
+        nums_map[num] = idx
+    return []
+
+
+nums, target = [2, 7, 11, 15], 9
+print(get_two_sum_index_by_dict(nums, target))
+```
+
+```python
+"""
+Two pointer, optimized O(n)
+
+풀이 4: 투 포인터 활용하기
+    -> 양 끝 포인터에서부터 탐색합니다.
+    -> 탐색 이전에 정렬이 필요합니다.
+    -> 그러나, 정렬하면 인덱스가 흐트러지기 때문에 답을 구할 수 없습니다.
+
+따라서, 인덱스를 구하는 것이 아닌 매칭되는 값을 구하는 문제라면 투 포인터를 활용할 수 있습니다.
+"""
+
+def get_two_sum_index_by_dict(nums: list, target: int) -> list:
+    nums_map = {}
+    for idx, num in enumerate(nums):
+        if target - num in nums_map:
+            return [nums_map[target - num], idx]  # find directly using hash key
+        nums_map[num] = idx
+    return []
+
+
+nums, target = [2, 7, 11, 15], 9
+print(get_two_sum_index_by_dict(nums, target))
+```
+
+<br>
+### [배열] 빗물 트래핑
+
+<br>
+### [배열] 세 수의 합
+
+<br>
+### [배열] 배열 파티션 1
+
+<br>
+### [배열] 자신을 제외한 배열의 곱
+
+<br>
+### [배열] 주식을 사고 팔기 가장 좋은 시점
+
+<br>
+## 비선형 자료구조
+
+<br>
+## 알고리즘
