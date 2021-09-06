@@ -477,6 +477,50 @@ print(get_two_sum_index_by_dict(nums, target))
 <br>
 ### [배열] 빗물 트래핑
 
+높이를 입력 받아 비 온 후 얼마나 많은 물이 쌓일 수 있는지 계산합니다.
+
+[1] Input
+```python
+[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+```
+
+[2] Output
+```python
+6
+```
+
+```python
+"""
+Two pointer
+
+투 포인터를 활용해 양 끝점 중 더 낮은 높이에서 높은 높이로 포인터를 이동시키며 진행합니다. (같은 경우 왼쪽 포인터 진행)
+포인터가 이동할 때마다 각 사이드에서의 높이의 차이만큼씩 빗물의 양을 더해 나갑니다.
+새로운 위치에서의 높이가 이전 위치에서의 최대 높이보다 높을 경우 최대 높이와 포인터 인덱스를 그것으로 교체합니다.
+종료조건은 두 포인터가 만나는 지점입니다.
+"""
+
+
+def trap(height: list) -> int:
+    if not height:
+        return 0
+
+    result = 0
+    start, end = 0, len(height) - 1
+    left_max, right_max = height[start], height[end]
+
+    while start < end:
+        left_max = max(left_max, height[start])
+        right_max = max(right_max, height[end])
+        if left_max <= right_max:
+            result += left_max - height[start]
+            start += 1
+        else:
+            result += right_max - height[end]
+            end -= 1
+
+    return result
+```
+
 <br>
 ### [배열] 세 수의 합
 
