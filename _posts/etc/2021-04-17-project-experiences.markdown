@@ -3,8 +3,8 @@ title:  "개발 경험 정리"
 created: 2021-04-14 01:09:24 +0900
 updated: 2021-04-20 15:06:12 +0900
 author: namu
-categories: projects
-permalink: "/projects/:year/:month/:day/:title"
+categories: etc
+permalink: "/etc/:year/:month/:day/:title"
 image: https://cdn.pixabay.com/photo/2016/12/02/02/09/idea-1876658_1280.jpg
 alt: projects image
 image-view: true

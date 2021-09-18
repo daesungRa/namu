@@ -12,7 +12,7 @@ permalink: /about/
 아직 부족한 점도 많고, 앞으로 공부할 것들이 많아
 이 개인블로그에 꾸준히 공부한 것들을 정리하고 있습니다.:computer:<br>
 
-1. 지금까지의 **<a href="{{ site.github.url }}{% link _posts/projects/2021-04-17-project-experiences.markdown %}" target="_blank">개발 경험</a>**을 정리중입니다.
+1. 지금까지의 **<a href="{{ site.github.url }}{% link _posts/etc/2021-04-17-project-experiences.markdown %}" target="_blank">개발 경험</a>**을 정리중입니다.
 
 2. 파이썬 Flask 와 Django 를 활용한 사이드 프로젝트도 진행하는 중입니다.
 - **<a href="https://github.com/daesungRa/newsmine" target="_blank">뉴스마인 API 서버 코드</a>**
