@@ -16,11 +16,11 @@ dropdown_menu:
 - {name: '장고, 플라스크', path: 'django', icon: 'django', url: ''}
 - {name: '데이터베이스', path: 'database', icon: 'database', url: ''}
 - {name: '도커', path: 'docker', icon: 'docker', url: ''}
+- {name: '클라우드', path: 'cloud', icon: 'cloud', url: ''}
 - {name: '알고리즘 실전', path: 'algorithm-practical', icon: 'algorithm', url: ''}
 - {name: '알고리즘 이론', path: 'algorithm-theory', icon: 'algorithm', url: ''}
 - {name: 'CS', path: 'computer-science', icon: 'cs', url: ''}
 - {name: 'WEB, HTTP', path: 'web', icon: 'web', url: ''}
-- {name: '프로젝트', path: 'projects', icon: 'projects', url: ''}
 - {name: '방통대수업정리', path: 'knou', icon: 'book', url: ''}
 - {name: '잡동사니', path: 'etc', icon: 'package', url: ''}
 - {name: '나무야 나무야', path: 'daily', icon: 'favicon', url: ''}
