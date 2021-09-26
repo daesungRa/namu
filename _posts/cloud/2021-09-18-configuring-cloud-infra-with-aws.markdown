@@ -31,8 +31,9 @@ image-source: https://velog.io/@shanukhan/Top-Reasons-to-Learn-AWS
     [AWS Identity and Access Management (IAM)](#aws-identity-and-access-management-iam), [](#), [](#)
 3. [기본 VPC 구축하기](#기본-vpc-구축하기)
 4. [서비스 인스턴스 구축하기](#서비스-인스턴스-구축하기)
-5. [로드밸런서 적용 및 도메인 등록](#로드밸런서-적용-및-도메인-등록)
+5. [ELB 를 활용해 분산 트래픽 적용하기](#elb-를-활용해-분산-트래픽-적용하기)
 6. [데이터베이스 구축하기](#데이터베이스-구축하기)
+7. [추가 작업](#추가-작업)
 
 ### 참조
 
@@ -539,8 +540,9 @@ Inbound 와 Outbound 모두 동일하게 **```100번 any allow```**, **```*번 a
 
 ### (1) 인스턴스 생성하기
 
-EC2 를 처음 접하신다면 **<a href="https://aws.amazon.com/ko/ec2/pricing/" target="_blank">Amazon EC2 요금</a>**
-체계를 확인해 보시기 바랍니다.
+> EC2 를 처음 접하신다면 **<a href="https://aws.amazon.com/ko/ec2/pricing/" target="_blank">Amazon EC2 요금</a>**
+> 체계를 확인해 보시기 바랍니다.<br>
+> 인스턴스 타입별 시간당 USD 를 한달치 원화로 계산해 월별 비용을 예측할 수 있습니다.
 
 우상단의 '인스턴스 시작' 클릭한 후 생성할 인스턴스의 이미지([AMI](#amazon-machine-image-ami))를 선택합니다.
 
@@ -727,14 +729,26 @@ SSM 세션 매니저 관련 규칙들은 private 서브넷 내의 서비스 인�
 
 먼저 세션 매니저를 활용해 터미널에 접속합니다.
 
-```{bash}
+```text
 $ bash
+ssm-user@ip-10-20-10-31:/var/snap/amazon-ssm-agent/4047$ 
 ssm-user@ip-10-20-10-31:/var/snap/amazon-ssm-agent/4047$ 
 ssm-user@ip-10-20-10-31:/var/snap/amazon-ssm-agent/4047$ ls -l /home/
 drwxr-xr-x  3 ssm-user    ssm-user    4096 Aug 24 22:55 ssm-user
 drwxr-xr-x  3 ubuntu      ubuntu      4096 Aug 15 14:18 ubuntu
 ssm-user@ip-10-20-10-31:/var/snap/amazon-ssm-agent/4047$ 
+ssm-user@ip-10-20-10-31:/var/snap/amazon-ssm-agent/4047$ 
 ssm-user@ip-10-20-10-31:/var/snap/amazon-ssm-agent/4047$ passwd root
+New password:
+Retype new password:
+passwd: password updated successfully
+ssm-user@ip-10-20-10-31:/var/snap/amazon-ssm-agent/4047$
+ssm-user@ip-10-20-10-31:/var/snap/amazon-ssm-agent/4047$
+ssm-user@ip-10-20-10-31:/var/snap/amazon-ssm-agent/4047$ su - root
+root@ip-10-20-10-31:~# 
+root@ip-10-20-10-31:~# 
+root@ip-10-20-10-31:~# apt-get update
+0% [Connecting to ap-northeast-2a.clouds.ports.ubuntu.com (2001:67c:1562::15)] [Connecting to ports.ubuntu.com (2001:67c:1562::15)] [Connecting to download.docker.com (2600:9000:2001:5c00:3:db06:4200:93a1)] [C
 ```
 
 그런데 위와 같이 SSM 세션 매니저로 인스턴스에 접근은 성공했지만
@@ -742,18 +756,107 @@ private 서브넷 내에 있기 때문에 'apt-get' 패키지 매니저가 외�
 
 따라서 [NAT](#nat-gateway-nat) 를 활용해 환경 구축시에만 임시적으로 외부 인터넷 리퀘스트가 가능하도록 해봅시다.
 
-VPC 구축 단계에서 NAT 를 만들어두지 않았다면 [여기](#4-optional-nat-게이트웨이-생성)로 돌아가서 만들고 옵시다.
-
-```text
-[NAT 를 활용해 private 인스턴스 인터넷 연결]
-- 
-```
-
-NAT 게이트웨이를 활용한 트래픽과 [EIP](#elastic-ip-address-eip) 에 대한 비용이 발생므로
-환경 구성 시에만 임시적으로 사용하고 삭제합니다.
+(만약 VPC 구축 단계에서 NAT 를 만들어두지 않았다면 [여기](#4-optional-nat-게이트웨이-생성)로 가서 만듭니다.)
 
 <br>
-## 로드밸런서 적용 및 도메인 등록
+
+---
+
+<br>
+#### NAT 를 활용해 private 인스턴스 인터넷 연결
+
+```text
+[NAT 만들기]
+- VPC 페이지의 NAT gateways 에서 'Create NAT gateway' 선택
+- 이름 작성
+    - 'My-NAT'
+- 서브넷 선택
+    'my-subnet-public01'
+- 연결 타입은 'Public'
+- EIP 가 없다면 우측의 'Elastic IP 할당' 클릭 (> 자동으로 생성, 할당됨)
+- 태그 작성
+    - Name: My-NAT
+```
+
+NAT 게이트웨이를 생성하고 EIP 를 할당해 퍼블릭 서브넷에 붙혔습니다.
+
+```text
+[NAT 를 Private 전용 라우트 테이블에 적용]
+- 라우트 테이블 탭에서 private 전용 테이블인 'my-route-private' 선택
+- 라우트 탭에서 '라우트 수정'
+    - 목적지는 '0.0.0.0/0', 타겟은 'My-NAT' 규칙 추가
+```
+
+외부와 통신할 private 인스턴스가 속한 서브넷의 **라우트 테이블(사설 전용 테이블)에 퍼블릭 서브넷에 붙힌 NAT 방향 규칙을 추가**합니다.
+
+이제 private 인스턴스에서 이 게이트웨이를 통하는 Outbound 트래픽은
+[IGW](#internet-gateway-igw)('my-igw') 를 지나 인터넷 통신이 가능합니다.
+
+마지막으로 **private 전용 보안 그룹의 Outbound 에 HTTP, HTTPS any open 룰을 추가**합니다.
+
+```text
+[Private SG 에 HTTP, HTTPS any open 규칙 추가]
+- Security Groups 탭에서 private 전용 보안그룹인 'my-SG-private-service' 선택
+- 'Outbound rules' 탭에서 '아웃바운드 규칙 편집'
+    - IPv4, HTTP, 80 port, 0.0.0.0/0, 'for package management'
+    - IPv4, HTTPS, 443 port, 0.0.0.0/0, 'for package management'
+```
+
+이제 세션 매니저로 private 인스턴스에 접속해 다시 패키지 업데이트 명령을 해봅시다.
+
+```text
+...
+
+root@ip-10-20-10-31:~# 
+root@ip-10-20-10-31:~# 
+root@ip-10-20-10-31:~# apt-get update
+Hit:1 https://download.docker.com/linux/ubuntu focal InRelease
+Hit:2 http://ap-northeast-2a.clouds.ports.ubuntu.com/ubuntu-ports focal InRelease
+Get:3 http://ports.ubuntu.com/ubuntu-ports focal-security InRelease [114 kB]
+Get:4 http://dl.google.com/linux/chrome/deb stable InRelease [1811 B]
+Get:5 http://ap-northeast-2a.clouds.ports.ubuntu.com/ubuntu-ports focal-updates InRelease [114 kB]
+
+...
+
+Get:30 http://ap-northeast-2a.clouds.ports.ubuntu.com/ubuntu-ports focal-backports/universe arm64 Packages [5796 B]
+Get:31 http://ap-northeast-2a.clouds.ports.ubuntu.com/ubuntu-ports focal-backports/universe arm64 c-n-f Metadata [276 B]
+Fetched 4129 kB in 3s (1414 kB/s)
+Reading package lists... Done
+```
+
+잘 됩니다!(<del>짝짝</del>)
+
+NAT 게이트웨이를 활용한 트래픽과 [EIP](#elastic-ip-address-eip) 에 대한 비용이 발생하므로
+인스턴스 환경 구성 시에만 임시적으로 사용하고 삭제하도록 합시다.
+
+```text
+[NAT 게이트웨이 삭제]
+- NAT 게이트웨이 탭으로 이동해 'My-NAT' 삭제
+    - 'Actions -> delete' (삭제 시간 소요)
+- 라우트 테이블의 'my-route-private' 에서 NAT 규칙 삭제
+    - '0.0.0.0/0', 'My-NAT'
+- NAT 삭제가 완료되면 Elastic IPs 탭에서 할당했던 EIP 릴리즈
+    - 'Actions -> Release Elastic IP addresses'
+- 보안 그룹 탭의 'my-SG-private-service' 에서 Outbound 룰 삭제
+    - IPv4, HTTP, 80 port, 0.0.0.0/0, 'for package management'
+    - IPv4, HTTPS, 443 port, 0.0.0.0/0, 'for package management'
+```
+<br>
+
+---
+
+<br>
+다시 웹앱 환경 구축으로 돌아오겠습니다.(웹서버는 Nginx, 웹앱은 파이썬 Flask)
+
+<br>
+## ELB 를 활용해 분산 트래픽 적용하기
 
 <br>
 ## 데이터베이스 구축하기
+
+<br>
+## 추가 작업
+
+- 도메인 등록
+- 요금 절감 전략(스팟 인스턴스, Savings Plan)
+- Auto Scaling
