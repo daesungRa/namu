@@ -1,7 +1,7 @@
 ---
 title:  "AWS 자원으로 클라우드 인프라 구축하기"
 created:   2021-09-18 20:17:42 +0900
-updated:   2021-09-18 20:17:42 +0900
+updated:   2021-09-26 01:23:34 +0900
 author: namu
 categories: cloud
 permalink: "/cloud/:year/:month/:day/:title"
