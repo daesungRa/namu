@@ -606,20 +606,230 @@ element Delete_q(int *front, int rear) {
 <br>
 ## 5. 연결 리스트
 
-### 5.1 
+### 5.1 리스트의 개념
+
+- 리스트는 일정한 순서의 나열
+- 어떤 정의에 의해서 결정된 '논리적인 순서'의 나열
+
+배열과 달리 연결 리스트는 **물리적인 순서가 보장되지는 않습니다.**
+하지만 개발자는 원소들을 **논리적인 순서로 확인할 수 있습니다.**
+
+논리적 순서만 보장되는 연결 리스트를 구현하려면 포인터를 활용하거나 배열을 활용할 수 있습니다.
 
 ---
 
-### 5.2 
+### 5.2 배열을 이용한 리스트의 구현
+
+배열로 리스트를 구현할 수 있습니다.
+이 때는 배열의 인덱스 순서와 물리적 순서가 동일합니다.
+
+하지만 만약 중간에 새 데이터가 추가되거나 삭제되면 그 이후의 모든 원소들의 이동이 수반됩니다.
+또한 배열의 크기를 늘리는 경우(확장)에도 비용이 추가 소요되며, 너무 큰 사이즈로 할당해 두면 자원의 낭비가 있습니다.
+
+**배열을 이용한 리스트의 구현은 단순하고 쉽지만, 삽입과 삭제, 메모리 관리에 있어서 효율적이지 않습니다.**
 
 ---
 
-### 5.3 
+### 5.3 포인터를 이용한 리스트의 구현
+
+이 방법에서는 **노드**를 활용합니다.
+
+노드에는 **데이터(data)**와 다음 노드를 가리키는 **포인터(link)**가 존재합니다.
+메모리상에서 멀리 떨어진 곳에 다음 노드가 존재해도 그곳의 주소값만 알고 있다면 순서대로 찾아갈 수 있습니다.
+
+따라서 포인터를 이용한 리스트의 구현은 물리적인 순서의 제약이 없으며,
+사전에 크기를 제한해두지 않아도 되기 때문에 메모리 관리에 효율적입니다.
+
+[Node 예시]
+```c
+struct linked_list_node {
+    int data;
+    struct linked_list_node* link;
+}
+```
 
 ---
 
-### 5.4 
+### 5.4 포인터 변수 및 리스트의 삭제와 삽입
+
+[포인터 할당과 반환 예]
+```c
+int a, *p_a;
+float b, *p_b;
+
+p_a = (int*)malloc(sizeof(int));
+p_b = (float*)malloc(sizeof(float));
+*p_a = 10;
+*p_b = 3.14;
+
+printf("a is %d, b is %f\n", *p_a, *p_b);
+free(p_a);
+free(p_b);
+```
 
 ---
 
-### 5.5 
+### 5.5 연결 리스트에서 노드의 삽입과 삭제
+
+- 노드로 구성된 연결 리스트에서 **삽입**
+    - 새 노드 생성
+    - 선행 노드의 link 에 새 노드의 주소(포인터) 삽입
+    - 새 노드의 link 에 선행 노드가 가지도 있던 다음 노드의 주소(포인터) 삽입
+    - null 인 경우 null 삽입
+
+- 노드로 구성된 연결 리스트에서 **삭제**
+    - 선행 노드의 link 에 삭제할 노드의 link 값(포인터) 삽입
+    - null 인 경우 null 삽입
+    - 노드 삭제
+
+<br>
+## 6. 연결 리스트의 응용
+
+단순 연결 리스트의 각 노드는 후행 노드에 대한 정보만 가지고 있습니다.
+
+하지만 실질적으로 사용하다 보면 선행 노드의 정보도 필요로 하게 됩니다.
+이러한 요구를 충족하는 변형된 연결 리스트가 존재합니다.
+
+### 6.1 연결 리스트의 변형
+
+변형구조의 대표적인 것이 **이중 연결 리스트**입니다.
+
+이것은 선행 노드의 link 포인터를 추가로 저장해 역추적이 가능하도록 합니다.
+
+[이중 연결 리스트의 Node 예시]
+```c
+struct linked_list_node {
+    int data;
+    struct linked_list_node* Llink;
+    struct linked_list_node* Rlink;
+}
+```
+
+**원형 연결 리스트**는 마지막 노드가 시작 노드의 link 포인터를 가져 환형 구조를 형성합니다.
+이는 단순 연결 리스트의 마지막 노드의 link 에 null 이 저장됨으로써 선형 구조인 것과 대조됩니다.
+원형 연결 리스트는 마지막 노드의 공간을 활용하며 시작 노드로 바로 접근하게 됨으로써 프로그램의 성능이 향상되게 합니다.
+
+---
+
+### 6.2 원형 연결 리스트
+
+[원형 연결 리스트의 생성]
+```c
+typedef struct ListNode {  // 원형 연결 리스트의 노드 구조 정의
+    int data;
+    struct ListNode* link;
+} listNode;
+
+typedef struct {  // 원형 연결 리스트의 헤드 노드 구조 정의
+    listNode* head;
+} linkedList_h;
+
+linkedList_h* createLinkedList_h (void) {  // 원형 연결 리스트의 헤드 노드 생성
+    linkedList_h* H;
+    H = (linkedList_h*)malloc(sizeof(linkedList_h));
+    H -> head = NULL;
+    return H;
+}
+```
+
+[원형 연결 리스트의 노드 삽입]
+```c
+void addFirstNode(linkedList_h* H, int x) {
+    if (H -> head == NULL) {  // 현재 리스트가 공백인 경우
+        H -> head = NewNode;
+        NewNode -> link = NewNode;
+        return;
+    }
+
+    tempNode = H -> head;
+    while (tempNode -> link != H -> head)  // 루프 돌며 마지막 노드인지 확인
+        tempNode = tempNode -> link;
+    NewNode -> link = tempNode -> link;
+    tempNode -> link = NewNode;
+    H -> head = NewNode;
+}
+```
+
+---
+
+### 6.3 이중 연결 리스트
+
+이중 연결 리스트는 단순 연결 리스트에서 선행 노드를 바로 알 수 없는 문제를 개선한 것입니다.
+
+선행 노드는 **Llink**, 후행 노드는 **Rlink** 로 정합니다.
+
+마찬가지로 헤더를 **Lhead**, **Rhead** 로 나눌 수 있습니다.
+
+[이중 연결 리스트의 생성]
+```c
+typedef struct ListNode {  // 이중 연결 리스트의 노드 구조 정의
+    struct ListNode* Llink;
+    int data;
+    struct ListNode* Rlink;
+} listNode;
+
+typedef struct {  // 이중 연결 리스트의 헤드 노드 구조 정의
+    listNode* Lhead;
+    listNode* Rhead;
+} linkedList_h;
+
+linkedList_h* createLinkedList_h (void) {  // 초기화, 원형 연결 리스트의 헤드 노드 생성
+    linkedList_h* H;
+    H = (linkedList_h*)malloc(sizeof(linkedList_h));
+    H -> Lhead = NULL;
+    H -> Rhead = NULL;
+    return H;
+}
+```
+
+[이중 연결 리스트의 노드 삽입]
+```c
+void addNode(linkedList_h* H, listNode* prevNode, int x) {  // 이중 연결 리스트 노드 삽입 연산, x값은 200 이라고 가정
+    listNode* NewNode;
+    NewNode = (listNode*)malloc(sizeof(listNode));
+    NewNode -> Llink = NULL;
+    NewNode -> data = x;
+    NewNode -> Rlink = NULL;
+
+    NewNode -> Rlink = prevNode -> Rlink;
+    prevNode -> Rlink = NewNode;
+    NewNode -> Llink = prevNode;
+    NewNode -> Rlink -> Llink = NewNode;
+}
+```
+
+<br>
+## 7. 트리
+
+### 7.1 
+
+---
+
+### 7.2 
+
+<br>
+## 8. 스레드 트리
+
+### 8.1 
+
+---
+
+### 8.2 
+
+<br>
+## 9. 힢
+
+### 9.1
+
+---
+
+### 9.2 
+
+<br>
+## 10. 선택트리, 숲, 이진트리 개수
+
+### 10.1
+
+---
+
+### 10.2 
