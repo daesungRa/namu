@@ -165,3 +165,101 @@ SoFi should see a faster growth in revenues later this year.
 Considering the dependence on capital to finance their lending products,
 the pending bank charter is crucial to the long term success of SoFi.
 The fintech needs bank deposits from Members in order to fund future loans similar to traditional banks.
+
+---
+
+그들의 대출 상품들이 재원을 확보하기 위해 자본에 의존하는 것을 고려하여,
+연기되고 있는 은행 헌장(bank charter)은 소파이의 장기적인 성공에 있어서 결정적입니다.
+핀테크 기업은 전통적인 은행들과 유사하게 미래의 대출 자금을 마련하기 위해 고객들로부터의 은행 예금이 필요합니다.
+
+<br>
+
+At the recent Credit Suisse Technology conference, CFO Chris Lapointe repeated the
+benefits of the bank charter
+the company is optimistic at obtaining full approval:
+
+> In terms of the benefits of having a bank charter, right now, it comes in multiple fold,
+> primarily it's a cost of capital play and will allow us to grow our lending business in a more robust way.
+> So to give you a little bit of context, our lending business, right now,
+> we rely on about $6 billion of warehouse capacity, as well as our own equity capital in order to fund originations.
+> So we originate loans, we fund them with warehouse capacity.
+> And historically, we've paid anywhere between 175 to 400 basis points in terms of cost of capital...
+> So think of this as if we're paying 300 basis points on warehouse facility
+> but we offer 1% interest rate to our SoFi Money members,
+> we're able to save 200 basis points in terms of origination costs for our lending business,
+> which is quite significant.
+
+---
+
+최근의 Credit Suisse 기술 컨퍼런스에서, CFO Chris Lapointe 는 은행 헌장의 이점과
+회사는 충분한 승인을 얻는 데 낙관적이라고 반복해서 이야기했습니다:
+
+> 은행 헌장을 얻는 것의 이점의 측면에서, 지금 당장에 그것은 우선적으로 자본 융통의 비용 그리고
+> 더욱 강력한 방식으로 우리의 대출 사업을 성장시킬 수 있도록 하는 등 여러 가지로 다가올 것입니다.
+> 또한 지금 당신에게 우리의 대출 사업에 대한 약간의 맥락을 제공하기 위해 설명하자면,
+> 우리는 자금을 마련하기 위해 $6 million 의 은행 자본(웨어하우스 자본)과 자체 자기 자본에 의존하고 있습니다.
+> 따라서 우리는 대출을 개시하고, 은행 자본(웨어하우스 자본)으로 그것들에 자금을 조달합니다.
+> 그리고 역사적으로 우리는 자본 비용의 측면에서 1.75% ~ 4%(175bp to 400bp) 사이의 비용을 지불해 왔습니다 ...
+> 따라서 이것을 마치 은행(웨어하우스) 시설에 3%(300bp) 를 지불하는 것으로 생각될 수 있지만
+> 소파이 머니 고객들에게 1% 이자율을 제공한다고 생각해 보면,
+> 우리는 우리의 대출 사업의 개시 비용 측면에서 2%(200bp) 만큼을 절감할 수 있습니다. 이것은 매우 의미 있는 일입니다.
+
+<br>
+
+In essence, SoFi is able to pay 100 basis points to Members
+for cash deposits versus the 300 basis points on a warehouse loan.
+The fintech won't face the same risks of lending capacity shrinking during financial crisis
+and the company will save 200 basis points on costs.
+Also, SoFi can hold onto loans for a longer period of time to generate more interest income
+versus a current period of only up to four months.
+
+---
+
+본질적으로, 소파이는 현금 예금을 한 사용자들에게 100bp를 제공할 수 있는 반면 은행(웨어하우스) 대출에 대해서는 300bp를 제공할 수 있습니다.
+이 핀테크는 금융 위기에도 대출 자본이 축소되는 동일한 위험에 직면하지 않을 것이며, 200bp 의 비용을 절감할 것입니다.
+또한, 소파이는 현재 최대 4 개월에 불과한 기간보다 더 많은 이자 수익을 생성하기 위해 더 긴 기간 동안 대출을 보유할 수 있습니다.
+
+<br>
+
+The current consensus analyst estimates already have revenues rising to nearly $1.5 billion next year and
+nearly $2.1 billion in 2023.
+The company has very attractive growth rates even before the addition of the bank charter.
+
+---
+
+현재의 애널리스트 평가의견은 이미 다음년도의 수익은 $1.5 billion 에 달할 것이고, 2023년에는 $2.1 billion 에 이를 것으로 추정하고 있습니다.
+이 기업는 심지어 은행 헌장을 추가하는 것 이전에 이미 매우 매력적인 성장률을 보유하고 있습니다.
+
+<br>
+
+At the time of the SPAC deal, SoFi predicted up to $234 million upside to 2034 EBITDA from the bank charter.
+The stock has a market cap of $11 billion with an enterprise value
+down around $8 billion based on over $3 billion in financial assets from cash and net loans on the balance sheet.
+Anything close to the previous 2024 adjusted EBITDA targets of $1.05 billion
+places SoFi at a very attractive valuation with the stock down at the lows.
+
+---
+
+스팩 거래가 진행되는 시점에 소파이는 은행 헌장으로부터 2034년 EBITDA 까지 $234 million 의 업사이드가 예견되어 있었습니다.
+이 주식은 $11 billion 의 시가총액을 보유하고 있으며
+기업 가치는 대차대조표상 현금과 순수 대출로 인한 $3 billion 이상의 금융자산 기준 $8 billion 정도 하락했습니다.
+앞선 2024년도 조정 EBITDA 목표치인 $1.05 billion 지점에 도달하게 된다면
+소파이는 매우 매력적인 밸류에이션과 함께 주가가 최저점에 도달하게 됩니다.
+
+<br>
+## Takeaway
+
+The key investor takeaway is that SoFi is far too cheap down at the lows.
+The fintech has a major catalyst in an already fast growing business,
+yet the stock trades as if the business has been impaired.
+The stock is now trading around 10x original 2024 EBITDA targets, assuming the bank charter is approved.
+Investors should buy the stock ahead of the bank charter approval and
+before the moratorium on student loans expires allowing their lending business to return to normal.
+
+---
+
+투자자가 가져갈 핵심은 소파이가 최저점인 너무 싼 가격에 내려왔다는 것입니다.
+이 핀테크는 이미 빠르게 성장하고 있는 비즈니스에서 주요한 촉매제를 가지고 있으면서도 마치 비즈니스가 손상된 것처럼 주식이 거래되고 있습니다.
+주가는 은행 헌장이 승인되었다는 가정 하에 본래 2024 EBITDA 목표치 대비 약 10배의 가격으로 거래되고 있습니다.
+투자자들은 은행 헌장이 승인되기에 앞서 그리고 기업의 대출 사업이 정상으로 돌아가도록 하는
+학자금 대출 지불 중지(모라토리움)가 만료되기 이전에 매수해야만 합니다.
