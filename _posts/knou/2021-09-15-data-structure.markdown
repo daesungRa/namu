@@ -1,7 +1,7 @@
 ---
 title:  "[방통대] 자료구조!"
-created:   2021-10-21 19:17:32 +0900
-updated:   2021-10-21 19:17:32 +0900
+created:   2021-09-15 19:17:32 +0900
+updated:   2021-09-15 19:17:32 +0900
 author: namu
 categories: knou
 permalink: "/knou/:year/:month/:day/:title"
