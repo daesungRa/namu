@@ -84,7 +84,9 @@ layout: default
     <!--  <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>  -->
     {%- for post in site.posts -%}
       {% if post.categories %}
-        {% unless post.categories contains 'demian' or post.categories contains 'daily' %}
+        {% unless post.categories contains 'demian'
+            or post.categories contains 'daily'
+            or post.categories contains 'etc' %}
           {% assign content_length = post.content | size %}
           <div class="title-box">
             <h1 class="home-post-title">
