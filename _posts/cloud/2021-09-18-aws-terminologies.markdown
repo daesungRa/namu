@@ -1,7 +1,7 @@
 ---
-title:  "[AWS 퍼블릭클라우드] 용어 정리"
-created:   2021-09-17 17:00:00 +0900
-updated:   2021-09-17 17:00:00 +0900
+title:  "[01][AWS 퍼블릭클라우드 실습] 용어 정리"
+created:   2021-09-18 17:00:00 +0900
+updated:   2021-09-18 17:00:00 +0900
 author: namu
 categories: cloud
 permalink: "/cloud/:year/:month/:day/:title"
@@ -17,17 +17,18 @@ image-source: https://www.whizlabs.com/blog/aws-cheat-sheet/
 
 ### 목차
 
-1. [VPC](#vpc)
+1. [들어가며](#들어가며)
+2. [VPC](#vpc)
     - [Region](#region), [Availability Zone](#availability-zone),
     [Virtual Private Cloud(VPC)](#virtual-private-cloud-vpc), [VPC subnet](#vpc-subnet), [Route table](#route-table),
     [Internet Gateway (IGW)](#internet-gateway-igw), [NAT Gateway (NAT)](#nat-gateway-nat),
     [VPC endpoint](#vpc-endpoint), [Access Control List (ACL)](#access-control-list-acl),
     [Security Group (SG)](#security-group-sg)
-2. [EC2](#ec2)
+3. [EC2](#ec2)
     - [Elastic Compute Cloud (EC2)](#elastic-compute-cloud-ec2), [Elastic Ip Address (EIP)](#elastic-ip-address-eip),
     [Elastic Load Balancer (ELB)](#elastic-load-balancer-elb), [Amazon Machine Image (AMI)](#amazon-machine-image-ami),
     [Amazon Elastic Block Storage (EBS)](#amazon-elastic-block-storage-ebs)
-3. [ETC](#etc)
+4. [ETC](#etc)
     - [Relational Database Service (RDS)](#relational-database-service-rds),
     [Simple Storage Service (S3)](#simple-storage-service-s3),
     [AWS Identity and Access Management (IAM)](#aws-identity-and-access-management-iam), [](#), [](#)
@@ -35,9 +36,9 @@ image-source: https://www.whizlabs.com/blog/aws-cheat-sheet/
 ### 시리즈
 
 - <a href="{{ site.github.url }}/cloud/2021/09/18/build-cloud-infra-with-aws01" target="_blank">
-[AWS 퍼블릭클라우드 실습 01] VPC 구축</a>
+[02][AWS 퍼블릭클라우드 실습] VPC 구축</a>
 - <a href="{{ site.github.url }}/cloud/2021/10/17/build-cloud-infra-with-aws02" target="_blank">
-[AWS 퍼블릭클라우드 실습 02] EC2 생성</a>
+[03][AWS 퍼블릭클라우드 실습] EC2 생성</a>
 
 ### 참조
 
@@ -53,8 +54,7 @@ AWS 의 용어를 총정리합니다.
 
 처음 접하는 용어가 있다면 눈에 익히는 정도로만 가볍게 살펴보기 바랍니다.
 이후 구축 단계를 따라가며 실용적으로 이해할 수 있을 것입니다.
-
-- 참조: <a href="https://docs.aws.amazon.com/general/latest/gr/glos-chap.html" target="_blank">AWS 레퍼런스 가이드</a>
+(참조: <a href="https://docs.aws.amazon.com/general/latest/gr/glos-chap.html" target="_blank">AWS 레퍼런스 가이드</a>)
 
 <br>
 ## VPC
@@ -285,6 +285,8 @@ public 망에 배스천 자원을 추가로 구축하여 인증을 통해 접근
 ---
 
 <br>
+
 다음글인
-**<a href="{{ site.github.url }}/cloud/2021/09/18/build-cloud-infra-with-aws01" target="_blank">[AWS 퍼블릭클라우드 실습 01] VPC 구축</a>**
+**<a href="{{ site.github.url }}/cloud/2021/09/18/build-cloud-infra-with-aws01" target="_blank">
+[02][AWS 퍼블릭클라우드 실습] VPC 구축</a>**
 로 이어집니다.
