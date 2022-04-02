@@ -1,7 +1,7 @@
 ---
 title:  "[02][AWS 퍼블릭클라우드 실습] VPC 구축"
-created:   2021-09-18 20:17:42 +0900
-updated:   2021-09-26 01:23:34 +0900
+created:   2021-09-18 20:17:00 +0900
+updated:   2022-03-29 22:12:00 +0900
 author: namu
 categories: cloud
 permalink: "/cloud/:year/:month/:day/:title"
@@ -19,6 +19,11 @@ image-source: https://velog.io/@shanukhan/Top-Reasons-to-Learn-AWS
 
 1. [들어가며](#들어가며)
 2. [기본 VPC 구축하기](#기본-vpc-구축하기)
+    - [(1) VPC 생성](#1-vpc-생성)
+    - [(2) VPC 서브넷 생성](#2-vpc-서브넷-생성)
+    - [(3) 라우팅 테이블 생성 및 서브넷에 적용](#3-라우팅-테이블-생성-및-서브넷에-적용)
+    - [(4) [OPTIONAL] NAT 게이트웨이 생성 및 적용](#4-optional-nat-게이트웨이-생성-및-적용)
+    - [(5) 보안 설정](#5-보안-설정)
 
 ### 시리즈
 
@@ -39,7 +44,7 @@ image-source: https://velog.io/@shanukhan/Top-Reasons-to-Learn-AWS
 
 AWS 서비스를 활용하여 가용성 높은 클라우드 네트워크를 구축합니다.
 
-특히, Public 및 Private 서브넷 대역을 독립적으로 구성해 **보안적으로 안전한 인프라 구축을 목표**로 합니다.
+Public 및 Private 망을 독립적으로 구성하는 것이 특징입니다.
 대략적인 구성도는 다음과 같습니다.
 
 ![aws infra diagram]({{ site.github.url }}{% link assets/post-img/aws-infra-diagram01.png %})
@@ -49,7 +54,7 @@ AWS 서비스를 활용하여 가용성 높은 클라우드 네트워크를 구�
 - 가용영역: ap-northeast-2a, ap-northeast-2b
 - VPC: 10.20.0.0/16
 - Public 서브넷: 서로 다른 가용영역에 각각 하나씩
-- Private 서브넷: 서로 다른 가용영역에 각각 둘씩, 기본 EC2 와 RDS
+- Private 서브넷: 서로 다른 가용영역에 각각 하나씩
 - ELB: Application Load Balancer 를 두 가용 영역에 걸쳐 설치, 가용성 확보
 ```
 
@@ -59,7 +64,10 @@ target="_blank">VPC</a>** 대역을 ```10.20.0.0/16``` 으로 지정하고, 이 
 구성도에서는 public bastion 인스턴스가 존재하지만, 이것 대신
 **<a href="{{ site.github.url }}/cloud/2021/09/18/aws-terminologies#aws-systems-manager---session-manager"
 target="_blank">SSM Agent</a>**
-세션 매니저를 활용해 SSH 터미널 접속할 예정입니다.
+세션 매니저를 임시로 활용해 SSH 터미널 접속할 예정입니다.
+
+> RDS 데이터베이스 인스턴스도 구성도에 있지만, **VPC 및 서비스 인프라 구축** 관점에서 굳이 필요하지 않기 때문에
+> 본 시리즈에서는 포함하지 않을 예정입니다.
 
 <br>
 ## 기본 VPC 구축하기
@@ -91,7 +99,7 @@ target="_blank">SSM Agent</a>**
 >> 하지만 그만큼 더 많은 비용이 소요되며 클라우드 사업자로부터 커스터마이징 자원에 대한 유지보수를 받기 어렵다는 단점이 있습니다.
 
 <br>
-### (2) VPC [서브넷](#vpc-subnet) 생성
+### (2) **<a href="{{ site.github.url }}/cloud/2021/09/18/aws-terminologies#vpc-subnet" target="_blank">VPC 서브넷</a>** 생성
 
 구성도에 나온 대로
 **<a href="{{ site.github.url }}/cloud/2021/09/18/aws-terminologies#region" target="_blank">리전</a>**
@@ -111,18 +119,18 @@ target="_blank">SSM Agent</a>**
     - Name: 'my-subnet-public01'
 ```
 
-이와 같은 방식으로 5개 더 생성!
+이와 같은 방식으로 3개 더 생성!
 
 ```text
 - my-subnet-public02: ap-northeast-2b, 10.20.120.0/24
 - my-subnet-private01: ap-northeast-2a, 10.20.10.0/24, EC2 인스턴스용(서비스)
 - my-subnet-private02: ap-northeast-2b, 10.20.20.0/24, EC2 인스턴스용(서비스)
-- my-subnet-private03: ap-northeast-2a, 10.20.30.0/24, RDS 인스턴스용(데이터베이스)
-- my-subnet-private04: ap-northeast-2b, 10.20.40.0/24, RDS 인스턴스용(데이터베이스)
 ```
 
+동종의 서브넷은 가용 영역을 서로 다르게 하여(ap-northeast-2a, ap-northeast-2b) 가용성을 높혔다는 점을 꼭 기억하시기 바랍니다.
+
 <br>
-### (3) [라우팅 테이블](#route-table) 생성 및 서브넷에 적용
+### (3) **<a href="{{ site.github.url }}/cloud/2021/09/18/aws-terminologies#route-table" target="_blank">라우팅 테이블</a>** 생성 및 서브넷에 적용
 
 먼저 **<a href="{{ site.github.url }}/cloud/2021/09/18/aws-terminologies#internet-gateway-igw"
 target="_blank">인터넷 게이트웨이(IGW)</a>** 를 생성합니다.
@@ -183,15 +191,15 @@ VPC 내 private 대역을 대상으로 할 것이므로 추가적인 라우팅 �
 
 ```text
 1. 'my-route-private' 라우팅 테이블의 '서브넷 연결' 탭에서 '서브넷 연결 편집' 클릭
-2. 'my-subnet-private01', 'my-subnet-private02', 'my-subnet-private03', 'my-subnet-private04' 각각 선택 후 저장
+2. 'my-subnet-private01', 'my-subnet-private02' 각각 선택 후 저장
 ```
 
 <br>
-### (4) [OPTIONAL] NAT 게이트웨이 생성
+### (4) [OPTIONAL] **<a href="{{ site.github.url }}/cloud/2021/09/18/aws-terminologies#nat-gateway-nat" target="_blank">NAT 게이트웨이</a>** 생성 및 적용
 
 **<a href="{{ site.github.url }}/cloud/2021/09/18/aws-terminologies#nat-gateway-nat"
 target="_blank">NAT 게이트웨이(NAT)</a>** 는 outbound 전용 게이트웨이입니다.
-이후 **private EC2 인스턴스에서 패키지 다운로드 등 외부 인터넷 연결이 필요할 경우 사용할 것**이기 때문에 미리 생성해 두도록 합시다.
+이후 **private EC2 인스턴스에서 패키지 다운로드 등 외부 인터넷 연결시 사용할 것**이기 때문에 미리 생성해 두도록 합시다.
 
 NAT 게이트웨이는 트래픽 발생 시마다 비용이 청구됩니다.
 또한 **<a href="{{ site.github.url }}/cloud/2021/09/18/aws-terminologies#elastic-ip-address-eip"
@@ -226,6 +234,18 @@ EIP 는 오직 NAT 생성 시에만 부착될 수 있으며, 이후에는 따로
 **<a href="{{ site.github.url }}/cloud/2021/09/18/aws-terminologies#elastic-load-balancer-elb"
 target="_blank">탄력적 로드밸런서(ELB, ALB)</a>** 를 설치하여
 별도의 공인 IP와 도메인이 할당되도록 하겠지만, NAT 게이트웨이는 그것과는 별개의 인터넷 통로라고 볼 수 있습니다.
+
+다음으로 실제 트래픽 라우팅이 활성화되도록 하기 위해,
+퍼블릭 서브넷에 생성된 **NAT 게이트웨이를 프라이빗 서브넷의 라우트 테이블에 연결**합니다.
+
+```text
+1. 라우팅 테이블 탭으로 이동하여 'my-route-private' 프라이빗 서브넷 선택
+2. '라우팅' 탭으로 이동 후 '라우팅 편집' 클릭
+3. '라우팅 추가'로 항목을 추가하고 '0.0.0.0/0' 입력, 대상 목록 중 'NAT 게이트웨이' 클릭하여 앞서 생성한 NAT 게이트웨이 선택
+4. 변경 사항 저장
+```
+
+비로소 'my-route-private' 라우트 테이블이 적용된 프라이빗 서브넷 내의 호스트 자원에서 외부인터넷으로 outbound 라우팅이 가능해졌습니다.
 
 <br>
 ### (5) 보안 설정
@@ -265,19 +285,32 @@ target="_blank">로드밸런서</a>** 에 적용하게 됩니다.
     - 'My public security group'
 4. 'My-VPC' VPC 선택
 5. 인바운드 규칙 추가
-    - '사용자 지정 TCP', 'TCP' 프로토콜, port '443', '사용자 지정', '0.0.0.0/0', 설명 'from everywhere'
+    - '사용자 지정 TCP', 'TCP' 프로토콜, port '80', '사용자 지정', '0.0.0.0/0', 설명 'from HTTP everywhere'
+    - '사용자 지정 TCP', 'TCP' 프로토콜, port '443', '사용자 지정', '0.0.0.0/0', 설명 'from HTTPS everywhere'
 6. 아웃바운드 규칙 추가
-    - '사용자 지정 TCP', 'TCP' 프로토콜, port '5020', '사용자 지정', '10.20.10.31/32', 설명 'to service instance'
-    - '사용자 지정 TCP', 'TCP' 프로토콜, port '5020', '사용자 지정', '10.20.20.32/32', 설명 'to service instance'
+    - '사용자 지정 TCP', 'TCP' 프로토콜, port '8888', '사용자 지정', '10.20.10.31/32', 설명 'to service instance'
+    - '사용자 지정 TCP', 'TCP' 프로토콜, port '8888', '사용자 지정', '10.20.20.32/32', 설명 'to service instance'
 ```
 
 방금 생성한 것은 **퍼블릭 전용 보안 그룹**입니다.
 로드밸런서에 적용할 것이기 때문에 인바운드는 any 오픈이고,
 아웃바운드 타겟은 private 서브넷 내에 생성될 서비스 EC2 인스턴스입니다.
-서비스의 인스턴스 포트는 5020 으로 지정합니다.
+서비스의 인스턴스 포트는 8888 으로 지정합니다.
 이로써 외부에서 인입된 사용자의 트래픽은 로드밸런서를 거쳐 private 내 인스턴스로 향하게 됩니다.
 
-이젠 **프라이빗 전용 보안 그룹**을 생성해 보겠습니다.
+> **Public DMZ(Demilitarized Zone)**
+> - 사실 외부 사용자의 트래픽은 로드밸런서에서 내부망인 private 서브넷으로 들어가서는 안되는데요, 그것은 로드밸런서가 독립적인 웹서버의
+> 역할을 수행할 수 없기 때문입니다. 이는 사실상 사용자가 내부망에 곧바로 접근하는 것과 마찬가지입니다.
+> - 이 문제를 해결하기 위해 **Public DMZ** 를 두어 한 단계 필터를 거쳐야 합니다.
+> - 군사용어에서 **DMZ** 는 비무장지대를 의미하는 만큼 **네트워크에서의 DMZ 는 외부망과 내부망 사이의 중간지점**을 의미합니다.
+> - 원칙적으로 인프라 네트워크의 내부망은 외부로부터 완전히 차단되어 있어야 하므로, 외부에서 서비스를 이용하는 사용자는 내부망에 직접적으로
+> 접근할 수 없습니다.
+> - 하지만 서비스는 제공되어야 하기에 중간지대인 DMZ 대역을 구성하여 사용자는 이곳으로 접근하고, 요청은 DMZ 웹서버에서 한번 이상의
+> 필터를 거쳐 실서비스에 들어가게 됩니다.
+> - 본 AWS 퍼블릭클라우드 실습 시리즈에서도 그렇게 하면 좋겠지만, WEB 용 인스턴스를 추가로 생성해야 하고 웹서버를 설치하는 등 단계가
+> 복잡해지므로, **로드밸런서로 인입된 트래픽이 DMZ 를 거쳐 내부망 인스턴스로 들어간다고 가정**하고 진행하겠습니다.
+
+이번에는 **프라이빗 전용 보안 그룹**을 생성해 보겠습니다.
 맨 위에서 보았던 [인프라 구성도](#들어가며)를 보면 프라이빗 서브넷 영역은 EC2 서비스 인스턴스용, RDS 인스턴스용 두 종류가 존재합니다.
 
 ```text
@@ -289,24 +322,11 @@ target="_blank">로드밸런서</a>** 에 적용하게 됩니다.
     - 'My private security group for service'
 4. 'My-VPC' VPC 선택
 5. 인바운드 규칙 추가
-    - '사용자 지정 TCP', 'TCP' 프로토콜, port '5020', '사용자 지정', 'my-SG-public', 설명 'from public subnet'
-6. 아웃바운드 규칙 추가
-    - '사용자 지정 TCP', 'TCP' 프로토콜, port '3306', '사용자 지정', '10.20.30.21/32', 설명 'to RDS instance'
-    - '사용자 지정 TCP', 'TCP' 프로토콜, port '3306', '사용자 지정', '10.20.40.22/32', 설명 'to RDS instance'
-
-[RDS 인스턴스용]
-1. '보안 그룹 생성' 클릭
-2. 보안 그룹 이름 작성
-    - 'my-SG-private-db'
-3. 설명 작성
-    - 'My private security group for db'
-4. 'My-VPC' VPC 선택
-5. 인바운드 규칙 추가
-    - '사용자 지정 TCP', 'TCP' 프로토콜, port '3306', '사용자 지정', 'my-SG-private-service', 설명 'from private service'
+    - '사용자 지정 TCP', 'TCP' 프로토콜, port '8888', '사용자 지정', 'my-SG-public', 설명 'from public subnet'
 ```
 
-'my-SG-private-service' 인바운드는 퍼블릭 서브넷 5020 포트로 지정합니다.
-5020 포트로 서비스를 제공할 것이기 때문입니다.
+'my-SG-private-service' 인바운드는 퍼블릭 서브넷 8888 포트로 지정합니다.
+내부적으로 8888 포트로 서비스를 제공할 것이기 때문입니다.
 아웃바운드로는 DB 영역의 두 인스턴스로 지정합니다.
 
 나중에 실제 인스턴스를 생성한 이후에는 SSH 터미널 접속을 위해
@@ -314,10 +334,9 @@ target="_blank">로드밸런서</a>** 에 적용하게 됩니다.
 target="_blank">SSM</a>** 용 인바운드 룰과
 외부 패키지 다운로드 및 업데이트를 위해 아웃바운드 443, 80 룰을 추가할 것입니다.
 
-'my-SG-private-db' 의 인바운드는 3306 포트의 'my-SG-private-service' 로 지정합니다.
-서비스 인스턴스의 db 접속을 위함입니다.
-
 이후 필요에 따라 외부 인터넷 연결 혹은 다른 서브넷 인스턴스 등 임시적인 규칙을 추가할 수 있습니다.
+
+<br>
 
 다음글인
 **<a href="{{ site.github.url }}/cloud/2021/10/17/build-cloud-infra-with-aws02" target="_blank">
