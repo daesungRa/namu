@@ -23,15 +23,18 @@ image-source: https://www.whizlabs.com/blog/aws-cheat-sheet/
     [Virtual Private Cloud(VPC)](#virtual-private-cloud-vpc), [VPC subnet](#vpc-subnet), [Route table](#route-table),
     [Internet Gateway (IGW)](#internet-gateway-igw), [NAT Gateway (NAT)](#nat-gateway-nat),
     [VPC endpoint](#vpc-endpoint), [Access Control List (ACL)](#access-control-list-acl),
-    [Security Group (SG)](#security-group-sg)
+    [Security Group (SG)](#security-group-sg), [VPC Peering](#vpc-peering)
 3. [EC2](#ec2)
-    - [Elastic Compute Cloud (EC2)](#elastic-compute-cloud-ec2), [Elastic Ip Address (EIP)](#elastic-ip-address-eip),
-    [Elastic Load Balancer (ELB)](#elastic-load-balancer-elb), [Amazon Machine Image (AMI)](#amazon-machine-image-ami),
+    - [Elastic Compute Cloud (EC2)](#elastic-compute-cloud-ec2), [Amazon EC2 Auto Scaling](#amazon-ec2-auto-scaling),
+    [Elastic Ip Address (EIP)](#elastic-ip-address-eip), [Elastic Load Balancer (ELB)](#elastic-load-balancer-elb),
+    [Target Groups](#target-groups), [Amazon Machine Image (AMI)](#amazon-machine-image-ami),
     [Amazon Elastic Block Storage (EBS)](#amazon-elastic-block-storage-ebs)
 4. [ETC](#etc)
     - [Relational Database Service (RDS)](#relational-database-service-rds),
     [Simple Storage Service (S3)](#simple-storage-service-s3),
-    [AWS Identity and Access Management (IAM)](#aws-identity-and-access-management-iam), [](#), [](#)
+    [AWS Identity and Access Management (IAM)](#aws-identity-and-access-management-iam),
+    [Multi-Factor Authentication (MFA)](#multi-factor-authentication-mfa),
+    [AWS Certificate Manager (ACM)](#aws-certificate-manager-acm)
 
 ### 시리즈
 
@@ -171,19 +174,148 @@ ACL 은 서브넷에 적용됩니다.
 보통 SG 룰은 [EC2](#elastic-compute-cloud-ec2) 인스턴스 자원에 적용되고,
 [VPC endpoint](#vpc-endpoint), [Load Balancer](#elastic-load-balancer-elb)(ELB) 등에도 적용 가능합니다.
 
+### VPC Peering
+
+VPC 피어링은 일종의 네트워킹 연결입니다.
+
+서로 다른 두 VPC 사이에서 비공개로 트래픽을 라우팅할 수 있도록 하기 위해 VPC 피어링 연결이 사용됩니다.
+VPC 연결과 함께 라우트 테이블, Security Group 설정을 진행하면 해당 VPC 의 인스턴스는 동일한 네트워크 안에 있는 것처럼 서로 통신할
+수 있습니다. AWS VPC 간의 연결이기 때문에 private 대역의 연결도 가능합니다.
+
+또한 다른 AWS 계정의 VPC 또는 다른 AWS 리전의 VPC 사이에서 VPC 피어링 연결을 생성할 수 있습니다.
+VPC 피어링 연결의 생성은 게이트웨이나 AWS Site-to-Site VPN 연결이 아니기 때문에 별도의 물리적 하드웨어에 의존하지 않습니다.
+통신에 대한 단일 장애 지점이나 대역폭 병목 현상도 없습니다.
+
+VPC 피어링 연결 생성은 AWS 웹콘솔의 **VPC 서비스 > 피어링 연결 > 피어링 연결 생성** 으로 진행합니다.
+현재 소유한 VPC 중에서 **VPC ID(요청자)** 를 지정하고, 내 계정/다른 계정 및 리전을 선택하여 **VPC ID(수락자)** 를 지정합니다.
+이후 수락자의 화면에서 피어링 연결을 수락하여 작업을 마칩니다.
+
+주의할 점은 요청자와 수락자 간 중첩되는 CIDR 이 존재하면 안된다는 점입니다.
+동일 계정 내에서 그럴 일은 없겠지만, 서로 다른 계정이라면 VPC 의 사설 대역의 CIDR 이 동일하게 설정되어 있을 수 있으므로 사전 확인이
+필요합니다.
+
 <br>
 ## EC2
 
 ### Elastic Compute Cloud (EC2)
 
-- Auto Scaling
 - Billings
     - Spot Instances
     - Savings Plan
 
+### Amazon EC2 Auto Scaling
+
 ### Elastic Ip Address (EIP)
 
 ### Elastic Load Balancer (ELB)
+
+탄력적 로드밸런서는 일종의 스위치(L4/L7) 장비로, 단일 진입점 역할을 수행하여 인입되는 요청 트래픽을 지정된 복수의 타겟으로
+부하분산시키는 역할을 합니다. 다수의 컴퓨팅 리소스에
+**<a href="https://en.wikipedia.org/wiki/Round-robin_scheduling" target="_blank">RR(Round Robin)</a>**
+방식으로 부하를 분산함으로써 가용성 및 내결함성을 높이는 이점을 가집니다.
+
+탄력적 로드밸런서는 분산이 필요한 [가용 영역](#availability-zone)에 대한 활성화가 필요합니다.
+이 과정에서 네트워크 인터페이스를 자동으로 생성하여 지정한 [서브넷](#vpc-subnet) 내 고정 IP 주소를 가져옵니다.
+또한 인터넷 경계(Internet-facing) 용도인 경우 public subnet 당
+하나의 [탄력적 IP 주소](#elastic-ip-address-eip)를 연결할 수 있습니다.
+
+부하 분산의 대상은 [타겟 그룹](#target-groups)을 생성하여 로드밸런서에 등록함으로써 적용하는데,
+조건에 따른 Health Checking 기능이 있어 다수의 타겟 중 active 상태인 것으로 트래픽을 보내게 됩니다.
+
+또한 시간에 따른 수신 트래픽량의 변화에 맞춰 확장/축소가 자동으로 가능하며([Auto Scaling](#amazon-ec2-auto-scaling)),
+인증서([ACM](#aws-certificate-manager-acm)를 적용함으로써 HTTPS 전용 리스너를 생성하여 클라이언트 요청의 암호화 해제가 가능합니다.
+
+탄력적 로드밸런서는 사용자의 니즈에 따라 다음의 세 가지 종류로 나뉩니다.
+
+- **(1) Application Load Balancer** - OSI L7(Layer 7) 의 트래픽을 컨트롤하는 장비로 대표적으로 HTTP/HTTPS 헤더를 필터하고,
+둘 이상의 가용영역 내 EC2 인스턴스, 컨테이너, IP 주소 등 여러 대상에 걸쳐 부하를 자동으로 분산하는 장비입니다.
+    - **리스너**: 하나 이상의 **리스너(Listener)** 를 생성할 수 있습니다.
+    [ACM](#aws-certificate-manager-acm) 인증서를 리스너에 HTTPS 프로토콜로 적용할 수 있습니다.
+    리스너는 구성한 프로토콜 및 포트를 사용하여 클라이언트의 연결 요청을 지정한 **규칙(Rule)**에 따라 라우팅합니다.
+    - **규칙(Rule)**: 각 **규칙**은 **우선 순위**, **하나 이상의 작업(forward, redirect, fixed-response)**,
+    **하나 이상의 조건(host-header, http-request-method, path-pattern, source-ip 중 0개 또는 1개)**으로
+    구성되며 지정한 조건이 충족되면 작업이 수행됩니다.
+    따라서 규칙의 세부 조건에 따라 여러 타겟 그룹으로 라우팅되도록 세팅할 수도 있습니다.
+    - **헬스체크**: 다른 ELB 와 마찬가지로 **Health Checking** 을 수행합니다.
+    체크 결과 active 상태가 아닌 대상으로는 트래픽을 보내지 않습니다.
+    - **보안**: [보안 그룹](#security-group-sg)을 적용할 수 있습니다.
+    따라서 ALB 에 특화된 Security Group 을 독립적으로 생성하는 것이 좋습니다.
+- **(2) Network Load Balancer** - OSI L4(Layer 4) 의 트래픽을 컨트롤하는 장비로 TCP/UDP 계층 필터를 수행합니다. 초당 수백만 개의
+요청을 처리하여 HTTP 헤더를 처리하는 ALB 보다 빠른 성능을 나타냅니다.
+    - **리스너**: 하나 이상의 **리스너(Listener)** 를 생성할 수 있습니다.
+    [ACM](#aws-certificate-manager-acm) 인증서를 리스너에 HTTPS 프로토콜로 적용할 수 있습니다.
+    리스너는 구성한 프로토콜 및 포트를 사용하여 클라이언트의 연결 요청을 지정한 **[대상 그룹](#target-groups)** 으로 전달합니다.
+    - **헬스체크**: 다른 ELB 와 마찬가지로 **Health Checking** 을 수행합니다.
+    체크 결과 active 상태가 아닌 대상으로는 트래픽을 보내지 않습니다.
+    - **보안**: NLB 는 단순 스위치의 역할을 하기 때분에 별도의 보안 그룹을 적용할 수 없습니다.
+    - **[EIP](#elastic-ip-address-eip)**: EIP 를 할당하여 고정적인 인바운드 트래픽을 보장합니다.
+    - **[가용 영역](#availability-zone)**: 둘 이상의 가용 영역 활성화가 필요한 ALB 와 다르게 하나의 가용 영역에만 활성화 가능합니다.
+    - **NLB+ALB 통합구성**: 특히 **(고정IP + L7스위치)** 기능이 필요한 경우,
+    앞단에 EIP 가 할당된 NLB 를 두고 NLB 의 대상 그룹으로 ALB 를 지정할 수 있습니다.
+    이는 AWS PrivateLink 를 활용한 ALB 와 NLB 통합구성입니다.
+    이 경우에는 ALB 의 대상 그룹에는 부하분산의 대상이 되는 어플리케이션 인스턴스들을 지정하고,
+    NLB 의 대상 그룹에는 먼저 생성한 ALB 를 지정합니다.
+    그리고 PrivateLink 엔드포인트 서비스를 생성하여 NLB 엔드포인트로 등록합니다.
+    (<a href="https://dev.classmethod.jp/articles/alb-nlb-aws-privatelink-fixed-ip-active/"
+    target="_blank">관련 포스팅 링크</a>)
+- **(3) Gateway Load Balancer** - OSI L3(Layer 3) 인 네트워크 계층에서 작동되는 LB 입니다. 방화벽, 침입 탐지 및 방지 시스템,
+심층 패킷 검사 시스템과 같은 **가상 어플라이언스**를 배포, 확장 및 관리할 때 사용됩니다.
+    - GWLB 는 모든 포트에서 모든 IP 패킷을 수신하고 리스너 규칙에 지정된 대상 그룹으로 트래픽을 전달합니다.
+    - GWLB 를 포함한 가상 써드파티 어플라이언스를 경유하는 GWLB Endpoint 를 생성하여 실 서비스에 적용할 수 있습니다.
+    GWLBE 는 GENEVE 캡슐화를 사용하여 트래픽을 보존합니다.
+    (<a href="https://docs.aws.amazon.com/ko_kr/elasticloadbalancing/latest/gateway/introduction.html"
+    target="_blank">자세한 내용은 GWLB 문서 참조</a>)
+
+탄력적 로드밸런서와 연계되는 AWS 서비스들은 다음과 같습니다.
+
+- **EC2, Auto Scaling** - 기본적인 트래픽 라우팅 대상 인스턴스이며, 수요에 따라 자동으로 인스턴스 수를 UP/DOWN 할수 있습니다.
+ELB 에서 Auto Scaling 을 활성화하면 Auto Scaling 에 의해 시작된 인스턴스가 로드 밸런서에 자동으로 등록됩니다.
+(종료된 인스턴스도 마찬가지)
+<a href="https://docs.aws.amazon.com/autoscaling/latest/userguide/"
+target="_blank">Amazon EC2 Auto Scaling 사용 설명서</a>
+- **AWS Certificate Manager** - AWS 자체적으로 제공하는 인증서 서비스입니다. ACM 에서 제공한 인증서를 ELB 에 지정할 수 있습니다.
+- **Amazon CloudWatch** - ELB 를 모니터링하고 필요에 따라 조치를 취할 수 있게 해줍니다.
+<a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/"
+target="_blank">Amazon CloudWatch 사용 설명서</a>
+- **Amazon ECS** - EC2 인스턴스 클러스터에서 Docker 컨테이너를 실행, 중단 및 관리할 수 있게 해줍니다.
+<a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/"
+target="_blank">Amazon Elastic Container Service 개발자 안내서</a>
+- **AWS Global Accelerator** - 애플리케이션의 가용성과 성능을 향상시킵니다. 액셀러레이터를 사용하여 하나 이상의 AWS 리전에 있는
+여러 로드밸런서에 트래픽을 분산합니다.
+<a href="https://docs.aws.amazon.com/global-accelerator/latest/dg/"
+target="_blank">AWS Global Accelerator 개발자 안내서</a>
+- **Route 53** - AWS 도메인 네임서버입니다. 이곳에 원하는 도메인을 비용을 지불하고 등록한 후, ACM 과 함께 ELB 에 적용하여 안정적인
+도메인 서비스를 구축할 수 있게 합니다.
+<a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/" target="_blank">Amazon Route 53 개발자 안내서</a>
+- **AWS WAF** - AWS 웹방화벽으로써 웹 ACL 의 규칙에 따라 요청을 허용하거나 차단할 수 있습니다.
+<a href="https://docs.aws.amazon.com/waf/latest/developerguide/" target="_blank">AWS WAF 개발자 안내서</a>
+
+### Target Groups
+
+타겟 그룹은 [ELB](#elastic-load-balancer-elb) 로 들어오는 requests 를 등록된 targets 로 route 하는 역할을 수행합니다.
+따라서 새 ELB 나 기존의 ELB 의 listener 를 구성할 때 몇몇 조건들과 함께 등록됩니다.
+
+다시 말해 ELB 가 외부에서 들어온 요청들을 부하분산시킨다면,
+그것에 등록된 **타겟 그룹은 분산요청이 어디로 가야할지 대상을 지정하는 역할**을 합니다.
+
+타겟 그룹은 리퀘스트 타입별로 각각 다르게 생성할 수 있습니다.
+예를 들어 인스턴스A 와 인스턴스B 를 동일하게 타겟으로 갖지만 protocol, port 리퀘스트 조건을 다르게 하여
+서로 다른 타겟 그룹을 목적에 따라 생성할 수 있습니다.
+
+타겟 그룹에서 타겟 타입은 **EC2 인스턴스**, **IP 주소**, **람다 함수**, **내부 ALB** 가 있습니다.
+
+EC2 인스턴스의 경우, 복수의 인스턴스를 지정할 수 있으며
+**<a href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-load-balancer.html"
+target="_blank">Amazon EC2 Auto Scaling</a>**
+에서 유용하게 사용할 수 있습니다.
+
+IP 주소의 경우, 요청을 라우팅할 IP 주소 대역을 지정함으로써
+AWS VPC 뿐아니라 온프레미스(On-Premise) 리소스 대상으로 지정할 때 사용됩니다.
+
+람다 함수의 경우, 서버리스로 특정 조건에 수행되는 람다 함수를 대상으로 라우팅합니다.
+
+내부 ALB 의 경우, 주로 Internet-facing NLB 로 들어온 요청을 Internal ALB 로 라우팅시 사용됩니다.
+이 경우 **NLB 는 TCP 필터링, EIP 지정과 함께 Application 수준의 유연한 트래픽 제어가 가능**합니다.
 
 ### Amazon Machine Image (AMI)
 
@@ -245,6 +377,8 @@ MFA 생성 코드를 [IAM](#aws-identity-and-access-management-iam) 계정관리
 
 자세한 내용은 **<a href="https://aws.amazon.com/ko/iam/features/mfa/?audit=2019q1" target="_blank">여기</a>**를
 확인하세요.
+
+### AWS Certificate Manager (ACM)
 
 ### AWS Systems Manager - Session Manager
 
