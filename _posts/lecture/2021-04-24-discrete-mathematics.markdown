@@ -3,8 +3,8 @@ title:  "[방통대] 이산수학 수업 정리"
 created:   2021-04-24 20:06:24 +0900
 updated:   2021-04-24 20:06:24 +0900
 author: namu
-categories: knou
-permalink: "/knou/:year/:month/:day/:title"
+categories: lecture
+permalink: "/lecture/:year/:month/:day/:title"
 image: https://www.openuped.eu/images/mooc/crop/Engineering10.jpg
 alt: discrete mathematics image
 image-view: true

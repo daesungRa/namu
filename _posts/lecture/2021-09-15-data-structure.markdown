@@ -3,8 +3,8 @@ title:  "[방통대] 자료구조!"
 created:   2021-09-15 19:17:32 +0900
 updated:   2021-09-15 19:17:32 +0900
 author: namu
-categories: knou
-permalink: "/knou/:year/:month/:day/:title"
+categories: lecture
+permalink: "/lecture/:year/:month/:day/:title"
 image: https://cdn.pixabay.com/photo/2018/04/07/09/29/small-poly-3298069_960_720.jpg
 alt: data structure dog image
 image-view: true

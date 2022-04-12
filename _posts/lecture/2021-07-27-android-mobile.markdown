@@ -3,8 +3,8 @@ title:  "[방통대] 안드로이드 수업 정리"
 created:   2021-07-27 19:01:24 +0900
 updated:   2021-07-27 19:01:24 +0900
 author: namu
-categories: knou
-permalink: "/knou/:year/:month/:day/:title"
+categories: lecture
+permalink: "/lecture/:year/:month/:day/:title"
 image: https://cdn.pixabay.com/photo/2013/10/22/07/56/android-199225_960_720.jpg
 alt: android image
 image-view: true

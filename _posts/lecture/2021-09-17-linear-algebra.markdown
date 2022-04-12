@@ -3,8 +3,8 @@ title:  "[방통대] 선형대수 정리"
 created:   2021-09-17 21:23:12 +0900
 updated:   2021-09-17 21:23:12 +0900
 author: namu
-categories: knou
-permalink: "/knou/:year/:month/:day/:title"
+categories: lecture
+permalink: "/lecture/:year/:month/:day/:title"
 image: https://cdn.inflearn.com/wp-content/uploads/linear2_5.jpg
 alt: linear algebra image
 image-view: true

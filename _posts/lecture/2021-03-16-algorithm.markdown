@@ -3,8 +3,8 @@ title:  "[방통대] 알고리즘 수업 정리"
 created:   2021-03-16 22:48:07 +0900
 updated:   2021-03-17 15:29:33 +0900
 author: namu
-categories: knou
-permalink: "/knou/:year/:month/:day/:title"
+categories: lecture
+permalink: "/lecture/:year/:month/:day/:title"
 image: https://images.unsplash.com/photo-1509475826633-fed577a2c71b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1651&q=80
 alt: algorithm image
 image-view: true
