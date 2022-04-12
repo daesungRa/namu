@@ -3,8 +3,8 @@ title: Django tutorial 정리
 created: 2020-08-25 21:17:34 +0900
 updated: 2020-09-91 22:36:24 +0900
 author: namu
-categories: django
-permalink: "/django/:year/:month/:day/:title"
+categories: frameworks
+permalink: "/frameworks/:year/:month/:day/:title"
 image: https://miro.medium.com/max/1050/1*Ks0q-hduUiEo9JVzWNJhRg.jpeg
 image-view: true
 image-author: Pim Vernooij

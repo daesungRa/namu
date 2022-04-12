@@ -3,8 +3,8 @@ title: "[번역] 장고의 디자인 철학"
 created: 2020-12-23 20:25:27 +0900
 updated: 2020-12-23 20:25:27 +0900
 author: namu
-categories: django
-permalink: "/django/:year/:month/:day/:title"
+categories: frameworks
+permalink: "/frameworks/:year/:month/:day/:title"
 image: https://miro.medium.com/max/875/1*KwSbyYyqaukruQVofd1HTQ.jpeg
 image-view: true
 image-author: Why you should use Django for your next project(Abdul Hafeez Abdul Raheem)

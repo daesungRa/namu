@@ -13,7 +13,7 @@ menu:
 dropdown_menu:
 - {name: '자바스크립트', path: 'javascript', icon: 'javascript', url: ''}
 - {name: '파이썬', path: 'python', icon: 'python', url: ''}
-- {name: '장고, 플라스크', path: 'django', icon: 'django', url: ''}
+- {name: 'Frameworks', path: 'frameworks', icon: 'django', url: ''}
 - {name: '데이터베이스', path: 'database', icon: 'database', url: ''}
 - {name: '도커', path: 'docker', icon: 'docker', url: ''}
 - {name: '클라우드', path: 'cloud', icon: 'cloud', url: ''}
