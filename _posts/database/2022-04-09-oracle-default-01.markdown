@@ -5,10 +5,10 @@ updated:   2022-05-05 20:00:00 +0900
 author: namu
 categories: database
 permalink: "/database/:year/:month/:day/:title"
-image: https://seekvectorlogo.com/wp-content/uploads/2017/12/oracle-vector-logo.png
+image: https://logos-world.net/wp-content/uploads/2020/09/Oracle-Logo.png
 image-view: true
-image-author: seekvectorlogo.com
-image-source: https://seekvectorlogo.com/oracle-vector-logo/
+image-author: logos-world.net/oracle-logo/
+image-source: https://logos-world.net/oracle-logo/
 ---
 
 ---
@@ -30,7 +30,7 @@ image-source: https://seekvectorlogo.com/oracle-vector-logo/
 ### 시리즈
 
 - <a href="{{ site.github.url }}/database/2022/05/05/oracle-default-02" target="_blank">
-[02] 오라클 기본 정리 - 쿼리</a>
+[02] 오라클 기본 정리 - DB 생성, 쿼리</a>
 
 ### 참조
 
@@ -361,14 +361,17 @@ SELECT BLOCK_SIZE FROM V$CONTROLFILE;  -- 16384 (byte)
     **automatic undo management** 모드에서 완전히 관리됨
     - 이 테이블스페이스의 언두 기능을 사용하면 **읽기 일관성(read consistency)** 이 보장됨
 
-**d. Tablespaces**: 세그먼트로 구성되는 가장 큰 논리적 단위. 오라클에서는 다음의 두 가지 타입으로 분류됨
+**d. Tablespaces**: 세그먼트로 구성되는 가장 큰 논리적 단위. 오라클에서는 다음의 세 가지 타입으로 분류됨
 - **Permanent tablespaces**
-    1. **SYSTEM**: data dictionaries, administrative views, and tables, ...
-    2. **SYSAUX**: SYSTEM 외부의 데이터베이스 메타데이터를 위한 중앙 집중식 스토리지
-    3. **UNDO**
-    4. **user tablespaces**: 사용자에 할당된 테이블스페이스
+    1. **SYSTEM**: 오라클 운영 및 관리에 필요한 **어드민 데이터 저장**
+    (data dictionaries, administrative views, and tables, ...)
+    2. **SYSAUX**: **SYSTEM 외부의 데이터베이스 메타데이터**를 위한 중앙 집중식 스토리지. **SYSTEM 의 보조 역할**
+    3. **USERS**: 새 계정 생성 시 별도의 설정이 없다면 **USERS** 테이블 스페이스가 기본 테이블 스페이스로 할당됨
 - **Temporary tablespaces**
-    1. **TEMP**: temporary objects (session duration limit); no permanent objects can be stored here
+    1. **TEMP**: SQL 구문 실행 시 **정렬을 위한 임시 저장공간**.
+    temporary objects (session duration limit); no permanent objects can be stored here
+- **Undo tablespaces**
+    1. **UNDO**: **트랜잭션의 Undo** 정보 저장
 
 만약 **특정 사용자 지정 객체**가 필요하다면(새로운 db, table 등이 필요한 경우)
 데이터베이스의 기본 운영에 필수적인 기존의 테이블스페이스(**SYSTEM**, **SYSAUX**)가 아니라
@@ -535,5 +538,5 @@ SHOW PARAMETER PGA_AGGREGATE_TARGET;  -- VALUE is 2437M
 
 다음글인
 **<a href="{{ site.github.url }}/database/2022/05/05/oracle-default-02" target="_blank">
-[02] 오라클 기본 정리 - 쿼리</a>**
+[02] 오라클 기본 정리 - DB 생성, 쿼리</a>**
 로 이어집니다.
