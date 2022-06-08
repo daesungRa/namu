@@ -1,7 +1,7 @@
 ---
 title:  "[03] 오라클 기본 정리 - 쿼리"
 created:   2022-05-13 21:00:00 +0900
-updated:   2022-05-13 21:00:00 +0900
+updated:   2022-06-02 22:33:00 +0900
 author: namu
 categories: database
 permalink: "/database/:year/:month/:day/:title"
