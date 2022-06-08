@@ -6,6 +6,7 @@ author: namu
 categories: frameworks
 permalink: "/frameworks/:year/:month/:day/:title"
 image: https://miro.medium.com/max/875/1*KwSbyYyqaukruQVofd1HTQ.jpeg
+alt: django image
 image-view: true
 image-author: Why you should use Django for your next project(Abdul Hafeez Abdul Raheem)
 image-source: https://codeburst.io/why-you-should-use-django-for-your-next-project-83c775a750d1

@@ -6,6 +6,7 @@ author: namu
 categories: frameworks
 permalink: "/frameworks/:year/:month/:day/:title"
 image: https://miro.medium.com/max/1050/1*Ks0q-hduUiEo9JVzWNJhRg.jpeg
+alt: python and django logo
 image-view: true
 image-author: Pim Vernooij
 image-source: https://blog.labdigital.nl/why-python-django-are-our-weapons-of-choice-8a662b51136e
