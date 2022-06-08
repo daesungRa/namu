@@ -14,10 +14,15 @@ layout: default
       </h1>
     </div>
     <span class="home-post-date">
-      <i class="fa fa-calendar" aria-hidden="true"></i>
-      {{ post.date | date_to_string }} -
-      <i class="fa fa-clock-o" aria-hidden="true"></i>
-      {% include read-time.html %}
+            <i class="fa fa-calendar" aria-hidden="true"></i> [생성]
+            {% if post.created and post.updated %}
+              {{ post.created | date: '%Y-%m-%d' }}
+              [수정] {{ post.updated | date: '%Y-%m-%d' }} -
+            {% else %}
+              {{ post.date | date: '%Y-%m-%d' }} -
+            {% endif %}
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            {% include read-time.html %}
     </span>
     {% if post.image %}
       {% if post.image contains '://' %}
