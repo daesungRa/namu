@@ -1,5 +1,5 @@
 ---
-title: "[번역] 장고의 디자인 철학"
+title: "[번역] 장고의 디자인 철학, 모델 관련 번역글"
 created: 2020-12-23 20:25:27 +0900
 updated: 2022-06-03 22:50:00 +0900
 author: namu
@@ -26,8 +26,6 @@ image-source: https://codeburst.io/why-you-should-use-django-for-your-next-proje
     6. [Views](#6-views)
     7. [Cache Framework](#7-cache-framework)
 2. [장고 모델을 활용한 모범 사례](#장고-모델을-활용한-모범-사례)
-    1. [Correct Model Naming](#1-correct-model-naming)
-    2. [Relationship Field Naming](#2-relationship-field-naming)
 
 ### 참조
 
@@ -344,7 +342,7 @@ class Item(models.Model):
 ### 7. Denormalisations
 
 관계형 데이터베이스에서 **생각 없이 비정규화를 사용해서는 안 됩**니다.
-어떤 이유(e.g. 생산성의 이유)에서건 **당신이 의식적으로 데이터 비정규화를 하는 경우**를 제외하고는
+어떤 이유에서건 **당신이 의식적으로 데이터 비정규화를 하는 경우**(e.g. 생산성의 이유)를 제외하고는
 언제나 **이것을 회피하고자** 노력하십시오.
 
 데이터베이스 설계 단계에서 많은 데이터를 비정규화해야 한다는 것을 안 경우, **NoSQL** 을 사용하는 것은 좋은 선택입니다.
@@ -512,7 +510,7 @@ print(Article.objects.latest())
 그 결과값이 파이썬 객체로 변환된 후 **_len_** 함수에 의해 객체의 길이를 확인하는 과정을 거치므로 매우 권장되지 않습니다.
 
 반면 **_count_** 메서드는 SQL 함수인 **COUNT()** 와 바로 연동되므로 데이터베이스에서 더욱 간단한 쿼리가 수행됩니다.
-그리고 파이썬 코드 성능상 더 적은 리소스많이 요구됩니다.
+그리고 파이썬 코드 성능상 더 적은 리소스만이 요구됩니다.
 
 <br>
 ### 19. _if queryset_ is a bad idea
@@ -532,7 +530,7 @@ boolean 값으로 쿼리셋을 사용하지 마십시오.
 >
 > 위에서 설명한 쿼리셋도 게으르게(lazy) 동작한다고 했으므로,
 > if 문의 조건절에 그대로 사용한다면 **True or False 의 조건을 완벽하게 보장할 수 없습**니다.
-> **_queryset.exists()_** 메서드를 사용하면 객체의 존재 유무를 파악하는 기능이 즉시 실행되므로 보장된 조건을 제공할 수 있습니다.
+> **_queryset.exists()_** 메서드를 사용하면 객체의 존재 유무를 파악하는 기능이 즉시 실행되므로 보장된 결과를 제공할 수 있습니다.
 
 <br>
 ### 20. Using help_text as documentation
@@ -600,16 +598,16 @@ _ModelForm_ 에서 모델 필드의 목록을 설명하기 위해 _Meta.exclude_
 이러한 문제를 피하기 위해, 다음을 참조하세요.
 
 ```python
-import os
+from pathlib import Path
 from datetime import datetime
 
 
 def get_upload_avatar_path(instance, filename):
-    return os.path.join('account/avatars/', datetime.now().date().strftime('%Y-%m-%d'), filename)
+    return Path('account/avatars/') / datetime.now().date().strftime('%Y-%m-%d') / filename
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(blank=True, upload_to=get_upload_path)
+    avatar = models.ImageField(blank=True, upload_to=get_upload_avatar_path)
 ```
 
 **get_upload_avatar_path** 함수는 일자별로 별도의 하위 디렉토리를 생성하여 **filename** 과 조합된 업로드 경로를 반환하여
