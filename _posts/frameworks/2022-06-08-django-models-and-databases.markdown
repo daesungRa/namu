@@ -34,8 +34,7 @@ target="_blank">Django model Guideline</a>
 target="_blank">Django Docs: Models and databases</a>
 - <a href="https://jairvercosa.medium.com/manger-vs-query-sets-in-django-e9af7ed744e0"
 target="_blank">Manager vs Query Sets in Django</a>
-- <a href="https://books.google.co.kr/books/about/Two_Scoops_of_Django.html?id=o_7dsgEACAAJ&source=kp_book_description&redir_esc=y"
-target="_blank">Two Scoops of Django</a>
+- <a href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=88857020" target="_blank">Two Scoops of Django</a>
 
 ---
 
@@ -362,8 +361,7 @@ Business Logic in Django projects</a>)
 
 <br>
 
-**<a href="https://books.google.co.kr/books/about/Two_Scoops_of_Django.html?id=o_7dsgEACAAJ&source=kp_book_description&redir_esc=y"
-target="_blank">Two Scoops of Django</a>** 는
+**<a href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=88857020" target="_blank">Two Scoops of Django</a>** 는
 거대 모델(Fat Models)이 신의 객체(god object) 수준으로 폭발하는 것에 대한 위험성을 강하게 경고합니다.
 
 > 이런 안티 패턴의 결과로 모델 클래스가 수백, 수천, 심지어는 수만 줄의 코드가 되어 버리기도 한다.
