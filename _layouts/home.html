@@ -85,8 +85,7 @@ layout: default
     {%- for post in site.posts -%}
       {% if post.categories %}
         {% unless post.categories contains 'demian'
-            or post.categories contains 'daily'
-            or post.categories contains 'etc' %}
+            or post.categories contains 'daily' %}
           {% assign content_length = post.content | size %}
           <div class="title-box">
             <h1 class="home-post-title">
