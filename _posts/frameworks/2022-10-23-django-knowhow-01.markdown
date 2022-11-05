@@ -1,5 +1,5 @@
 ---
-title: "장고 노하우 정리"
+title: "[01] 장고 노하우 정리"
 created: 2022-10-23 18:00:00 +0900
 updated: 2022-11-03 22:00:00 +0900
 author: namu
@@ -23,7 +23,11 @@ image-source: https://velog.io/@castlemin/Two-Scoops-of-Django-0.-%EB%93%A4%EC%9
 - 6장 [장고에서 모델 이용하기](#6장-장고에서-모델-이용하기)
 - 7장 [쿼리와 데이터베이스 레이어](#7장-쿼리와-데이터베이스-레이어)
 - 8장 [함수 기반 뷰와 클래스 기반 뷰](#8장-함수-기반-뷰와-클래스-기반-뷰)
-- 11장 [장고 폼의 기초](#11장-장고-폼의-기초)
+- 11장 [장고 폼](#11장-장고-폼)
+
+### 시리즈
+
+- <a href="{{ site.github.url }}/frameworks/2022/11/04/django-knowhow-02" target="_blank">[02] 장고 노하우 정리</a>
 
 ### 참조
 
@@ -1227,7 +1231,7 @@ class PDFFlavorView(LoginRequiredMixin, View):
 ```
 
 <br>
-# 11장. 장고 폼의 기초
+# 11장. 장고 폼
 
 <br>
 
@@ -1804,44 +1808,4 @@ class IceCreamStoreListView(TitleSearchMixin, ListView):
 
 이러한 공통 믹스인은 개발을 편리하게 하지만 너무 남발하면 유지보수가 복잡해질 수 있으니 주의합시다!
 
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
-
-<br>
-### 
+**<a href="{{ site.github.url }}/frameworks/2022/11/04/django-knowhow-02" target="_blank">[다음글]</a>**
