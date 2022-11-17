@@ -163,13 +163,19 @@ image-source: https://www.facebook.com/AlgorithmInterview/
     - 6-9. [경주로 건설](#경주로-건설)
     - 6-10. [징검다리 문제](#징검다리-문제)
 
+### 참조
+
+- <a href="http://www.yes24.com/Product/Goods/91084402" target="_blank">파이썬 알고리즘 인터뷰</a>
+(2020, 박상길, 책만)
+
 ---
 
 
 <br>
 ## 들어가며
 
-너무 유용하게 읽고 있는 책 **"파이썬 알고리즘 인터뷰"**(2020, 박상길, 책만) 일부 내용과 느낀점을 정리합니다.
+너무 유용하게 읽고 있는 책
+**<a href="http://www.yes24.com/Product/Goods/91084402" target="_blank">파이썬 알고리즘 인터뷰</a>** 내용을 정리합니다.
 
 <br>
 ## 파이썬
