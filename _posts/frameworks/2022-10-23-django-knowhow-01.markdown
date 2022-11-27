@@ -27,7 +27,8 @@ image-source: https://velog.io/@castlemin/Two-Scoops-of-Django-0.-%EB%93%A4%EC%9
 
 ### 시리즈
 
-- <a href="{{ site.github.url }}/frameworks/2022/11/04/django-knowhow-02" target="_blank">[02] 장고 노하우 정리</a>
+- <a href="{{ site.github.url }}/frameworks/2022/11/05/django-knowhow-02" target="_blank">[02] 장고 노하우 정리</a>
+- <a href="{{ site.github.url }}/frameworks/2022/11/27/django-knowhow-03" target="_blank">[03] 장고 노하우 정리</a>
 
 ### 참조
 
@@ -1808,4 +1809,5 @@ class IceCreamStoreListView(TitleSearchMixin, ListView):
 
 이러한 공통 믹스인은 개발을 편리하게 하지만 너무 남발하면 유지보수가 복잡해질 수 있으니 주의합시다!
 
-**<a href="{{ site.github.url }}/frameworks/2022/11/04/django-knowhow-02" target="_blank">[다음글]</a>**
+<br>
+**<a href="{{ site.github.url }}/frameworks/2022/11/05/django-knowhow-02" target="_blank">[다음글]</a>**
