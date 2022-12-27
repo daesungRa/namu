@@ -23,14 +23,11 @@ image-source: https://velog.io/@castlemin/Two-Scoops-of-Django-0.-%EB%93%A4%EC%9
 - 22장. [테스트, 문서화에 집착하자](#22장-테스트-문서화에-집착하자)
 - 24장. [장고 성능 향상시키기](#24장-장고-성능-향상시키기)
 - 25장. [비동기 태스크 큐](#25장-비동기-태스크-큐)
-- 26장. [장고 보안의 실전 방법론](#26장-장고-보안의-실전-방법론)
-- 27장. [로깅: 누구를 위한 것인가](#27장-로깅-누구를-위한-것인가)
-- 31장. [장고 프로젝트 배포 및 지속적 통합](#31장-장고-프로젝트-배포-및-지속적-통합)
 
 ### 시리즈
 
 - <a href="{{ site.github.url }}/frameworks/2022/10/23/django-knowhow-01" target="_blank">[01] 장고 노하우 정리</a>
-- <a href="{{ site.github.url }}/frameworks/2022/11/27/django-knowhow-03" target="_blank">[03] 장고 노하우 정리</a>
+- <a href="{{ site.github.url }}/frameworks/2022/12/25/django-knowhow-03" target="_blank">[03] 장고 노하우 정리</a>
 
 ### 참조
 
@@ -185,8 +182,8 @@ REST API 를 구현할 때 일반적으로 알아야 할 HTTP 상태 코드는 �
 클래스 기반 뷰에 기초를 둔 패턴으로 REST API 를 효과적으로 구현하기 위해
 **django-rest-framework** 를 이용하겠습니다.
 
-> 참조: <a href="django-rest-framework**" target="_blank">
-> **django-rest-framework** 의 class-based views 와 serializers 상세설명 사이트</a>
+> **참조: <a href="https://www.cdrf.co/" target="_blank">
+> DRF 의 class-based views 와 serializers 상세설명 사이트</a>**
 
 ```python
 # flavors/models.py
@@ -653,7 +650,7 @@ def test_bad_cone_choice():
 - 하나의 템플릿에서 하나 이상의 같은 쿼리가 (반복) 호출된다면 **해당 쿼리를 뷰로 이동시켜 콘텍스트 변수로 처리**할 것
 - **key/value 형식의 캐시(Memcached)** 이용하기
 - **django.utils.functional.cached_property** 데코레이터 이용하여 객체 인스턴스의 메서드 호출 결과를
-메모리 캐시게 저장하기
+메모리 캐시에 저장하기
 
 <br>
 **(2) 일반 쿼리 빠르게 하기**
@@ -799,7 +796,7 @@ def test_bad_cone_choice():
 **(2) 태스크 또한 리소스를 이용한다**
 
 태스크 실행을 위한 메모리와 리소스에도 한계가 있기 때문에
-최대한 간결하고 리소스를 낭비하니 않는 방향으로 코드를 작성해야 합니다.
+최대한 간결하고 리소스를 낭비하지 않는 방향으로 코드를 작성해야 합니다.
 
 <br>
 **(3) JSON 화 가능한 값들만 태스크 함수에 전달하라**
@@ -894,4 +891,4 @@ exit 결과물이 불필요한 저장소를 차지하지 않도록 보통은 이
 
 <br>
 **<a href="{{ site.github.url }}/frameworks/2022/10/23/django-knowhow-01" target="_blank">[이전글]</a>**
-**<a href="{{ site.github.url }}/frameworks/2022/11/27/django-knowhow-03" target="_blank">[다음글]</a>**
+**<a href="{{ site.github.url }}/frameworks/2022/12/25/django-knowhow-03" target="_blank">[다음글]</a>**

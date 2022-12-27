@@ -28,7 +28,7 @@ image-source: https://velog.io/@castlemin/Two-Scoops-of-Django-0.-%EB%93%A4%EC%9
 ### 시리즈
 
 - <a href="{{ site.github.url }}/frameworks/2022/11/05/django-knowhow-02" target="_blank">[02] 장고 노하우 정리</a>
-- <a href="{{ site.github.url }}/frameworks/2022/11/27/django-knowhow-03" target="_blank">[03] 장고 노하우 정리</a>
+- <a href="{{ site.github.url }}/frameworks/2022/12/25/django-knowhow-03" target="_blank">[03] 장고 노하우 정리</a>
 
 ### 참조
 
