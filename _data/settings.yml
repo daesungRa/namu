@@ -17,6 +17,7 @@ dropdown_menu:
 - {name: '데이터베이스', path: 'database', icon: 'database', url: ''}
 - {name: '도커', path: 'docker', icon: 'docker', url: ''}
 - {name: '클라우드', path: 'cloud', icon: 'cloud', url: ''}
+- {name: 'Snippets', path: 'snippets', icon: 'snippets', url: ''}
 - {name: '알고리즘 실전', path: 'algorithm-practical', icon: 'algorithm', url: ''}
 - {name: '알고리즘 이론', path: 'algorithm-theory', icon: 'algorithm', url: ''}
 - {name: 'CS', path: 'computer-science', icon: 'cs', url: ''}
