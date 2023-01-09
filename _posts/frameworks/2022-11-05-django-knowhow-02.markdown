@@ -89,7 +89,7 @@ image-source: https://velog.io/@castlemin/Two-Scoops-of-Django-0.-%EB%93%A4%EC%9
 >
 > - **(X, 하면 안됨!) 템플릿상에서 복잡하게 얽힌 쿼리들**
 >     - 템플릿에서 **User** 객체를 iterating 하며 이에 속한 추가 객체들을 조회하는 경우.
->     - **{\{ user.flavor.scoops_remaining }\}** 등이 있음
+>     - {% raw %}**{{ user.flavor.scoops_remaining }}**{% endraw %} 등이 있음
 >     - 이보다는 파이썬 단에서 **select_related** 기능을 활용할 것
 > 
 > - **(X, 하면 안됨!) 템플릿에서 생기는 CPU 부하**
@@ -104,16 +104,18 @@ image-source: https://velog.io/@castlemin/Two-Scoops-of-Django-0.-%EB%93%A4%EC%9
 
 장고 템플릿 문법에서 여러 html 파일들이 **base.html** 을 상속받는 경우,
 
-- **```block```** 태그 내에서 **{\{ block.super }\}** 와 같은 식으로 상위 요소 상속도 가능함!
-- 상속 시 **{\{ block.super }\}** 를 사용하지 않고 새롭게 **```block```** 정의가 가능함!
+- **```block```** 태그 내에서 {% raw %}**{{ block.super }}**{% endraw %} 와 같은 식으로 상위 요소 상속도 가능함!
+- 상속 시 {% raw %}**{{ block.super }}**{% endraw %} 를 사용하지 않고 새롭게 **```block```** 정의가 가능함!
 
+{% raw %}
 ```html
-{ % extends "base.html" %}
-{ % block stylesheets %}
+{% extends "base.html" %}
+{% block stylesheets %}
     {# 'block.super' 를 사용하지 않음으로써 dashboard.css 만 사용하도록 stylesheets 재정의 #}
-    <link rel="stylesheet" type="text/css" href="{ % static 'css/dashboard.css' %}" />
-{ % endblock stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}" />
+{% endblock stylesheets %}
 ```
+{% endraw %}
 
 혹은 아예 stylesheets 블록을 재정의하지 않으면 부모(base.html)의 css 를 그대로 상속받게 됩니다.
 
