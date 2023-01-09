@@ -390,8 +390,8 @@ SELECT "post"."id", "post"."author", "post"."title", "post"."content", "post"."c
 >>> Post.objects.filter(pub_date__lte=timezone.now()).order_by('created_date')
 ```
 
-이렇게 생성된 쿼리셋은 ```views.py``` 모듈에서 **장고 템플릿 엔진으로 전달되어 그대로 사용 가능**합니다.
-템플릿에서는 기본적으로 **{\{ posts }\}**, **{ % for post in posts %\}**, **{\{ post.title }\}** 와 같이 사용됩니다.
+이렇게 생성된 쿼리셋은 ```views.py``` 모듈에서 **장고 템플릿 엔진으로 전달되어 그대로 사용 가능**합니다. 템플릿에서는 기본적으로
+{% raw %}**{{ posts }}**, **{% for post in posts %}**, **{{ post.title }}**{% endraw %} 와 같이 사용됩니다.
 
 ```python
 # apps/posts/views.py
@@ -1187,16 +1187,18 @@ class FlavorListView(ListView):
 
 검색 폼을 위한 HTML 예시는 다음과 같습니다.
 
+{% raw %}
 ```html
 {# templates/flavors/search.html #}
-{ % comment %}
-    Usage: { % include "flavors/search.html" %}
-{ % endcomment %}
-<form action="{ % url 'flavors:list' %}" method="GET">
+{% comment %}
+    Usage: {% include "flavors/search.html" %}
+{% endcomment %}
+<form action="{% url 'flavors:list' %}" method="GET">
     <input type="text" name="q" />
     <button type="submit">search</button>
 </form>
 ```
+{% endraw %}
 
 **(4) django.views.generic.View 이용하기**
 
