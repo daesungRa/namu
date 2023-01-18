@@ -22,6 +22,9 @@ image-source: https://pixabay.com/ko/users/manuchi-1728328/
 3. [프로젝트 구성](#3-프로젝트-구성)
 4. [기본 템플릿 구성](#4-기본-템플릿-구성)
 5. [User 앱](#5-user-앱)
+    - [User 모델과 폼](#user-모델과-폼)
+    - [믹스인, 뷰, URLConf](#믹스인-뷰-urlconf)
+    - [회원가입, 탈퇴](#회원가입-탈퇴)
 
 ### 참조
 
@@ -307,7 +310,19 @@ Quit the server with CTRL-BREAK.
 
 <header>
     <a href="{% url 'core:home' %}">MySite</a>
+
+    {% include "partials/nav.html" %}
 </header>
+
+```
+
+```html
+<!-- templates/partials/nav.html --><div>
+    {% if user.is_authenticated %}
+        <!-- <span><a href="{{ user.get_absolute_url }}">Profile</a></span> -->
+        <span><a href="{% url 'users:logout' %}">Log out</a></span>
+    {% endif %}
+</div>
 
 ```
 
@@ -394,7 +409,7 @@ urlpatterns = [
 
 ```
 
-이후 **http://127.0.0.1:8000/** 로 다시 접속해봅니다.
+이후 **http://127.0.0.1:8000/** 로 다시 접속하면 뷰에서 지정한 home 템플릿이 렌더링됩니다.
 
 <br><br>
 # 5. User 앱
@@ -403,7 +418,7 @@ urlpatterns = [
 프로젝트의 첫 앱인 **users** 를 생성합니다.
 
 users 앱은 장고에서 권한관리 및 어드민 기능을 기본적으로 제공하는
-**'django.contrib.auth'**, **'django.contrib.admin'** 앱을 베이스로 구성됩니다.
+**'django.contrib.auth'**, **'django.contrib.admin'** 어플리케이션을 베이스로 구성됩니다.
 
 ```text
 (venv) ~/mysite $ django-admin startapp users
@@ -439,7 +454,7 @@ class UsersConfig(AppConfig):
 ```
 
 settings.py 설정의 **INSTALLED_APPS** 에 **users** 앱을 추가하고,
-하단에 **users** 앱의 **커스텀 User 모델**을 프로젝트의 AUTH_USER 객체로 쓸지 지정해줍니다.
+하단에 **users** 앱의 **커스텀 User 모델**을 프로젝트의 **AUTH_USER** 객체로 사용하도록 지정합니다.
 
 ```python
 # ./config/settings.py
@@ -689,9 +704,7 @@ class HomeView(LoggedInOnlyView, View):  # 로그인 필수 적용!
 
 {% block content %}
     <div>
-        {% url "users:login" as loginUrl %}
-
-        <form method="POST" {% if url %} action="{{ url }}" {% endif %} enctype="multipart/form-data">
+        <form method="POST" action="{% url 'users:login' %}" enctype="multipart/form-data">
             {% csrf_token %}
             {% if form.non_field_errors %}
                 {% for error in form.non_field_errors %}
@@ -751,6 +764,3 @@ urlpatterns = [
 ```
 
 **http://127.0.0.1:8000/** 로 다시 접속한 후 로그인, 로그아웃을 해봅시다!
-
-<br>
-## 
