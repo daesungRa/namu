@@ -28,7 +28,7 @@ image-source: https://pixabay.com/ko/users/manuchi-1728328/
 
 ### 참조
 
-- <a href="https://channels.readthedocs.io/en/stable/" target="_blank">Docs: Django Channels</a>
+- <a href="https://docs.djangoproject.com/en/4.1/" target="_blank">Docs: Django Documentation</a>
 
 ---
 
@@ -40,7 +40,7 @@ image-source: https://pixabay.com/ko/users/manuchi-1728328/
 # 1. 파이썬 환경 설정
 
 <br>
-가장 먼저 **<a href="https://github.com/pyenv/pyenv" target="_blank">pyenv</a>** 를 설치합니다.<br>
+파이썬 환경 설정을 위해 **<a href="https://github.com/pyenv/pyenv" target="_blank">pyenv</a>** 를 설치합니다.<br>
 **pyenv** 를 활용하면 시스템 내에서 global python 버전 전환시 매우 간편합니다.
 
 - 리눅스OS: **<a href="https://github.com/pyenv/pyenv#installation" target="_blank">pyenv</a>**
@@ -73,7 +73,7 @@ $
 ```
 
 2022년 12월 릴리즈 된 **3.10.9** 버전으로 합니다.<br>
-터미널에서 ```$ python --version``` 입력 시 pyenv 의 **Python 3.10.9** 표시되는지 확인합니다.
+터미널에서 **```$ python --version```** 입력 시 pyenv 의 **Python 3.10.9** 표시되는지 확인합니다.
 
 이후 가상환경 생성을 위해 패키지 관리자인 **pip** 업그레이드와 **virtualenv** 설치를 진행하면 완료입니다.
 
@@ -82,7 +82,7 @@ $
 
 <br>
 프로젝트를 생성할 위치에서 진행하며, 이름은 **mysite** 으로 합니다.<br>
-<small>_(원하는 프로젝트명으로 하세요.)_</small>
+**<small>_(원하는 프로젝트명으로 하세요.)_</small>**
 
 **mysite** 디렉토리 생성 후 그곳으로 이동하여
 
@@ -317,9 +317,10 @@ Quit the server with CTRL-BREAK.
 ```
 
 ```html
-<!-- templates/partials/nav.html --><div>
+<!-- templates/partials/nav.html -->
+
+<div>
     {% if user.is_authenticated %}
-        <!-- <span><a href="{{ user.get_absolute_url }}">Profile</a></span> -->
         <span><a href="{% url 'users:logout' %}">Log out</a></span>
     {% endif %}
 </div>
@@ -417,8 +418,7 @@ urlpatterns = [
 <br>
 프로젝트의 첫 앱인 **users** 를 생성합니다.
 
-users 앱은 장고에서 권한관리 및 어드민 기능을 기본적으로 제공하는
-**'django.contrib.auth'**, **'django.contrib.admin'** 어플리케이션을 베이스로 구성됩니다.
+users 앱은 장고에서 권한관리 및 어드민 기능을 기본적으로 제공하는 **'django.contrib.auth'** 어플리케이션을 베이스로 구성됩니다.
 
 ```text
 (venv) ~/mysite $ django-admin startapp users
@@ -569,7 +569,7 @@ class LoginForm(Form):
 
 여러 모듈에서 재사용되는 부분을 **믹스인**으로 정의해두면 좋습니다.
 
-사용자 request 가 로그인된 상태인지 구분하는 기능이 대표적인 예시입니다.
+사용자 request 세션이 로그인된 상태인지 구분하는 기능이 대표적인 예시입니다.
 
 ```python
 # apps/users/mixins.py
@@ -625,7 +625,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 
 from .forms import LoginForm
-from .mixins import LoggedInOnlyView, LoggedOutOnlyView
+from .mixins import LoggedOutOnlyView
 
 
 class LoginView(LoggedOutOnlyView, SuccessMessageMixin, FormView):
@@ -764,3 +764,258 @@ urlpatterns = [
 ```
 
 **http://127.0.0.1:8000/** 로 다시 접속한 후 로그인, 로그아웃을 해봅시다!
+
+<br>
+## 회원가입, 탈퇴
+
+이번엔 템플릿부터 작성합니다.
+
+{% raw %}
+```html
+<!-- templates/users/signup.html -->
+
+{% extends "layout.html" %}
+
+{% block page_title %}
+    Sign Up
+{% endblock page_title %}
+
+{% block content %}
+    <div>
+        <form method="POST" action="{% url 'users:signup' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+            {% for field in form %}
+                <div class="{% if field.errors %}has-error{% endif %}">
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button>Sign Up</button>
+        </form>
+
+        <div>
+            <span>계정이 이미 있나요?</span>
+            <a href="{% url 'users:login' %}">Log in</a>
+        </div>
+    </div>
+{% endblock content %}
+
+```
+
+기존 로그인 템플릿에 회원가입 링크를 추가합니다.
+
+```html
+<!-- templates/users/login.html -->
+
+{% extends "layout.html" %}
+
+{% block page_title %}
+    Log In
+{% endblock page_title %}
+
+{% block content %}
+    <div>
+        <form method="POST" action="{% url 'users:login' %}" enctype="multipart/form-data">
+            ...
+        </form>
+
+        <div>
+            <span>계정이 없나요?</span>
+            <a href="{% url 'users:signup' %}">Sign up</a>
+        </div>
+    </div>
+{% endblock content %}
+
+```
+{% endraw %}
+
+**users** 앱에 회원가입 폼과 뷰를 추가합니다.
+
+```python
+# apps/users/forms.py
+"""
+Forms of users app.
+"""
+
+from django.forms import Form, ModelForm, ValidationError
+from django.forms import CharField, EmailField
+from django.forms import TextInput, EmailInput, PasswordInput, DateInput
+
+from .models import User
+
+
+class LoginForm(Form):
+    """Login form detail"""
+    
+    ...
+    
+    
+class SignUpForm(ModelForm):
+    """Signup form detail"""
+
+    class Meta:
+        model = User
+        fields = (
+            'username', 'password', 'password_confirm', 'first_name', 'last_name', 'birthdate',)
+        widgets = {
+            'username': EmailInput(attrs={'placeholder': 'Username in email form only'}),
+            'first_name': TextInput(attrs={'placeholder': 'First name'}),
+            'last_name': TextInput(attrs={'placeholder': 'Last name'}),
+            'birthdate': DateInput(attrs={'placeholder': 'Birth date'}),
+        }
+
+    password = CharField(widget=PasswordInput(attrs={'placeholder': 'Password'}))
+    password_confirm = CharField(
+        widget=PasswordInput(attrs={'placeholder': 'Confirm Password'}), label='Confirm Password')
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        try:
+            User.objects.get(username=username)
+            raise ValidationError('User already exists with that username(email)')
+        except User.DoesNotExist:
+            return username
+
+    def clean_password_confirm(self):
+        password = self.cleaned_data.get('password')
+        password_confirm = self.cleaned_data.get('password_confirm')
+        if password != password_confirm:
+            raise ValidationError('Password confirmation does not match')
+        else:
+            return password
+
+    def save(self, *args, **kwargs):
+        """
+        Overridden save() method: To encrypt and save password
+        """
+        password = self.cleaned_data.get('password')
+        user = super().save(commit=False)
+        user.set_password(raw_password=password)
+        user.save()
+
+```
+
+```python
+# apps/users/views.py
+
+...
+
+from .forms import LoginForm, SignUpForm
+from .mixins import LoggedOutOnlyView
+
+
+class LoginView(LoggedOutOnlyView, SuccessMessageMixin, FormView):
+    ...
+
+
+def logout(request):
+    ...
+
+
+class SignUpView(LoggedOutOnlyView, FormView):
+    template_name = 'users/signup.html'
+    form_class = SignUpForm
+
+    def form_valid(self, form):
+        # create user after validation check
+        form.save()
+
+        # login
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(request=self.request, username=username, password=password)
+        if user is not None:
+            django_login(request=self.request, user=user)
+        return super(SignUpView, self).form_valid(form=form)
+
+    def get_success_url(self):
+        next_arg = self.request.GET.get('next')
+        if next_arg is not None:
+            return next_arg
+        else:
+            return reverse('core:home')
+
+```
+
+회원가입 뷰 라우팅을 추가하고 회원가입 로직을 테스트 해봅니다.
+
+```python
+# apps/users/urls.py
+"""
+URLConf of users app.
+"""
+
+from django.urls import path
+
+from .views import LoginView, logout
+
+app_name = 'users'
+urlpatterns = [
+    path(r'login/', LoginView.as_view(), name='login'),
+    path(r'logout/', logout, name='logout'),
+    path(r'signup/', SignUpView.as_view(), name='signup'),
+]
+
+```
+
+마지막으로 **탈퇴 로직**을 간단히 추가하겠습니다.
+
+로그인 시 **nav.html** 에 탈퇴 버튼이 나타나도록 링크를 추가 합니다.
+
+{% raw %}
+```html
+<!-- templates/partials/nav.html -->
+
+<div>
+    {% if user.is_authenticated %}
+        <span><a href="{% url 'users:logout' %}">Log out</a></span>
+        <span><a href="{% url 'users:delete' %}">Quit</a></span>
+    {% endif %}
+</div>
+
+```
+{% endraw %}
+
+탈퇴를 위한 뷰와 라우팅을 추가하면 완료입니다.
+
+```python
+# apps/users/views.py
+
+...
+
+def delete_user(request):
+    messages.info(request=request, message='You have been quit.')
+    request.user.delete()
+    django_logout(request=request)
+    return redirect(reverse('core:home'))
+
+```
+
+```python
+# apps/users/urls.py
+"""
+URLConf of users app.
+"""
+
+from django.urls import path
+
+from .views import LoginView, logout, delete_user
+
+app_name = 'users'
+urlpatterns = [
+    path(r'login/', LoginView.as_view(), name='login'),
+    path(r'logout/', logout, name='logout'),
+    path(r'signup/', SignUpView.as_view(), name='signup'),
+    path(r'delete/', delete_user, name='delete'),
+]
+
+```
