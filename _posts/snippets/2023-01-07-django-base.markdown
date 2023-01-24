@@ -721,7 +721,7 @@ class HomeView(LoggedInOnlyView, View):  # 로그인 필수 적용!
                     {% endif %}
                 </div>
             {% endfor %}
-            <button>Log In</button>
+            <input type="submit" value="Log In" />
         </form>
     </div>
 {% endblock content %}
@@ -799,7 +799,7 @@ urlpatterns = [
                     {% endif %}
                 </div>
             {% endfor %}
-            <button>Sign Up</button>
+            <input type="submit" value="Sign Up" />
         </form>
 
         <div>
@@ -993,7 +993,7 @@ urlpatterns = [
 ...
 
 def delete_user(request):
-    messages.info(request=request, message='You have been quit.')
+    messages.info(request=request, message='Your account has been deleted.')
     request.user.delete()
     django_logout(request=request)
     return redirect(reverse('core:home'))
