@@ -470,14 +470,15 @@ S3 는 여러 AZ 공유가 가능한 저장소이기는 하지만 특성상 ECS 
 - **ECS 클러스터 생성**: **네트워킹**, **인프라 Capacity Provider(Fargate 서버리스, EC2 인스턴스 Launch Type)** 설정
     - 용량 공급자로 **EC2 인스턴스 Launch Type** 을 선택한 경우, **ASG 스펙을 지정하여 클러스터 내 EC2 인스턴스를 수동 조정**
     - ASG 스펙으로 OS/아키텍쳐 및 Min/Max 인스턴스 개수, 인스턴스 타입 설정
-- **ECS 서비스(Tasks) 정의**: 하나의 전체적인 서비스 구성을 위한 Task 정의
-    - Task 에 필요한 **여러 Docker Container 를 지정**할 수 있음. 각 컨테이너 별 네트워크 통신에 필요한 **Port 정의**
+- **ECS 서비스(Tasks) 정의**: 하나의 전체적인 서비스 구성을 위한 Task 정의. JSON 형식의 메타데이터로 정의됨.
+    - Task 에 필요한 **여러 Docker Image 를 지정**할 수 있음.(컨테이너 최대 10개)
+    - 각 컨테이너 별 **네트워크 관련 정보 및 Port** 와 **환경변수 정의**
     - 구성하는 Task 에서 사용할 **용량 공급자**(클러스터 생성 시 사전 정의), **OS 시스템 및 CPU/Mem 사이즈**,
     **Task Role**(Role 은 S3, DynamoDB 등 필요시), **스토리지**(Fargate 로부터 기본 20GiB 부여) 지정
     - **Task 가 배포되는 인스턴스에 적용할 Security Group** 적용(HTTP 80, HTTPS 443 등)
 - **ECS 서비스(Task) 배포**: ECS 클러스터로 돌아가서, Task 기반으로 배포를 실행
     - 사용할 **Task 를 지정**(Family)하고 **배포할 서비스명**을 입력, **실행할 Task 개수**를 지정
-    - 예를 들어 Task 개수를 3개로 하면 동일한 컨테이너 구성의 태스크를 3개 서비스함
+    - 예를 들어 Task 개수를 3개로 하면 동일한 컨테이너 구성의 Task 를 3개 서비스함
     - **로드밸런서로 ALB 생성**하도록 지정 (Create or Use existing ALB)
 
 배포까지 마치게 되면 ALB 생성에서부터 Task 실행으로 서비스 제공이 원활히 이루어지는지 확인합니다.
@@ -490,11 +491,11 @@ S3 는 여러 AZ 공유가 가능한 저장소이기는 하지만 특성상 ECS 
 > 이 때, **Capacity Provider** 로 **Fargate 서버리스**를 이용한다면 별도의 수동 프로비저닝 없이 자동으로 인프라가 관리되며,
 > 배포 시 생성(혹은 사용)했던 **ALB 는 새로 늘어난 Task 로 트래픽을 분산**시킵니다.
 > 
-> **태스트 개수를 0**으로 바꾸면 **모든 태스크가 종료**됩니다. 이렇게 **배포 설정은 유지하면서 서비스는 꺼둘 수** 있습니다.
+> **태스크 개수를 0**으로 바꾸면 **모든 태스크가 종료**됩니다. 이렇게 **배포 설정은 유지하면서 서비스는 꺼둘 수** 있습니다.
 
 **(7)** 배포된 **ECS Task 의 desired number** 를 **Auto Scaling 으로 자동 조절**할 수 있습니다.
 
-여기에서도 **기존의 ASG** 와 같이 **ALB 의 CPU/Mem/ALB request count per target 지표(metric) 기준**으로 **Scale out/in** 이
+여기에서도 **기존의 ASG** 와 같이 **ALB 의 CPU/Mem/ALB request count per target 지표 기준**으로 **Scale out/in** 이
 이루어지며 **스케일링 방식**도 **Tartet/Step/Scheduled** 등 동일하게 적용 가능합니다.
 
 다만, ECS 클러스터 내 **Task 대상의 스케일링**인 만큼 기존의 **EC2 인스턴스 대상 스케일링과는 다르다는 점**을 꼭 기억하시기 바랍니다.
@@ -528,6 +529,96 @@ rubygarage.github.io/slides/aws/ecs#/](https://rubygarage.github.io/assets/image
 3. **(Serverless) ECS Service Auto Scaling 활용 큐 메시지 폴링**
     - SQS Queue 메시지를 폴링하는 ECS Task 서비스 생성
     - Task 배포 시 ECS Service Auto Scaling 적용하여 SQS 대기열에 메시지가 많으면 자동으로 Task 추가하도록 구성
+
+**(10)** **Amazon ECS Tasks Placement(태스크 배치)** 기능을 통해 ECS Tasks 에 존재하는 여러 종류의 컨테이너를 적절하게 배치할 수
+있습니다. 이것은 **EC2 launch type** 에서만(Fargate X) 적용이 가능하며 Scale in/out 시 제한된 CPU, memory, port 자원 내에서
+컨테이너 배치가 효과적으로 이루어지도록 시도합니다. 이를 위해 **Task placement strategies** 및
+**Task placement constraints** 를 정의하게 됩니다.
+
+Task 배치가 이루어지는 과정은 다음과 같습니다.
+
+1. **CPU, memory, and port 요구사항을 만족**하는 인스턴스 식별
+2. **Task placement constraints 를 만족**하는 인스턴스 식별
+3. **Task placement strategies 를 만족**하는 인스턴스 식별 이후 최종 선택
+
+- **Task placement strategy**
+    - **Binpack**: 첫 인스턴스에 컨테이너를 최대한 채우고 다음 인스턴스로 넘어감
+    ```json
+    "placementStrategy": [
+        {
+            "field": "memory",
+            "type": "binpack"
+        }
+    ]
+    ```
+    - **Random**: 무작위로 배치
+    ```json
+    "placementStrategy": [
+        {
+            "type": "random"
+        }
+    ]
+    ```
+    - **Spread**: 특정 값에 따라 컨테이너를 분산 배치 (ex. "attribute:ecs.availability-zone", "instanceId")
+    ```json
+    "placementStrategy": [
+        {
+            "field": "attribute:ecs.availability-zone",
+            "type": "spread"
+        }
+    ]
+    ```
+    - 다음과 같이 여러 전략 mix 도 가능
+    ```json
+    "placementStrategy": [
+        {
+            "field": "attribute:ecs.availability-zone",
+            "type": "spread"
+        },
+        {
+            "field": "instanceId",
+            "type": "spread"
+        }
+    ]
+    ```
+    ```json
+    "placementStrategy": [
+        {
+            "field": "attribute:ecs.availability-zone",
+            "type": "spread"
+        },
+        {
+            "field": "memory",
+            "type": "binpack"
+        }
+    ]
+    ```
+
+- **Task placement constraints**
+    - **distinctInstance**: place each task on a different container instance
+    ```json
+    "placementConstraints": [
+        {
+            "type": "distinctInstance"
+        }
+    ]
+    ```
+    - **memberOf**: places task on instances that satisfy an expression
+        - 표현식은 **Cluster Query Language(advanced)** 사용 (ex. "attribute:ecs.instance-type =~ t2.*")
+        ```json
+        "placementConstraints": [
+            {
+                "expression": "attribute:ecs.instance-type =~ t2.*",
+                "type": "memberOf"
+            }
+        ]
+        ```
+
+**(11)** **Amazon ECR(Elastic Container Registry)** 는 docker 이미지 저장소로 Docker hub 를 대체할 수 있으며
+**private 저장**이 가능하고 **ECS 와 완전히 결합**됩니다. **docker image** 는 **Amazon S3 에 저장**되며 이미지를 끌어오기
+위해 인스턴스에는 적절한 **IAM Role** 을 적용합니다.
+
+또한 **이미지 취약점 스캐닝, 버저닝, 이미지 태그, 이미지 수명 주기** 확인을 지원합니다.
 
 <br>
 ### Elastic Beanstalk
